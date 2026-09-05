@@ -1,4 +1,10 @@
 import argparse
+import sys
+import os
+
+# Add the project root to the python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from env.target_capture_env import TargetCaptureEnv
 from agents.random_agent import RandomAgent
 from agents.heuristic_agent import HeuristicAgent

@@ -64,6 +64,17 @@ class TargetCaptureEnv:
             "agent_1": self.agent_1.position,
             "target": self.target.position
         }
+        
+    def _get_occupied_positions(self, exclude: Any = None) -> list[Position]:
+        """Helper to get positions occupied by entities, excluding a specific entity."""
+        positions = []
+        if self.agent_0 and self.agent_0 != exclude:
+            positions.append(self.agent_0.position)
+        if self.agent_1 and self.agent_1 != exclude:
+            positions.append(self.agent_1.position)
+        if self.target and self.target != exclude:
+            positions.append(self.target.position)
+        return positions
 
     def step(self, actions: Dict[str, Action]) -> Tuple[Dict[str, Position], Dict[str, Any]]:
         """
@@ -75,15 +86,21 @@ class TargetCaptureEnv:
         5. Update episode status
         6. Return state and info
         """
-        # 1. Apply hunter actions
+        # 1. Apply hunter actions sequentially, preventing overlaps
         if "agent_0" in actions:
-            MovementController.move_agent(self.agent_0, actions["agent_0"], self.grid)
+            MovementController.move_agent(
+                self.agent_0, actions["agent_0"], self.grid, self._get_occupied_positions(self.agent_0)
+            )
         if "agent_1" in actions:
-            MovementController.move_agent(self.agent_1, actions["agent_1"], self.grid)
+            MovementController.move_agent(
+                self.agent_1, actions["agent_1"], self.grid, self._get_occupied_positions(self.agent_1)
+            )
             
-        # 2. Move target
+        # 2. Move target, preventing overlaps
         target_action = self.target_policy.choose_action(self.target, self.grid)
-        MovementController.move_target(self.target, target_action, self.grid)
+        MovementController.move_target(
+            self.target, target_action, self.grid, self._get_occupied_positions(self.target)
+        )
         
         # 3. Update timestep
         self.current_step += 1

@@ -6,17 +6,18 @@ The goal is to investigate the emergence of cooperation.
 
 ## Current Implementation Status
 
-Phase 8 completed:
+Phase 9 completed:
 
 Implemented:
-- random baseline agent
-- heuristic baseline agent
-- baseline evaluation framework
+- independent Q-learning baseline
+- tabular learning agent
+- training loop
+- evaluation pipeline
 
 Not implemented yet:
-- reinforcement learning
-- learned policies
-- MARL algorithms
+- deep reinforcement learning
+- cooperative MARL algorithms
+- MAPPO
 
 ## Future Roadmap
 

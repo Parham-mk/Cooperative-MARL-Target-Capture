@@ -23,21 +23,23 @@ class MovementController:
         return Position(x, y)
 
     @staticmethod
-    def move_agent(agent: Agent, action: Action, grid: GridWorld) -> None:
+    def move_agent(agent: Agent, action: Action, grid: GridWorld, occupied_positions: list = None) -> None:
         """
         Updates the agent's position based on the action and grid boundaries.
-        Only valid movements are applied.
+        Prevents moving into occupied positions.
         """
         new_pos = MovementController.calculate_new_position(agent.position, action)
         if grid.is_valid_position(new_pos):
-            agent.set_position(new_pos)
+            if occupied_positions is None or new_pos not in occupied_positions:
+                agent.set_position(new_pos)
 
     @staticmethod
-    def move_target(target: Target, action: Action, grid: GridWorld) -> None:
+    def move_target(target: Target, action: Action, grid: GridWorld, occupied_positions: list = None) -> None:
         """
         Updates the target's position based on the action and grid boundaries.
-        If an action leads outside the grid, the target stays in place (invalid movement is ignored).
+        Prevents moving into occupied positions.
         """
         new_pos = MovementController.calculate_new_position(target.position, action)
         if grid.is_valid_position(new_pos):
-            target.set_position(new_pos)
+            if occupied_positions is None or new_pos not in occupied_positions:
+                target.set_position(new_pos)
