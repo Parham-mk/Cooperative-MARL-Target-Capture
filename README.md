@@ -6,18 +6,29 @@ The goal is to investigate the emergence of cooperation.
 
 ## Current Implementation Status
 
-Phase 9 completed:
+Phase 10 completed:
 
 Implemented:
-- independent Q-learning baseline
-- tabular learning agent
-- training loop
-- evaluation pipeline
+- shared-policy cooperative Q-learning baseline
+- agent-centric relative state representation
+- shared Q-table parameters
+- teammate-aware cooperative exploration
+- independent and cooperative evaluation frameworks
 
 Not implemented yet:
-- deep reinforcement learning
-- cooperative MARL algorithms
-- MAPPO
+- sophisticated deep MARL
+- learned multi-agent communication
+- continuous action spaces
+
+## Shared-Policy Cooperative Q-Learning
+
+To introduce explicit cooperative learning while keeping the algorithm interpretable, both homogeneous hunter agents share a single tabular Q-function.
+
+Each hunter acts from an agent-centric state containing:
+- relative target position
+- relative teammate position
+
+Experience from both hunters updates the same Q-table. This experiment evaluates whether parameter sharing and teammate-aware state representations improve coordination compared with Independent Q-Learning.
 
 ## Future Roadmap
 
