@@ -1,0 +1,137 @@
+[
+  {
+    "path": "behavioral/behavioral_seed_summary.csv",
+    "sha256": "62ee9bf555ab776a5d085ad8d613267eb91af425c66a9e2d4e338f6cf056b72b",
+    "size_bytes": 2391
+  },
+  {
+    "path": "behavioral/behavioral_summary.csv",
+    "sha256": "f9e744886a8da044725d28b24a8367ec3ca14f3fd80511809d1aad93c97ff193",
+    "size_bytes": 1258
+  },
+  {
+    "path": "behavioral/cooperative_q_learning_trajectory.png",
+    "sha256": "78129e8d24586e19eec92db44260a7af4f69ed442d926e0f527e67b3e4dccd7c",
+    "size_bytes": 35993
+  },
+  {
+    "path": "behavioral/heuristic_trajectory.png",
+    "sha256": "91457702640ad95f9d4d72937095148218c3149cb4248823623025d316c66768",
+    "size_bytes": 32985
+  },
+  {
+    "path": "behavioral/independent_q_learning_trajectory.png",
+    "sha256": "913fa08116a652366b7f170766b50f213cbe7e6120e31ca6aca881399f881bef",
+    "size_bytes": 35288
+  },
+  {
+    "path": "behavioral/random_trajectory.png",
+    "sha256": "e613bebc3e66682ff8dcafe56c4395ef9433a79abf2a75da4fbde254ad9c6f1e",
+    "size_bytes": 36222
+  },
+  {
+    "path": "behavioral/representative_selection.csv",
+    "sha256": "1b8332b314bec81106fc9f8b1a903ba2c45f62f87bd4d93026fddea78e5257c8",
+    "size_bytes": 1300
+  },
+  {
+    "path": "gifs/cooperative_q_learning_success.gif",
+    "sha256": "b7a9a74c4ad8b6a89b39b59ccc77076cc7e35a3a8d380b20f8361b0446829fc5",
+    "size_bytes": 79213
+  },
+  {
+    "path": "gifs/heuristic_success.gif",
+    "sha256": "fdc233e12b1a0ee71de31ee440eb66448d299173305e2505bfee12997e1b1369",
+    "size_bytes": 46329
+  },
+  {
+    "path": "gifs/independent_q_learning_failure.gif",
+    "sha256": "7231173aaee67ba8cdf9f0cff24e1e4cbe08fbd72eb107df252a1b11611a7c3c",
+    "size_bytes": 397985
+  },
+  {
+    "path": "gifs/independent_q_learning_success.gif",
+    "sha256": "60d32ffaf579c0b1d59117569ce9794ba4f8d6e4cadf5bea0d912fc8c82b7b5d",
+    "size_bytes": 83111
+  },
+  {
+    "path": "gifs/random_success.gif",
+    "sha256": "b55180b4d99d108056a46af8ef3ef8471d2a1a1d7288684c842786d60c7604ab",
+    "size_bytes": 175744
+  },
+  {
+    "path": "plots/capture_rate_comparison.png",
+    "sha256": "748fa32485124308f2ca73153059626b6eaa6b3c38553261a1f80e7a4fea38f9",
+    "size_bytes": 38315
+  },
+  {
+    "path": "plots/episode_length_comparison.png",
+    "sha256": "6345bf1dddf7390dcbb5718297a86370957c4bc7ea694d4800d1913b1eb8bf42",
+    "size_bytes": 38509
+  },
+  {
+    "path": "plots/reward_comparison.png",
+    "sha256": "0a6edad8acbf523ebf2b82b6fadf0d22289ed044bda324816c0694189577da99",
+    "size_bytes": 39164
+  },
+  {
+    "path": "plots/training_capture_curve.png",
+    "sha256": "e76a71437fd2e32a91c5fcf5e25aec79aca5565a23a97e07e857fa7231396e3b",
+    "size_bytes": 65448
+  },
+  {
+    "path": "plots/training_reward_curve.png",
+    "sha256": "c0fb58e735c453e4e1ca841627a0fea4194fb64a4ab0318bc20306493e419485",
+    "size_bytes": 205836
+  },
+  {
+    "path": "reproduction_verification.json",
+    "sha256": "4a852650de63f274897cd43a2cf285bf02a70574be01d5799ee32258f6026a92",
+    "size_bytes": 619
+  },
+  {
+    "path": "summaries/comparison_summary.csv",
+    "sha256": "d52bf441b569f634dfd170286ba7a16d2310b84e17a42ef7bab8ec40512bf897",
+    "size_bytes": 895
+  },
+  {
+    "path": "summaries/experiment_config.json",
+    "sha256": "d8c43c6a77c4e6bab0312dff57237be247faf5d009af1b0e81f65482fec4a862",
+    "size_bytes": 308
+  },
+  {
+    "path": "summaries/per_seed_summary.csv",
+    "sha256": "d3c6da8935e7714d97dab256f374da2690a5875d934ba1a8f28c91a8bbffd6ff",
+    "size_bytes": 1314
+  },
+  {
+    "path": "summaries/training_curve_source.csv",
+    "sha256": "d49cc048d0744a1c54660d61251a02e9762bd37a985b053b1e2ad9609dfe2d91",
+    "size_bytes": 830666
+  },
+  {
+    "path": "trajectories/cooperative_q_learning_success.json",
+    "sha256": "308001a3ff58bcfc85b806af855399748736b89d5b3beb1eb67e892eef20bde8",
+    "size_bytes": 9565
+  },
+  {
+    "path": "trajectories/heuristic_success.json",
+    "sha256": "e975e7e2d5186017fc29aa2a6ec16001817806ab60204e91e386ca3c4e83e227",
+    "size_bytes": 5490
+  },
+  {
+    "path": "trajectories/independent_q_learning_failure.json",
+    "sha256": "38e4a81eadd16052354f91eead6e53ca15c5b9112ff36224d7e7c737e96fe299",
+    "size_bytes": 57257
+  },
+  {
+    "path": "trajectories/independent_q_learning_success.json",
+    "sha256": "b19c001150940f8f5815bafa6295f6410a90a79c71c4e6172b94e5e2bc576ca0",
+    "size_bytes": 10867
+  },
+  {
+    "path": "trajectories/random_success.json",
+    "sha256": "1efe6aa4442e0041f29a7dddf66b3a9238d4c76b45a38d5e83c7080df9ea1f65",
+    "size_bytes": 22279
+  }
+]

@@ -13,6 +13,14 @@ class TargetCaptureEnv:
     """Core simulation environment for target capture."""
 
     def __init__(self, grid_size: int = 10, max_steps: int = 100, seed: Optional[int] = None):
+        if not isinstance(grid_size, int):
+            raise TypeError("grid_size must be an integer.")
+        if grid_size < 2:
+            raise ValueError("grid_size must be at least 2 to place three distinct entities.")
+        if not isinstance(max_steps, int):
+            raise TypeError("max_steps must be an integer.")
+        if max_steps < 1:
+            raise ValueError("max_steps must be at least 1.")
         self.grid_size = grid_size
         self.max_steps = max_steps
         self.seed = seed
@@ -118,7 +126,8 @@ class TargetCaptureEnv:
             "step": self.current_step,
             "captured": self.captured,
             "terminated": terminated,
-            "truncated": truncated
+            "truncated": truncated,
+            "target_action": target_action,
         }
         
         return state, info

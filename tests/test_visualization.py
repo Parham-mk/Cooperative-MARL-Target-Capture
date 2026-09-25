@@ -1,5 +1,6 @@
 import os
 import pytest
+from PIL import Image
 from visualization.renderer import GridWorldRenderer
 from visualization.gif_generator import GIFGenerator
 
@@ -31,8 +32,11 @@ def test_visualization_smoke_test(tmp_path):
     
     # Should not crash
     renderer.plot_static_trajectory(trajectory, "Test", str(png_path))
-    assert os.path.exists(png_path)
+    assert os.path.exists(png_path) and os.path.getsize(png_path) > 0
     
     # Rendering GIF might fail if imagemagick/pillow isn't setup right, but pillow writer is built-in
     gif_gen.generate(trajectory, "Test GIF", str(gif_path))
-    assert os.path.exists(gif_path)
+    assert os.path.exists(gif_path) and os.path.getsize(gif_path) > 0
+    with Image.open(gif_path) as image:
+        assert image.n_frames == len(trajectory)
+        assert image.size[0] > 0 and image.size[1] > 0

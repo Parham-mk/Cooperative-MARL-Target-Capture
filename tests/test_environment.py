@@ -8,7 +8,7 @@ def test_environment_creation():
     assert env.grid_size == 5
     assert env.max_steps == 10
     
-    env.reset()
+    env.reset(seed=1)
     assert env.grid is not None
     assert env.agent_0 is not None
     assert env.agent_1 is not None
@@ -16,7 +16,7 @@ def test_environment_creation():
 
 def test_reset():
     env = TargetCaptureEnv(grid_size=5)
-    state = env.reset()
+    state = env.reset(seed=2)
     
     assert "agent_0" in state
     assert "agent_1" in state
@@ -38,7 +38,7 @@ def test_reset():
 
 def test_step_execution():
     env = TargetCaptureEnv(grid_size=5)
-    env.reset()
+    env.reset(seed=3)
     
     actions = {
         "agent_0": Action.UP,
@@ -67,7 +67,7 @@ def test_reproducibility():
 
 def test_episode_limit():
     env = TargetCaptureEnv(grid_size=5, max_steps=5)
-    env.reset()
+    env.reset(seed=4)
     
     for _ in range(4):
         env.step({"agent_0": Action.STAY, "agent_1": Action.STAY})
@@ -81,12 +81,13 @@ def test_random_simulation():
     env.reset(seed=99)
     
     import random
+    rng = random.Random(123)
     actions_list = list(Action)
     
     for _ in range(100):
         actions = {
-            "agent_0": random.choice(actions_list),
-            "agent_1": random.choice(actions_list)
+            "agent_0": rng.choice(actions_list),
+            "agent_1": rng.choice(actions_list)
         }
         state, info = env.step(actions)
         
@@ -94,5 +95,27 @@ def test_random_simulation():
         assert env.grid.is_valid_position(state["agent_0"])
         assert env.grid.is_valid_position(state["agent_1"])
         assert env.grid.is_valid_position(state["target"])
-        
+        if info["terminated"] or info["truncated"]:
+            break
     assert env.is_done()
+
+
+def test_identical_seeded_full_trajectories():
+    actions = [
+        {"agent_0": Action.RIGHT, "agent_1": Action.UP},
+        {"agent_0": Action.STAY, "agent_1": Action.LEFT},
+        {"agent_0": Action.DOWN, "agent_1": Action.RIGHT},
+    ]
+    trajectories = []
+    for _ in range(2):
+        env = TargetCaptureEnv(grid_size=5, max_steps=3)
+        states = [env.reset(seed=123)]
+        infos = []
+        for joint_action in actions:
+            state, info = env.step(joint_action)
+            states.append(state)
+            infos.append(info)
+            if info["terminated"] or info["truncated"]:
+                break
+        trajectories.append((states, infos))
+    assert trajectories[0] == trajectories[1]

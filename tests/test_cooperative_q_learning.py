@@ -56,11 +56,11 @@ def test_random_tie_breaking():
     rng = random.Random(42)
     
     # All Q-values are 0 initially, meaning they are tied.
-    actions_chosen = set()
-    for _ in range(100):
-        actions_chosen.add(table.get_best_action(state, rng))
-        
-    assert len(actions_chosen) > 1 # Should have picked multiple different actions randomly
+    assert [table.get_best_action(state, rng).name for _ in range(10)] == [
+        "UP", "UP", "LEFT", "DOWN", "DOWN",
+        "DOWN", "UP", "STAY", "UP", "STAY",
+    ]
+    assert table.q_table == {}
 
 def test_valid_action():
     """Test 4: Valid Action output"""

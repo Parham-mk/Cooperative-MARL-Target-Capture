@@ -1,0 +1,7 @@
+method,outcome,training_seed,evaluation_seed,episode_length,method_median_success_time,selection_rule,trajectory
+Random,success,1,10000904,38,38,successful episode with capture time closest to the method median; ties broken by training seed then evaluation seed,results\validation\run_a\trajectories\random_success.json
+Heuristic,success,0,10000063,8,8,successful episode with capture time closest to the method median; ties broken by training seed then evaluation seed,results\validation\run_a\trajectories\heuristic_success.json
+Independent Q-Learning,success,0,10000009,17,17.0,successful episode with capture time closest to the method median; ties broken by training seed then evaluation seed,results\validation\run_a\trajectories\independent_q_learning_success.json
+Independent Q-Learning,failure,0,10000451,100,17.0,first failure ordered by training seed then evaluation seed,results\validation\run_a\trajectories\independent_q_learning_failure.json
+Cooperative Q-Learning,success,0,10000010,15,15.0,successful episode with capture time closest to the method median; ties broken by training seed then evaluation seed,results\validation\run_a\trajectories\cooperative_q_learning_success.json
+Cooperative Q-Learning,failure,,,,15.0,no failure observed in the complete evaluation dataset,

@@ -1,0 +1,17 @@
+{
+  "action_seed_base": 20000000,
+  "eval_episodes": 500,
+  "evaluation_seed_base": 10000000,
+  "grid_size": 10,
+  "max_steps": 100,
+  "output_dir": "results\\validation\\run_a",
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "train_episodes": 5000,
+  "training_seed_stride": 1000000
+}

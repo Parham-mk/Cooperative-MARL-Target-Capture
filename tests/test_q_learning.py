@@ -21,13 +21,12 @@ def test_agent_initialization():
     assert len(agent.q_table) == 0
 
 def test_action_selection_validity(dummy_obs):
-    agent = QLearningAgent()
+    agent = QLearningAgent(seed=1)
     action = agent.select_action(dummy_obs)
     assert action in Action
-    # Q-table should be initialized for this state
+    # Evaluation-style reads of unseen states must not mutate the table.
     state_key = agent._get_state_key(dummy_obs)
-    assert state_key in agent.q_table
-    assert len(agent.q_table[state_key]) == len(Action)
+    assert state_key not in agent.q_table
 
 def test_q_update(dummy_obs):
     agent = QLearningAgent(learning_rate=0.5, gamma=0.9)
@@ -47,7 +46,7 @@ def test_q_update(dummy_obs):
 
 def test_exploration(dummy_obs):
     # Epsilon = 1.0 means always explore
-    agent = QLearningAgent(epsilon=1.0)
+    agent = QLearningAgent(epsilon=1.0, seed=42)
     agent.q_table[agent._get_state_key(dummy_obs)] = {
         Action.UP: 100.0,
         Action.DOWN: -100.0,
@@ -57,11 +56,10 @@ def test_exploration(dummy_obs):
     }
     
     # It should not always pick UP
-    actions_chosen = set()
-    for _ in range(100):
-        actions_chosen.add(agent.select_action(dummy_obs))
-        
-    assert len(actions_chosen) > 1
+    assert [agent.select_action(dummy_obs).name for _ in range(10)] == [
+        "UP", "DOWN", "UP", "STAY", "RIGHT",
+        "UP", "STAY", "STAY", "STAY", "RIGHT",
+    ]
 
 def test_exploitation(dummy_obs):
     # Epsilon = 0.0 means always exploit
@@ -84,7 +82,7 @@ def test_training_smoke_test():
     agent1 = QLearningAgent()
     
     for ep in range(2):
-        state = env.reset()
+        state = env.reset(seed=ep)
         done = False
         while not done:
             obs0 = {"agent_position": state["agent_0"], "target_position": state["target"]}

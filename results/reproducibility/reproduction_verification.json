@@ -1,0 +1,25 @@
+{
+  "byte_identical_artifact_count": 35,
+  "comparison_fingerprint_sha256": "5b721ae4d900970fe6c92f99b628c68f77290257899726bf9ab45c9c3ffca9ff",
+  "comparison_scope": [
+    "raw CSVs",
+    "training histories",
+    "learned checkpoints",
+    "comparison summaries",
+    "training curve source data",
+    "behavioral metrics and summaries"
+  ],
+  "protocol": {
+    "evaluation_episodes_per_method_and_seed": 500,
+    "grid_size": 10,
+    "max_steps": 100,
+    "training_episodes_per_learning_method_and_seed": 5000,
+    "training_seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  }
+}

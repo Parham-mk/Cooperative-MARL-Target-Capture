@@ -27,7 +27,7 @@ def test_diagonal_case():
 
 def test_environment_termination():
     env = TargetCaptureEnv(grid_size=10, max_steps=100)
-    env.reset()
+    env.reset(seed=1)
     
     # Mock target policy to STAY so it doesn't run away
     env.target_policy.choose_action = lambda t, g: Action.STAY
@@ -51,7 +51,7 @@ def test_environment_termination():
 
 def test_reset_after_capture():
     env = TargetCaptureEnv(grid_size=10, max_steps=100)
-    env.reset()
+    env.reset(seed=2)
     
     # Mock target policy to STAY
     env.target_policy.choose_action = lambda t, g: Action.STAY
@@ -65,5 +65,18 @@ def test_reset_after_capture():
     
     assert env.captured is True
     
-    env.reset()
+    env.reset(seed=3)
     assert env.captured is False
+
+
+def test_capture_on_final_step_is_terminated_and_truncated():
+    env = TargetCaptureEnv(grid_size=10, max_steps=1)
+    env.reset(seed=5)
+    env.target_policy.choose_action = lambda target, grid: Action.STAY
+    env.target.position = Position(5, 5)
+    env.agent_0.position = Position(5, 4)
+    env.agent_1.position = Position(5, 6)
+    _, info = env.step({"agent_0": Action.STAY, "agent_1": Action.STAY})
+    assert info["captured"] is True
+    assert info["terminated"] is True
+    assert info["truncated"] is True

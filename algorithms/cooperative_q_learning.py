@@ -1,7 +1,9 @@
 import random
 import pickle
+from pathlib import Path
 from typing import Dict, Tuple, Optional
 from env.actions import Action
+from algorithms.q_update import q_learning_value
 
 class SharedQTable:
     """
@@ -25,7 +27,9 @@ class SharedQTable:
 
     def get_best_action(self, state: Tuple[int, int, int, int], rng: random.Random) -> Action:
         """Returns the best action, breaking ties randomly."""
-        q_values = self.get_q_values(state)
+        q_values = self.q_table.get(state)
+        if q_values is None:
+            q_values = {action: 0.0 for action in Action}
         max_q = max(q_values.values())
         best_actions = [a for a, q in q_values.items() if q == max_q]
         return rng.choice(best_actions)
@@ -47,15 +51,18 @@ class SharedQTable:
         
         current_q = self.q_table[state][action]
         
-        if done:
-            target_q = float(reward)
-        else:
-            best_next_q = max(self.q_table[next_state].values())
-            target_q = reward + self.gamma * best_next_q
-            
-        self.q_table[state][action] = current_q + self.learning_rate * (target_q - current_q)
+        best_next_q = max(self.q_table[next_state].values())
+        self.q_table[state][action] = q_learning_value(
+            current_q=current_q,
+            reward=reward,
+            best_next_q=best_next_q,
+            learning_rate=self.learning_rate,
+            gamma=self.gamma,
+            terminated=done,
+        )
 
     def save(self, filepath: str):
+        Path(filepath).parent.mkdir(parents=True, exist_ok=True)
         with open(filepath, 'wb') as f:
             pickle.dump(self.q_table, f)
             

@@ -23,13 +23,24 @@ class TrajectoryRecorder:
             "truncated": bool(info.get("truncated", False))
         })
 
-    def set_metadata(self, method: str, seed: int, eval_seed: int, grid_size: int, max_steps: int):
+    def set_metadata(
+        self,
+        method: str,
+        seed: int,
+        eval_seed: int,
+        grid_size: int,
+        max_steps: int,
+        checkpoint: str = "N/A",
+        selection_rule: str = "unselected evaluation episode",
+    ):
         self.metadata = {
             "method": method,
             "training_seed": seed,
             "evaluation_seed": eval_seed,
             "grid_size": grid_size,
-            "max_steps": max_steps
+            "max_steps": max_steps,
+            "checkpoint": checkpoint,
+            "selection_rule": selection_rule,
         }
 
     def save(self, filepath: str):

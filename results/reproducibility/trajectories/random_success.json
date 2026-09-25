@@ -1,0 +1,873 @@
+{
+    "metadata": {
+        "method": "Random",
+        "training_seed": 1,
+        "evaluation_seed": 10000904,
+        "grid_size": 10,
+        "max_steps": 100,
+        "checkpoint": "N/A",
+        "selection_rule": "successful episode with capture time closest to the method median; ties broken by training seed then evaluation seed",
+        "episode": 404,
+        "method_median_success_time": 38
+    },
+    "trajectory": [
+        {
+            "step": 0,
+            "agent_0_position": [
+                0,
+                2
+            ],
+            "agent_1_position": [
+                5,
+                9
+            ],
+            "target_position": [
+                9,
+                4
+            ],
+            "agent_0_action": "START",
+            "agent_1_action": "START",
+            "target_action": "START",
+            "captured": false,
+            "reward": 0.0,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 1,
+            "agent_0_position": [
+                0,
+                3
+            ],
+            "agent_1_position": [
+                6,
+                9
+            ],
+            "target_position": [
+                9,
+                5
+            ],
+            "agent_0_action": "UP",
+            "agent_1_action": "RIGHT",
+            "target_action": "UP",
+            "captured": false,
+            "reward": 1.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 2,
+            "agent_0_position": [
+                0,
+                4
+            ],
+            "agent_1_position": [
+                5,
+                9
+            ],
+            "target_position": [
+                9,
+                5
+            ],
+            "agent_0_action": "UP",
+            "agent_1_action": "LEFT",
+            "target_action": "STAY",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 3,
+            "agent_0_position": [
+                0,
+                5
+            ],
+            "agent_1_position": [
+                5,
+                8
+            ],
+            "target_position": [
+                8,
+                5
+            ],
+            "agent_0_action": "UP",
+            "agent_1_action": "DOWN",
+            "target_action": "LEFT",
+            "captured": false,
+            "reward": 3.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 4,
+            "agent_0_position": [
+                0,
+                4
+            ],
+            "agent_1_position": [
+                5,
+                8
+            ],
+            "target_position": [
+                7,
+                5
+            ],
+            "agent_0_action": "DOWN",
+            "agent_1_action": "STAY",
+            "target_action": "LEFT",
+            "captured": false,
+            "reward": 0.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 5,
+            "agent_0_position": [
+                1,
+                4
+            ],
+            "agent_1_position": [
+                5,
+                9
+            ],
+            "target_position": [
+                8,
+                5
+            ],
+            "agent_0_action": "RIGHT",
+            "agent_1_action": "UP",
+            "target_action": "RIGHT",
+            "captured": false,
+            "reward": -2.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 6,
+            "agent_0_position": [
+                0,
+                4
+            ],
+            "agent_1_position": [
+                6,
+                9
+            ],
+            "target_position": [
+                8,
+                5
+            ],
+            "agent_0_action": "LEFT",
+            "agent_1_action": "RIGHT",
+            "target_action": "STAY",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 7,
+            "agent_0_position": [
+                1,
+                4
+            ],
+            "agent_1_position": [
+                6,
+                8
+            ],
+            "target_position": [
+                8,
+                5
+            ],
+            "agent_0_action": "RIGHT",
+            "agent_1_action": "DOWN",
+            "target_action": "STAY",
+            "captured": false,
+            "reward": 1.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 8,
+            "agent_0_position": [
+                2,
+                4
+            ],
+            "agent_1_position": [
+                7,
+                8
+            ],
+            "target_position": [
+                7,
+                5
+            ],
+            "agent_0_action": "RIGHT",
+            "agent_1_action": "RIGHT",
+            "target_action": "LEFT",
+            "captured": false,
+            "reward": 3.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 9,
+            "agent_0_position": [
+                2,
+                3
+            ],
+            "agent_1_position": [
+                6,
+                8
+            ],
+            "target_position": [
+                7,
+                4
+            ],
+            "agent_0_action": "DOWN",
+            "agent_1_action": "LEFT",
+            "target_action": "DOWN",
+            "captured": false,
+            "reward": -2.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 10,
+            "agent_0_position": [
+                3,
+                3
+            ],
+            "agent_1_position": [
+                6,
+                9
+            ],
+            "target_position": [
+                6,
+                4
+            ],
+            "agent_0_action": "RIGHT",
+            "agent_1_action": "UP",
+            "target_action": "LEFT",
+            "captured": false,
+            "reward": 1.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 11,
+            "agent_0_position": [
+                4,
+                3
+            ],
+            "agent_1_position": [
+                5,
+                9
+            ],
+            "target_position": [
+                6,
+                5
+            ],
+            "agent_0_action": "RIGHT",
+            "agent_1_action": "LEFT",
+            "target_action": "UP",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 12,
+            "agent_0_position": [
+                4,
+                4
+            ],
+            "agent_1_position": [
+                5,
+                9
+            ],
+            "target_position": [
+                6,
+                5
+            ],
+            "agent_0_action": "UP",
+            "agent_1_action": "STAY",
+            "target_action": "STAY",
+            "captured": false,
+            "reward": 0.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 13,
+            "agent_0_position": [
+                4,
+                5
+            ],
+            "agent_1_position": [
+                6,
+                9
+            ],
+            "target_position": [
+                7,
+                5
+            ],
+            "agent_0_action": "UP",
+            "agent_1_action": "RIGHT",
+            "target_action": "RIGHT",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 14,
+            "agent_0_position": [
+                4,
+                5
+            ],
+            "agent_1_position": [
+                6,
+                9
+            ],
+            "target_position": [
+                7,
+                4
+            ],
+            "agent_0_action": "STAY",
+            "agent_1_action": "STAY",
+            "target_action": "DOWN",
+            "captured": false,
+            "reward": -2.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 15,
+            "agent_0_position": [
+                4,
+                5
+            ],
+            "agent_1_position": [
+                6,
+                9
+            ],
+            "target_position": [
+                7,
+                5
+            ],
+            "agent_0_action": "STAY",
+            "agent_1_action": "UP",
+            "target_action": "UP",
+            "captured": false,
+            "reward": 1.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 16,
+            "agent_0_position": [
+                4,
+                5
+            ],
+            "agent_1_position": [
+                5,
+                9
+            ],
+            "target_position": [
+                8,
+                5
+            ],
+            "agent_0_action": "STAY",
+            "agent_1_action": "LEFT",
+            "target_action": "RIGHT",
+            "captured": false,
+            "reward": -3.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 17,
+            "agent_0_position": [
+                4,
+                5
+            ],
+            "agent_1_position": [
+                5,
+                9
+            ],
+            "target_position": [
+                8,
+                6
+            ],
+            "agent_0_action": "STAY",
+            "agent_1_action": "STAY",
+            "target_action": "UP",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 18,
+            "agent_0_position": [
+                3,
+                5
+            ],
+            "agent_1_position": [
+                5,
+                9
+            ],
+            "target_position": [
+                7,
+                6
+            ],
+            "agent_0_action": "LEFT",
+            "agent_1_action": "STAY",
+            "target_action": "LEFT",
+            "captured": false,
+            "reward": 0.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 19,
+            "agent_0_position": [
+                2,
+                5
+            ],
+            "agent_1_position": [
+                6,
+                9
+            ],
+            "target_position": [
+                7,
+                6
+            ],
+            "agent_0_action": "LEFT",
+            "agent_1_action": "RIGHT",
+            "target_action": "STAY",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 20,
+            "agent_0_position": [
+                3,
+                5
+            ],
+            "agent_1_position": [
+                6,
+                9
+            ],
+            "target_position": [
+                7,
+                5
+            ],
+            "agent_0_action": "RIGHT",
+            "agent_1_action": "STAY",
+            "target_action": "DOWN",
+            "captured": false,
+            "reward": 0.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 21,
+            "agent_0_position": [
+                3,
+                4
+            ],
+            "agent_1_position": [
+                5,
+                9
+            ],
+            "target_position": [
+                6,
+                5
+            ],
+            "agent_0_action": "DOWN",
+            "agent_1_action": "LEFT",
+            "target_action": "LEFT",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 22,
+            "agent_0_position": [
+                4,
+                4
+            ],
+            "agent_1_position": [
+                4,
+                9
+            ],
+            "target_position": [
+                5,
+                5
+            ],
+            "agent_0_action": "RIGHT",
+            "agent_1_action": "LEFT",
+            "target_action": "LEFT",
+            "captured": false,
+            "reward": 1.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 23,
+            "agent_0_position": [
+                5,
+                4
+            ],
+            "agent_1_position": [
+                3,
+                9
+            ],
+            "target_position": [
+                4,
+                5
+            ],
+            "agent_0_action": "RIGHT",
+            "agent_1_action": "LEFT",
+            "target_action": "LEFT",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 24,
+            "agent_0_position": [
+                5,
+                4
+            ],
+            "agent_1_position": [
+                2,
+                9
+            ],
+            "target_position": [
+                4,
+                6
+            ],
+            "agent_0_action": "STAY",
+            "agent_1_action": "LEFT",
+            "target_action": "UP",
+            "captured": false,
+            "reward": -1.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 25,
+            "agent_0_position": [
+                5,
+                5
+            ],
+            "agent_1_position": [
+                2,
+                8
+            ],
+            "target_position": [
+                4,
+                7
+            ],
+            "agent_0_action": "UP",
+            "agent_1_action": "DOWN",
+            "target_action": "UP",
+            "captured": false,
+            "reward": 1.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 26,
+            "agent_0_position": [
+                5,
+                4
+            ],
+            "agent_1_position": [
+                2,
+                9
+            ],
+            "target_position": [
+                4,
+                7
+            ],
+            "agent_0_action": "DOWN",
+            "agent_1_action": "UP",
+            "target_action": "STAY",
+            "captured": false,
+            "reward": -2.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 27,
+            "agent_0_position": [
+                4,
+                4
+            ],
+            "agent_1_position": [
+                3,
+                9
+            ],
+            "target_position": [
+                4,
+                6
+            ],
+            "agent_0_action": "LEFT",
+            "agent_1_action": "RIGHT",
+            "target_action": "DOWN",
+            "captured": false,
+            "reward": 1.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 28,
+            "agent_0_position": [
+                5,
+                4
+            ],
+            "agent_1_position": [
+                3,
+                9
+            ],
+            "target_position": [
+                4,
+                6
+            ],
+            "agent_0_action": "RIGHT",
+            "agent_1_action": "STAY",
+            "target_action": "STAY",
+            "captured": false,
+            "reward": -1.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 29,
+            "agent_0_position": [
+                6,
+                4
+            ],
+            "agent_1_position": [
+                4,
+                9
+            ],
+            "target_position": [
+                4,
+                5
+            ],
+            "agent_0_action": "RIGHT",
+            "agent_1_action": "RIGHT",
+            "target_action": "DOWN",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 30,
+            "agent_0_position": [
+                6,
+                5
+            ],
+            "agent_1_position": [
+                5,
+                9
+            ],
+            "target_position": [
+                4,
+                6
+            ],
+            "agent_0_action": "UP",
+            "agent_1_action": "RIGHT",
+            "target_action": "UP",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 31,
+            "agent_0_position": [
+                6,
+                5
+            ],
+            "agent_1_position": [
+                5,
+                9
+            ],
+            "target_position": [
+                4,
+                7
+            ],
+            "agent_0_action": "STAY",
+            "agent_1_action": "UP",
+            "target_action": "UP",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 32,
+            "agent_0_position": [
+                5,
+                5
+            ],
+            "agent_1_position": [
+                5,
+                8
+            ],
+            "target_position": [
+                4,
+                7
+            ],
+            "agent_0_action": "LEFT",
+            "agent_1_action": "DOWN",
+            "target_action": "STAY",
+            "captured": false,
+            "reward": 1.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 33,
+            "agent_0_position": [
+                5,
+                6
+            ],
+            "agent_1_position": [
+                5,
+                7
+            ],
+            "target_position": [
+                4,
+                8
+            ],
+            "agent_0_action": "UP",
+            "agent_1_action": "DOWN",
+            "target_action": "UP",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 34,
+            "agent_0_position": [
+                4,
+                6
+            ],
+            "agent_1_position": [
+                4,
+                7
+            ],
+            "target_position": [
+                3,
+                8
+            ],
+            "agent_0_action": "LEFT",
+            "agent_1_action": "LEFT",
+            "target_action": "LEFT",
+            "captured": false,
+            "reward": -0.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 35,
+            "agent_0_position": [
+                4,
+                6
+            ],
+            "agent_1_position": [
+                3,
+                7
+            ],
+            "target_position": [
+                3,
+                8
+            ],
+            "agent_0_action": "UP",
+            "agent_1_action": "LEFT",
+            "target_action": "DOWN",
+            "captured": false,
+            "reward": 0.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 36,
+            "agent_0_position": [
+                4,
+                7
+            ],
+            "agent_1_position": [
+                3,
+                7
+            ],
+            "target_position": [
+                2,
+                8
+            ],
+            "agent_0_action": "UP",
+            "agent_1_action": "RIGHT",
+            "target_action": "LEFT",
+            "captured": false,
+            "reward": -1.05,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 37,
+            "agent_0_position": [
+                4,
+                8
+            ],
+            "agent_1_position": [
+                4,
+                7
+            ],
+            "target_position": [
+                3,
+                8
+            ],
+            "agent_0_action": "UP",
+            "agent_1_action": "RIGHT",
+            "target_action": "RIGHT",
+            "captured": false,
+            "reward": 1.95,
+            "terminated": false,
+            "truncated": false
+        },
+        {
+            "step": 38,
+            "agent_0_position": [
+                5,
+                8
+            ],
+            "agent_1_position": [
+                4,
+                7
+            ],
+            "target_position": [
+                4,
+                8
+            ],
+            "agent_0_action": "RIGHT",
+            "agent_1_action": "STAY",
+            "target_action": "RIGHT",
+            "captured": true,
+            "reward": 20.95,
+            "terminated": true,
+            "truncated": false
+        }
+    ]
+}

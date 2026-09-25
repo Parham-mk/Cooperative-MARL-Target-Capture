@@ -6,6 +6,8 @@ venv/
 .idea/
 .vscode/
 results/*
+!results/reproducibility/
+!results/reproducibility/**
 !results/plots/.gitkeep
 !results/gifs/.gitkeep
 !results/checkpoints/.gitkeep

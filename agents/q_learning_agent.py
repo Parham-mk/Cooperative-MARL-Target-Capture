@@ -1,7 +1,9 @@
-import random
 import pickle
-from typing import Dict, Any, Tuple
+import random
+from pathlib import Path
+from typing import Dict, Any, Tuple, Optional
 from env.actions import Action
+from algorithms.q_update import q_learning_value
 from .base_agent import BaseAgent
 
 class QLearningAgent(BaseAgent):
@@ -14,13 +16,15 @@ class QLearningAgent(BaseAgent):
         gamma: float = 0.95,
         epsilon: float = 1.0,
         epsilon_decay: float = 0.995,
-        min_epsilon: float = 0.05
+        min_epsilon: float = 0.05,
+        seed: Optional[int] = None,
     ):
         self.learning_rate = learning_rate
         self.gamma = gamma
         self.epsilon = epsilon
         self.epsilon_decay = epsilon_decay
         self.min_epsilon = min_epsilon
+        self.rng = random.Random(seed)
         
         # Q-table: state_tuple -> dict of action -> q_value
         self.q_table: Dict[Tuple[int, int, int, int], Dict[Action, float]] = {}
@@ -39,21 +43,28 @@ class QLearningAgent(BaseAgent):
     def select_action(self, observation: Dict[str, Any]) -> Action:
         """Epsilon-greedy action selection."""
         state_key = self._get_state_key(observation)
-        self._ensure_state_exists(state_key)
-        
         # Explore
-        if random.random() < self.epsilon:
-            return random.choice(list(Action))
+        if self.rng.random() < self.epsilon:
+            return self.rng.choice(list(Action))
             
         # Exploit
-        q_values = self.q_table[state_key]
+        q_values = self.q_table.get(state_key)
+        if q_values is None:
+            q_values = {action: 0.0 for action in Action}
         max_q = max(q_values.values())
         
         # Break ties randomly
         best_actions = [a for a, q in q_values.items() if q == max_q]
-        return random.choice(best_actions)
+        return self.rng.choice(best_actions)
         
-    def update(self, obs: Dict[str, Any], action: Action, reward: float, next_obs: Dict[str, Any]):
+    def update(
+        self,
+        obs: Dict[str, Any],
+        action: Action,
+        reward: float,
+        next_obs: Dict[str, Any],
+        terminated: bool = False,
+    ):
         """Q-learning update rule."""
         state_key = self._get_state_key(obs)
         next_state_key = self._get_state_key(next_obs)
@@ -65,8 +76,13 @@ class QLearningAgent(BaseAgent):
         current_q = self.q_table[state_key][action]
         
         # Q(s,a) = Q(s,a) + alpha * [r + gamma * max Q(s',a') - Q(s,a)]
-        self.q_table[state_key][action] = current_q + self.learning_rate * (
-            reward + self.gamma * best_next_q - current_q
+        self.q_table[state_key][action] = q_learning_value(
+            current_q=current_q,
+            reward=reward,
+            best_next_q=best_next_q,
+            learning_rate=self.learning_rate,
+            gamma=self.gamma,
+            terminated=terminated,
         )
 
     def decay_epsilon(self):
@@ -75,6 +91,7 @@ class QLearningAgent(BaseAgent):
         
     def save(self, filepath: str):
         """Saves Q-table to disk."""
+        Path(filepath).parent.mkdir(parents=True, exist_ok=True)
         with open(filepath, 'wb') as f:
             pickle.dump(self.q_table, f)
             

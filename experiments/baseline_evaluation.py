@@ -10,7 +10,7 @@ from agents.random_agent import RandomAgent
 from agents.heuristic_agent import HeuristicAgent
 from env.rewards import RewardCalculator
 
-def evaluate_agent(agent_class, num_episodes: int = 100, grid_size: int = 10, max_steps: int = 100):
+def evaluate_agent(agent_class, num_episodes: int = 100, grid_size: int = 10, max_steps: int = 100, seed: int = 0):
     """
     Evaluates a specific agent class in the TargetCaptureEnv.
     Returns metrics: capture_rate, avg_steps, avg_reward
@@ -23,11 +23,11 @@ def evaluate_agent(agent_class, num_episodes: int = 100, grid_size: int = 10, ma
     total_reward = 0.0
     
     for ep in range(num_episodes):
-        state = env.reset()
+        state = env.reset(seed=seed + ep)
         
         if agent_class == RandomAgent:
-            agent0 = agent_class(seed=ep)
-            agent1 = agent_class(seed=ep+1000)
+            agent0 = agent_class(seed=seed * 2 + ep * 2)
+            agent1 = agent_class(seed=seed * 2 + ep * 2 + 1)
         else:
             agent0 = agent_class()
             agent1 = agent_class()
@@ -76,13 +76,16 @@ def evaluate_agent(agent_class, num_episodes: int = 100, grid_size: int = 10, ma
 def main():
     parser = argparse.ArgumentParser(description="Baseline Agent Evaluation")
     parser.add_argument("--episodes", type=int, default=100, help="Number of episodes to evaluate")
+    parser.add_argument("--grid-size", type=int, default=10)
+    parser.add_argument("--max-steps", type=int, default=100)
+    parser.add_argument("--seed", type=int, default=0)
     args = parser.parse_args()
     
     print(f"Running Baseline Evaluation ({args.episodes} episodes)")
     print("-" * 40)
     
     # 1. Evaluate Random Agent
-    rand_cr, rand_steps, rand_reward = evaluate_agent(RandomAgent, args.episodes)
+    rand_cr, rand_steps, rand_reward = evaluate_agent(RandomAgent, args.episodes, args.grid_size, args.max_steps, args.seed)
     print("Random Agent:")
     print(f"Capture Rate: {rand_cr:.2f}")
     print(f"Average Steps: {rand_steps:.2f}")
@@ -90,7 +93,7 @@ def main():
     print("-" * 40)
     
     # 2. Evaluate Heuristic Agent
-    heur_cr, heur_steps, heur_reward = evaluate_agent(HeuristicAgent, args.episodes)
+    heur_cr, heur_steps, heur_reward = evaluate_agent(HeuristicAgent, args.episodes, args.grid_size, args.max_steps, args.seed)
     print("Heuristic Agent:")
     print(f"Capture Rate: {heur_cr:.2f}")
     print(f"Average Steps: {heur_steps:.2f}")

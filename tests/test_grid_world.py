@@ -53,5 +53,5 @@ def test_random_sampling():
     p2 = grid.sample_random_position(seed=42)
     assert p1 == p2
     
-    p3 = grid.sample_random_position(seed=99)
-    assert p1 != p3 # Highly likely to be different, but technically possible to be same depending on rng. Usually true.
+    assert p1 == Position(0, 7)
+    assert grid.sample_random_position(seed=99) == Position(9, 5)
