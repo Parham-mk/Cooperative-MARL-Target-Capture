@@ -235,6 +235,47 @@ The evidence bundle contains:
 
 Only narrowly listed evidence files are eligible for tracking. Large raw datasets, per-episode behavioral files, checkpoints, and smoke outputs remain ignored. All prior Phase 11/12 evidence is preserved. The pristine baseline had **90 passing tests**; the initial Phase 13 implementation passed **116 tests**, and the follow-up capture-rate audit extends the suite to **120 passing tests**. Coverage includes reward accounting, frozen unseen-state evaluation, seed aggregation, missing values, threshold conventions, fresh tables, isolated paths, default compatibility, repeated tiny-run equality, and independent capture/movement checks. Windows sandbox path-resolution failures required running tests outside that sandbox; 13 existing dependency deprecation warnings remain. See the [Phase 13 completion report](docs/phase13_reward_ablation.md) for the original implementation and verification record, and the [capture-rate audit](docs/phase13_capture_rate_audit.md) for the additional checks.
 
+## Generalization and Robustness
+
+To answer whether the tabular policies transfer beyond their exact training trajectories, we conducted a frozen-policy robustness evaluation (epsilon=0, no Q-table updates). We compared Independent Q-Learning to Shared-Policy Cooperative Q-Learning under three new, held-out evaluation conditions:
+
+### Held-Out Evaluation Protocol
+
+1. **In Distribution**: The standard 10x10 evaluation matching Phase 11.
+2. **Unseen Seeds**: Environment random seeds completely disjoint from the training seeds.
+3. **Unseen Initial States**: A deterministic set of 100 randomly generated initial spatial configurations never explicitly aligned with training seeds.
+4. **Stress Cases**: Specific geometric extremes (hunters very far from target, target near boundaries, etc.).
+
+Grid-size transfer (e.g. testing on a 12x12 grid) was intentionally excluded because tabular Q-learning does not provide mathematically reliable values for unseen relative states outside of bounds; thus, scaling the grid inherently breaks the pre-learned tabular bounds.
+
+### Robustness Results
+
+Both Independent and Cooperative methods demonstrated excellent robustness when evaluated on held-out seeds and unseen initial states within the 10x10 geometry. 
+
+| Method          | Condition              | Capture Rate      | Q Coverage |
+|-----------------|------------------------|-------------------|------------|
+| Independent Q   | In Distribution        | 1.00 ± 0.00       | 1.00 ± 0.00 |
+| Independent Q   | Unseen Seeds           | 1.00 ± 0.00       | 1.00 ± 0.00 |
+| Independent Q   | Unseen Initial States  | 1.00 ± 0.00       | 1.00 ± 0.00 |
+| Cooperative Q   | In Distribution        | 1.00 ± 0.00       | 0.96 ± 0.00 |
+| Cooperative Q   | Unseen Seeds           | 1.00 ± 0.00       | 0.96 ± 0.01 |
+| Cooperative Q   | Unseen Initial States  | 1.00 ± 0.00       | 0.96 ± 0.01 |
+
+*Note: Minor coverage deviations (0.96 vs 1.0) exist for Cooperative Q-Learning because its relative coordinate space encompasses a denser space of permutations, exposing slightly more "unseen" intermediate states during evaluation, although this did not harm the ultimate 100% capture rate.*
+
+![Capture Rate Robustness](results/robustness/plots/capture_rate_robustness.png)
+![Q-Table Coverage](results/robustness/plots/q_table_coverage.png)
+
+### State Coverage and Failure Cases
+
+The primary limitation of a purely tabular approach is its inability to guess values for unvisited configurations (State Coverage < 1.0). When facing severe geometric stress cases (e.g., both hunters stuck in the same corner far from the target), Cooperative Q-Learning sometimes dropped in capture rate (down to ~80% in the hardest permutations) specifically because those geometries yielded relative coordinates absent from the training table. Because the cooperative formulation uses agent-centric relative coordinates combined with parameter sharing, it trades absolute coordinate saturation for relational structure, meaning robustness differences cannot be purely attributed to "cooperation" alone but rather the representation switch.
+
+### Limitations
+
+- Tabular Q-learning cannot estimate values for truly unseen configurations; it relies entirely on its training saturation.
+- Robustness tests only evaluate changes in the initial state distribution; the target's random policy behavior remains unchanged.
+- The environment domain remained fixed at a 10x10 size without domain randomization or deep function approximation.
+
 ## Reproduce the results
 
 Create an environment and install the declared dependencies:
@@ -283,4 +324,4 @@ The independent-run comparison fingerprint and its checked scope are recorded in
 - No hypothesis test, confidence interval, alternate target policy, or larger-team study is included.
 - The reward ablation uses a fixed budget and removes one component at a time; it does not resolve component interactions or transfer to other learning settings.
 
-The repository is ready for Phase 14 generalization and stress testing. Phase 14 has not been implemented.
+The repository is ready for Phase 15.
