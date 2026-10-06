@@ -38,10 +38,11 @@ def evaluate_policy(
     max_steps: int,
     evaluation_seed_base: int = 10_000_000,
     seed_index: Optional[int] = None,
+    reward_config=None,
 ) -> List[Dict[str, Any]]:
     """Evaluate a pair without learning or changing its Q-table."""
     env = TargetCaptureEnv(grid_size=grid_size, max_steps=max_steps)
-    reward_calc = RewardCalculator()
+    reward_calc = RewardCalculator() if reward_config is None else reward_config.calculator()
     old_eps = [getattr(agent0, "epsilon", None), getattr(agent1, "epsilon", None)]
     before = [q_table_snapshot(agent0), q_table_snapshot(agent1)]
     for agent in (agent0, agent1):

@@ -1,6 +1,19 @@
 from typing import List, Dict
+from dataclasses import dataclass, asdict
 from .entities import Agent, Target
 from .position import Position
+
+
+@dataclass(frozen=True)
+class RewardConfig:
+    """Immutable parameters; all reward mathematics stays in RewardCalculator."""
+
+    distance_weight: float = 1.0
+    capture_weight: float = 20.0
+    step_penalty: float = -0.05
+
+    def calculator(self):
+        return RewardCalculator(**asdict(self))
 
 class RewardCalculator:
     """Calculates rewards for the multi-agent target capture environment."""

@@ -98,20 +98,33 @@ def train_independent_q(seed: int, config: ExperimentConfig = None, return_histo
     return agent0, agent1
 
 
-def train_cooperative_q(seed: int, config: ExperimentConfig = None, return_history: bool = False):
+def train_cooperative_q(
+    seed: int, config: ExperimentConfig = None, return_history: bool = False, *,
+    reward_config=None, checkpoint_path=None, history_path=None,
+    learning_rate=0.1, gamma=0.95, epsilon=1.0, epsilon_decay=0.995,
+    min_epsilon=0.05, rolling_window=None,
+):
+    """Train a fresh shared table; optional Phase 13 hooks preserve old defaults.
+
+    Supplying rolling_window adds complete-window statistics and epsilon_used;
+    the legacy history schema and partial-window convention remain the default.
+    """
     config = config or ExperimentConfig()
     seed_index = config.seeds.index(seed) if seed in config.seeds else seed
     env = TargetCaptureEnv(config.grid_size, config.max_steps)
-    reward_calc = RewardCalculator()
-    table = SharedQTable()
-    agent0 = SharedQAgent(table, "agent_0", "agent_1", seed=seed * 2)
-    agent1 = SharedQAgent(table, "agent_1", "agent_0", seed=seed * 2 + 1)
+    reward_calc = RewardCalculator() if reward_config is None else reward_config.calculator()
+    table = SharedQTable(learning_rate=learning_rate, gamma=gamma)
+    options = dict(epsilon=epsilon, epsilon_decay=epsilon_decay, min_epsilon=min_epsilon)
+    agent0 = SharedQAgent(table, "agent_0", "agent_1", seed=seed * 2, **options)
+    agent1 = SharedQAgent(table, "agent_1", "agent_0", seed=seed * 2 + 1, **options)
     history = []
     captures = []
+    lengths = []
 
     for episode in range(config.train_episodes):
         state = env.reset(seed=_training_seed(config, seed_index, episode))
         episode_reward = 0.0
+        epsilon_used = agent0.epsilon
         while True:
             # Both actions are selected from the same pre-step state.
             action0 = agent0.select_action(state)
@@ -141,9 +154,22 @@ def train_cooperative_q(seed: int, config: ExperimentConfig = None, return_histo
             "rolling_capture_rate": _rolling_capture(captures),
         })
 
-    path = config.checkpoints_dir / "cooperative_q" / f"seed_{seed}.pkl"
+        if rolling_window is not None:
+            lengths.append(info["step"])
+            complete = len(captures) >= rolling_window
+            history[-1].update({
+                "epsilon_used": epsilon_used,
+                "rolling_capture_rate": (
+                    _rolling_capture(captures, rolling_window) if complete else float("nan")
+                ),
+                "rolling_episode_length": (
+                    sum(lengths[-rolling_window:]) / rolling_window if complete else float("nan")
+                ),
+            })
+
+    path = checkpoint_path or config.checkpoints_dir / "cooperative_q" / f"seed_{seed}.pkl"
     table.save(path)
-    save_rows(history, config.training_dir / f"cooperative_q_seed_{seed}.csv")
+    save_rows(history, history_path or config.training_dir / f"cooperative_q_seed_{seed}.csv")
     if return_history:
         return agent0, agent1, history
     return agent0, agent1

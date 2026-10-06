@@ -1,0 +1,42 @@
+[
+  {
+    "path": "audit.json",
+    "sha256": "0ad97eb5e815af8af4b2e52729c8991305f214d5c2d2f4df914f558d348ef2d2",
+    "size_bytes": 9179
+  },
+  {
+    "path": "fresh_seed_per_seed.csv",
+    "sha256": "13d2cc422137828ab41955b40cfc8fc8cbafde93dfe7802fb365658cb13b64ea",
+    "size_bytes": 1736
+  },
+  {
+    "path": "fresh_seed_summary.csv",
+    "sha256": "af3d0f4d0dcbcb2d0ab49a86368f69c04c670dd40e18e800413163cfc844134a",
+    "size_bytes": 1001
+  },
+  {
+    "path": "raw/full_reward.csv",
+    "sha256": "a4b1a90e9a10bf8f2436ba0a1a56f1482d014ef33f8a69188ae8e1c710fb5de1",
+    "size_bytes": 465112
+  },
+  {
+    "path": "raw/no_capture_reward.csv",
+    "sha256": "f98f463893ee9e70a0707c6db94321a0a1844e81b78c400980e7b77aef032a44",
+    "size_bytes": 560310
+  },
+  {
+    "path": "raw/no_distance.csv",
+    "sha256": "f97ee3386948d713eb905db14c1351c8fb4af9faeac1acc89df83d25c877335d",
+    "size_bytes": 471139
+  },
+  {
+    "path": "raw/no_step_penalty.csv",
+    "sha256": "6fe8082fda204e5471161b33b248e3b97535d5753063e8875ea079d1a09cbde5",
+    "size_bytes": 449873
+  },
+  {
+    "path": "raw/untrained_shared.csv",
+    "sha256": "f8c126327c5365885dfd6aff42266dd8e607684ab3d2976d8346ef3057134dce",
+    "size_bytes": 145953
+  }
+]

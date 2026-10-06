@@ -53,10 +53,11 @@ def evaluate_with_recorder(
     checkpoint: str = "N/A",
     evaluation_seed_base: int = 10_000_000,
     seed_index: int = 0,
+    reward_config=None,
 ):
     """Evaluate a frozen policy and return complete real trajectories."""
     env = TargetCaptureEnv(grid_size, max_steps)
-    reward_calc = RewardCalculator()
+    reward_calc = RewardCalculator() if reward_config is None else reward_config.calculator()
     old_eps = [getattr(agent0, "epsilon", None), getattr(agent1, "epsilon", None)]
     before = [q_table_snapshot(agent0), q_table_snapshot(agent1)]
     for agent in (agent0, agent1):

@@ -1,0 +1,5 @@
+variant,seed_count,reached_seed_count,conditional_threshold_episode_mean,conditional_threshold_episode_std
+full_reward,5,5,254.6,6.730527468185536
+no_distance,5,5,921.6,88.53417419279405
+no_step_penalty,5,5,253.2,11.41052146047673
+no_capture_reward,5,5,260.2,9.311283477587823

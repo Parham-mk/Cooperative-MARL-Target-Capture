@@ -1,0 +1,38 @@
+{
+  "analysis_rerun_command": "python -m analysis.reward_ablation_analysis --output-dir results/ablations",
+  "baseline_tests": "90 passed; pristine HEAD snapshot, outside Windows sandbox",
+  "checkpoint_sha256_checks": 20,
+  "complete_rolling_windows_and_epsilon_schedule_checked": true,
+  "completed_study": true,
+  "evaluation_episode_rows": 10000,
+  "final_tests": "116 passed; 13 existing dependency deprecation warnings",
+  "frozen_evaluation": "each of the 20 recorded evaluation calls verified deep Q-table equality before and after; unit tests also cover unseen states",
+  "full_reward_regression": {
+    "fresh_checkpoints_identical_to_phase11": 5,
+    "frozen_evaluation_rows_identical_to_phase11": 2500
+  },
+  "full_study_independent_repeat_performed": false,
+  "plot_inspection": "all four scientific plots, the synthetic zero-success plot, and diagnostic trajectory plots inspected visually",
+  "repeated_tiny_studies": "byte-identical CSV, checkpoint and representative-trajectory artifacts; verified by test_repeated_tiny_studies_identical_numerical_artifacts",
+  "selected_trajectories_replayed_with_exact_rewards_actions_positions_and_flags": 5,
+  "training_episode_rows": 100000,
+  "training_runs": 20,
+  "variants": {
+    "full_reward": {
+      "evaluation_episodes": 2500,
+      "successful_episodes": 2500
+    },
+    "no_capture_reward": {
+      "evaluation_episodes": 2500,
+      "successful_episodes": 2500
+    },
+    "no_distance": {
+      "evaluation_episodes": 2500,
+      "successful_episodes": 2343
+    },
+    "no_step_penalty": {
+      "evaluation_episodes": 2500,
+      "successful_episodes": 2500
+    }
+  }
+}

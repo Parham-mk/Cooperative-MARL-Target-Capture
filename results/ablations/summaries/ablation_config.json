@@ -1,0 +1,167 @@
+{
+  "action_seed_base": 20000000,
+  "algorithm": "Shared-Policy Cooperative Q-Learning",
+  "capture_threshold": 0.5,
+  "conventions": {
+    "behavioral_frames": "initial frame and every post-transition frame, including capture",
+    "episode": "zero-based; episodes_completed = episode + 1",
+    "epsilon": "after decay; epsilon_used is the value during that training episode",
+    "evaluation": "epsilon zero, seeded random tie-breaking, no updates or unseen-state insertion",
+    "rolling": "complete windows only; earlier values are NaN",
+    "target_policy": "existing RandomTargetPolicy; mechanics unchanged",
+    "team_reward": "sum of distance improvements + capture_weight once + step_penalty once per transition",
+    "threshold": "first complete window with capture rate >= capture_threshold; conditional on attainment",
+    "uncertainty": "sample standard deviation across training-seed estimates; N/A when fewer than two valid seeds"
+  },
+  "epsilon": 1.0,
+  "epsilon_decay": 0.995,
+  "eval_episodes": 500,
+  "evaluation_seed_base": 10000000,
+  "executed_command": [
+    "C:\\Program Files\\Python312\\python.exe",
+    "-m",
+    "experiments.run_reward_ablation",
+    "--train-episodes",
+    "5000",
+    "--eval-episodes",
+    "500",
+    "--seeds",
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "--output-dir",
+    "results/ablations"
+  ],
+  "gamma": 0.95,
+  "grid_size": 10,
+  "learning_rate": 0.1,
+  "max_steps": 100,
+  "min_epsilon": 0.05,
+  "output_dir": "results\\ablations",
+  "rolling_window": 100,
+  "runtime": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "python": "3.12.7"
+  },
+  "seed_schedules": [
+    {
+      "evaluation_action_rng": [
+        20000000,
+        20000001
+      ],
+      "evaluation_environment_first": 10000000,
+      "evaluation_environment_last": 10000499,
+      "seed_index": 0,
+      "training_action_rng": [
+        0,
+        1
+      ],
+      "training_environment_first": 0,
+      "training_environment_last": 4999,
+      "training_seed": 0
+    },
+    {
+      "evaluation_action_rng": [
+        20000002,
+        20000003
+      ],
+      "evaluation_environment_first": 10000500,
+      "evaluation_environment_last": 10000999,
+      "seed_index": 1,
+      "training_action_rng": [
+        2,
+        3
+      ],
+      "training_environment_first": 1000000,
+      "training_environment_last": 1004999,
+      "training_seed": 1
+    },
+    {
+      "evaluation_action_rng": [
+        20000004,
+        20000005
+      ],
+      "evaluation_environment_first": 10001000,
+      "evaluation_environment_last": 10001499,
+      "seed_index": 2,
+      "training_action_rng": [
+        4,
+        5
+      ],
+      "training_environment_first": 2000000,
+      "training_environment_last": 2004999,
+      "training_seed": 2
+    },
+    {
+      "evaluation_action_rng": [
+        20000006,
+        20000007
+      ],
+      "evaluation_environment_first": 10001500,
+      "evaluation_environment_last": 10001999,
+      "seed_index": 3,
+      "training_action_rng": [
+        6,
+        7
+      ],
+      "training_environment_first": 3000000,
+      "training_environment_last": 3004999,
+      "training_seed": 3
+    },
+    {
+      "evaluation_action_rng": [
+        20000008,
+        20000009
+      ],
+      "evaluation_environment_first": 10002000,
+      "evaluation_environment_last": 10002499,
+      "seed_index": 4,
+      "training_action_rng": [
+        8,
+        9
+      ],
+      "training_environment_first": 4000000,
+      "training_environment_last": 4004999,
+      "training_seed": 4
+    }
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "train_episodes": 5000,
+  "training_seed_stride": 1000000,
+  "variant_order": [
+    "full_reward",
+    "no_distance",
+    "no_step_penalty",
+    "no_capture_reward"
+  ],
+  "variants": {
+    "full_reward": {
+      "capture_weight": 20.0,
+      "distance_weight": 1.0,
+      "step_penalty": -0.05
+    },
+    "no_capture_reward": {
+      "capture_weight": 0.0,
+      "distance_weight": 1.0,
+      "step_penalty": -0.05
+    },
+    "no_distance": {
+      "capture_weight": 20.0,
+      "distance_weight": 0.0,
+      "step_penalty": -0.05
+    },
+    "no_step_penalty": {
+      "capture_weight": 20.0,
+      "distance_weight": 1.0,
+      "step_penalty": 0.0
+    }
+  }
+}
