@@ -1,0 +1,377 @@
+[
+  {
+    "path": "behavioral/behavioral_seed_summary.csv",
+    "sha256": "66466909e82b1fad99d17d3ef246a490b9e6f244c00660957e605cc27d7d6499",
+    "size_bytes": 2335
+  },
+  {
+    "path": "behavioral/behavioral_summary.csv",
+    "sha256": "5fbb52b55d68875e3b227c57f281119260f0d485c3a5a85641d0e6c4a8666dd2",
+    "size_bytes": 1192
+  },
+  {
+    "path": "behavioral/full_reward_metrics.csv",
+    "sha256": "2669f9a251976a04a7585b333bfb1c90abf16614dd724338e921975ab2716969",
+    "size_bytes": 267011
+  },
+  {
+    "path": "behavioral/full_reward_success_trajectory.png",
+    "sha256": "027a47fb08dd7157d80a2c1758e55f13314f11bb6aec097135ade81f9d772e9b",
+    "size_bytes": 36029
+  },
+  {
+    "path": "behavioral/no_capture_reward_metrics.csv",
+    "sha256": "bcf31c5653f1039bd360f7eb0335647d156597538490e41c1316c42152b4d1e1",
+    "size_bytes": 289356
+  },
+  {
+    "path": "behavioral/no_capture_reward_success_trajectory.png",
+    "sha256": "edde2f4293fad5eebc1cf0b0dedd14c454bbdccab82ae2a82855e49b8bd3d161",
+    "size_bytes": 36915
+  },
+  {
+    "path": "behavioral/no_distance_failure_trajectory.png",
+    "sha256": "1e163a6866c30436c05c73e1f863cf23d035f6d272029f85cb1131641f40ff13",
+    "size_bytes": 46123
+  },
+  {
+    "path": "behavioral/no_distance_metrics.csv",
+    "sha256": "6b368aad7f971046b46a68cac15e09736b59b7a00782cae34e7ad19b62a9bd14",
+    "size_bytes": 276840
+  },
+  {
+    "path": "behavioral/no_distance_success_trajectory.png",
+    "sha256": "b094327ec38931ab77ccf576db99af0efcf2b154cf84d03ac9720c0350ca3568",
+    "size_bytes": 38640
+  },
+  {
+    "path": "behavioral/no_step_penalty_metrics.csv",
+    "sha256": "92bb5666535d1133fdb51ba32575207a5c77eff3b807756e285280e4c1a5ca40",
+    "size_bytes": 261330
+  },
+  {
+    "path": "behavioral/no_step_penalty_success_trajectory.png",
+    "sha256": "af250fb0d36e349623b1822ab2f5b60b7e8bf1f27e2819b44028969adf7c3961",
+    "size_bytes": 37030
+  },
+  {
+    "path": "behavioral/representative_selection.csv",
+    "sha256": "44b9f27a8e5243a0ed150fb312a5d113e31e48a3879ee71768b3614851e9e88a",
+    "size_bytes": 1304
+  },
+  {
+    "path": "checkpoints/full_reward/seed_0.pkl",
+    "sha256": "3c5976b72e9043417aa0cf8176195b387e717b44a5373e58f538d60af7f7fa18",
+    "size_bytes": 3716510
+  },
+  {
+    "path": "checkpoints/full_reward/seed_1.pkl",
+    "sha256": "16dadf2a00216fb83e129d5900af575d2a589f88f47f614cd25bc359143235b9",
+    "size_bytes": 3744662
+  },
+  {
+    "path": "checkpoints/full_reward/seed_2.pkl",
+    "sha256": "a5505856800b2fe0bebe4f4f1c5457b76fdc9e1db04b1eb2f7aa3043639dc77c",
+    "size_bytes": 3760431
+  },
+  {
+    "path": "checkpoints/full_reward/seed_3.pkl",
+    "sha256": "a7cec49544c376874464da139b934a19568bcefe182d610a8c9d7dcc2bcf3cfa",
+    "size_bytes": 3776199
+  },
+  {
+    "path": "checkpoints/full_reward/seed_4.pkl",
+    "sha256": "773458c30c98738aaeda2511e904aec7aa9572f5f19032083cfc97068e210681",
+    "size_bytes": 3732868
+  },
+  {
+    "path": "checkpoints/no_capture_reward/seed_0.pkl",
+    "sha256": "f4db6d40a56f3c882acee2282b5db9b9ec1e6ff410669eee513c4affb8336c15",
+    "size_bytes": 3744594
+  },
+  {
+    "path": "checkpoints/no_capture_reward/seed_1.pkl",
+    "sha256": "634bd98ea7502532b8d3976ba9b0af7c042f593e390671dc9b332ca65dc14ffb",
+    "size_bytes": 3756567
+  },
+  {
+    "path": "checkpoints/no_capture_reward/seed_2.pkl",
+    "sha256": "901d6da6efc5d03f7600b3bd412cb675e61783b8ba445e16a40cb271609f37cb",
+    "size_bytes": 3765864
+  },
+  {
+    "path": "checkpoints/no_capture_reward/seed_3.pkl",
+    "sha256": "b69ceb8db3b7b9fd36c192db1016388fb212a40826e6491660d12b01b63b1ac5",
+    "size_bytes": 3706210
+  },
+  {
+    "path": "checkpoints/no_capture_reward/seed_4.pkl",
+    "sha256": "ebb659ca22b2ed446095aad4b51d54a43d4dfabcb52c2831d7e28da6217c14c8",
+    "size_bytes": 3736268
+  },
+  {
+    "path": "checkpoints/no_distance/seed_0.pkl",
+    "sha256": "ffc3e4efa60c7f1513c9c863ad34e536f9ba7c2058925e31306b230f67e9d40d",
+    "size_bytes": 5069009
+  },
+  {
+    "path": "checkpoints/no_distance/seed_1.pkl",
+    "sha256": "9d0da4a6d9a0769955fb860515755f035a83933843475e2faac3939fcde1a738",
+    "size_bytes": 5097317
+  },
+  {
+    "path": "checkpoints/no_distance/seed_2.pkl",
+    "sha256": "d5780d50463afb8afdb2df603d42c84414b5d286975a07de8ed17c00aa0ff842",
+    "size_bytes": 5121512
+  },
+  {
+    "path": "checkpoints/no_distance/seed_3.pkl",
+    "sha256": "7eda01ed46df91871e437c043feb11eefdb199a9d353544ecb29a270adf1a37a",
+    "size_bytes": 5098925
+  },
+  {
+    "path": "checkpoints/no_distance/seed_4.pkl",
+    "sha256": "1253b63696a4f6bf4de37e79100fe2efe94705deb2d7bf710a1f0396f452928d",
+    "size_bytes": 5128146
+  },
+  {
+    "path": "checkpoints/no_step_penalty/seed_0.pkl",
+    "sha256": "c06e739d87a470fa7ec0ebf7be9616fa02fd313c030cd8bff8db7b1f1390451b",
+    "size_bytes": 3665479
+  },
+  {
+    "path": "checkpoints/no_step_penalty/seed_1.pkl",
+    "sha256": "8f54b2c2af61bf588b6e25a624b13ffc9a902b403986e20b9cec9ea976c19de4",
+    "size_bytes": 3734147
+  },
+  {
+    "path": "checkpoints/no_step_penalty/seed_2.pkl",
+    "sha256": "982190c0ada3ceb2cf3a2f0c9f91c807e752a509ea0ee6b4ca57a1709c86958e",
+    "size_bytes": 3763393
+  },
+  {
+    "path": "checkpoints/no_step_penalty/seed_3.pkl",
+    "sha256": "628a10808d29ebff9d4e03009f91689d838b8f5c35c0fca2afeb2f46f80f4f06",
+    "size_bytes": 3727559
+  },
+  {
+    "path": "checkpoints/no_step_penalty/seed_4.pkl",
+    "sha256": "5f599a0279852fd3e9a4bce30a9a624912f1209efd0a75c618111eb57eb18c08",
+    "size_bytes": 3793208
+  },
+  {
+    "path": "plots/ablation_learning_curves.png",
+    "sha256": "3094ec346a62bc53f8d1824fad131aedd4bd3cd309b148ff56c07182423ab0be",
+    "size_bytes": 356597
+  },
+  {
+    "path": "plots/capture_rate_ablation.png",
+    "sha256": "06c4686ceaa7421209d8aac84e99cae8ccf0e0f517a036da08e1d2f30490adb3",
+    "size_bytes": 36190
+  },
+  {
+    "path": "plots/capture_time_ablation.png",
+    "sha256": "2547b961e380af31073f3d319fdc19c9f08c566dcad64c417e04c76e69f53d76",
+    "size_bytes": 54784
+  },
+  {
+    "path": "plots/episode_length_ablation.png",
+    "sha256": "d3f028c1617c1fb26b4b2294108b2cdb37ce0f1892381514dce5ea09f9b6a6a1",
+    "size_bytes": 43231
+  },
+  {
+    "path": "raw/full_reward.csv",
+    "sha256": "4c5a093fd4860b2da34ff84614b69145c48c9ce02dce3610f86650d34f1a7192",
+    "size_bytes": 114164
+  },
+  {
+    "path": "raw/no_capture_reward.csv",
+    "sha256": "b1ea0437aef6156e65248a10986ae4335747c00630101ca70d32ae5f1a260896",
+    "size_bytes": 138104
+  },
+  {
+    "path": "raw/no_distance.csv",
+    "sha256": "32145d7c5c0c8feca7af34d5a2943b108cffb695906a67b7b8eae9405c56568f",
+    "size_bytes": 116193
+  },
+  {
+    "path": "raw/no_step_penalty.csv",
+    "sha256": "2ba4147bc5adf466c0e5cd522ed716089222e273e6e1be9211e48c111203a552",
+    "size_bytes": 110819
+  },
+  {
+    "path": "raw/training/full_reward_seed_0.csv",
+    "sha256": "53058655f51f37d1cd9b5eee9d7bca4a7190d03162e24e6ebfdf0e007774616b",
+    "size_bytes": 412805
+  },
+  {
+    "path": "raw/training/full_reward_seed_1.csv",
+    "sha256": "4d9e7a5914e5ebf29280a0f28e42caff0736614fd150e65d119182ceed8f2c24",
+    "size_bytes": 412036
+  },
+  {
+    "path": "raw/training/full_reward_seed_2.csv",
+    "sha256": "9614c2c144a6e0ea4027fed34cfbb470cd29ff03a90dacf537b64f4b76688c26",
+    "size_bytes": 413372
+  },
+  {
+    "path": "raw/training/full_reward_seed_3.csv",
+    "sha256": "9e4d0420ff9cb97ee312020dc7359cb32d9ea34ecc44cd67c371da5c7630e70c",
+    "size_bytes": 412667
+  },
+  {
+    "path": "raw/training/full_reward_seed_4.csv",
+    "sha256": "ea72c79c8242c78c7a30dad35ed3a71277076b0bb32f5a30b09053251b405764",
+    "size_bytes": 412444
+  },
+  {
+    "path": "raw/training/no_capture_reward_seed_0.csv",
+    "sha256": "bc09357a13e73527490bd3b6f0878dbd9ad5784b658767c187c50ea00e15451e",
+    "size_bytes": 460400
+  },
+  {
+    "path": "raw/training/no_capture_reward_seed_1.csv",
+    "sha256": "ac79b5b01976b185c475c44c3573081b9e85e29a27007b8093d4742d05853fde",
+    "size_bytes": 460008
+  },
+  {
+    "path": "raw/training/no_capture_reward_seed_2.csv",
+    "sha256": "6d69a0d47784292072fe113debfd6302496a4e92dcb4a9e212e39ea545e9b807",
+    "size_bytes": 459963
+  },
+  {
+    "path": "raw/training/no_capture_reward_seed_3.csv",
+    "sha256": "d1ecc63b858c677e7891ca46bb7dafc50f01d61edb33e7a5f1962fab6a0efb69",
+    "size_bytes": 459858
+  },
+  {
+    "path": "raw/training/no_capture_reward_seed_4.csv",
+    "sha256": "46bc2e5a5426453bd03cc8bd77ab1a8acedd372e78938f62a88987886ef1bfdd",
+    "size_bytes": 459052
+  },
+  {
+    "path": "raw/training/no_distance_seed_0.csv",
+    "sha256": "69b98890a805b4ee6f44e0b273f83c49e3519ef5250d632ba8e405adc036b964",
+    "size_bytes": 428323
+  },
+  {
+    "path": "raw/training/no_distance_seed_1.csv",
+    "sha256": "49b853aef4b1c7d1d524ce667eaa7118f88d26095a9f77429820c86814933662",
+    "size_bytes": 426999
+  },
+  {
+    "path": "raw/training/no_distance_seed_2.csv",
+    "sha256": "f803eaefd98544c989cfcf2abe9c21bedd6adb62dc1f150ff65d354e30f07d9e",
+    "size_bytes": 428125
+  },
+  {
+    "path": "raw/training/no_distance_seed_3.csv",
+    "sha256": "9c3b52bdb8bef4137e2b66f2f89e2644b2935dfd7313d8d6277160f7f0820b1e",
+    "size_bytes": 427557
+  },
+  {
+    "path": "raw/training/no_distance_seed_4.csv",
+    "sha256": "eb7e3e706d417b1851ce403a413d07a99f924d831abf1eee55f34c05bf5ac8aa",
+    "size_bytes": 427841
+  },
+  {
+    "path": "raw/training/no_step_penalty_seed_0.csv",
+    "sha256": "c9fc67fa625d0bdf1bc0d404d7a7edf9f64388f6947ced838f53bf72c073ef72",
+    "size_bytes": 400491
+  },
+  {
+    "path": "raw/training/no_step_penalty_seed_1.csv",
+    "sha256": "8463dd7aef9e436f5c0bb79c9c92509d3500352b59f01e046492f77c747f0c06",
+    "size_bytes": 401045
+  },
+  {
+    "path": "raw/training/no_step_penalty_seed_2.csv",
+    "sha256": "1b8f7c003ae3eefb952f5835a6f4c5c40d351217783902bf743bf32dad6ff279",
+    "size_bytes": 400640
+  },
+  {
+    "path": "raw/training/no_step_penalty_seed_3.csv",
+    "sha256": "34c5a602ba53dba19acf717394b2089a00f5550d95be955a0e751e7e2a372f7f",
+    "size_bytes": 400675
+  },
+  {
+    "path": "raw/training/no_step_penalty_seed_4.csv",
+    "sha256": "0001d729dedff9a5a50321ad279f510f61d2377657303f98e971444a01f804d7",
+    "size_bytes": 400561
+  },
+  {
+    "path": "summaries/ablation_config.json",
+    "sha256": "c03b1ec9ac1a29ed426bf38f5cadd0cc9898243422c84c1994e867e106823a8d",
+    "size_bytes": 4424
+  },
+  {
+    "path": "summaries/bar_plot_source.csv",
+    "sha256": "804f056719e1ba21da8dfcb882a6fe5d6e1227a4f68318fd23630989b4992715",
+    "size_bytes": 873
+  },
+  {
+    "path": "summaries/checkpoint_identities.csv",
+    "sha256": "1de21448d4e03ba7176980662b0124ae5324c5d5afef58b2fc1d0960e5071b42",
+    "size_bytes": 3360
+  },
+  {
+    "path": "summaries/learning_curve_source.csv",
+    "sha256": "a11a10cf8532905363d039847880610ba40ba42ac1a6f77662c92f9c036a42e7",
+    "size_bytes": 2026375
+  },
+  {
+    "path": "summaries/learning_speed_per_seed.csv",
+    "sha256": "710bb13a96af39987076ca2a73a8af0a41bb3cbd4710b345baa54248b856233a",
+    "size_bytes": 689
+  },
+  {
+    "path": "summaries/learning_speed_summary.csv",
+    "sha256": "d56b96f9cef0e337038cdd50696b6cf2a79a8ddd004ca2f44f875b780cde0b3c",
+    "size_bytes": 282
+  },
+  {
+    "path": "summaries/per_seed_summary.csv",
+    "sha256": "84e9ae4294790b6ed4a34197b3a7609fc6330f67826cf008381b6c2087c265fc",
+    "size_bytes": 1292
+  },
+  {
+    "path": "summaries/reward_ablation_summary.csv",
+    "sha256": "804f056719e1ba21da8dfcb882a6fe5d6e1227a4f68318fd23630989b4992715",
+    "size_bytes": 873
+  },
+  {
+    "path": "summaries/study_status.json",
+    "sha256": "2703c9fd945c6c0f7bd47a71e092f9aea921171f7f85f242ce81bdfa75161409",
+    "size_bytes": 6470
+  },
+  {
+    "path": "summaries/verification.json",
+    "sha256": "181123669cfa322dcf5ee70b71bc00cd1d0aed6a5bfb9d73b9639ef49db60d95",
+    "size_bytes": 1679
+  },
+  {
+    "path": "trajectories/full_reward_success.json",
+    "sha256": "1b9613990cbd90defcdd2511a308ae9d78261783dc60194710c8942aa387cdcc",
+    "size_bytes": 9813
+  },
+  {
+    "path": "trajectories/no_capture_reward_success.json",
+    "sha256": "8fa444058818818f19a3d4ddb2ce235bf37659efd198112a40a146903409dea7",
+    "size_bytes": 8710
+  },
+  {
+    "path": "trajectories/no_distance_failure.json",
+    "sha256": "21b63bb2a91037a6d6d2b3e4f722f944c99f8800d2bf911273c7d86a26759110",
+    "size_bytes": 57364
+  },
+  {
+    "path": "trajectories/no_distance_success.json",
+    "sha256": "ca327bd35c6c64439f69b34465c0088838b0c3be5e36405cbfaebf60f8b9fa5a",
+    "size_bytes": 16560
+  },
+  {
+    "path": "trajectories/no_step_penalty_success.json",
+    "sha256": "47362e85795006d56bc79d44182e77b33490e6d30d05d9c0f0387da7761e3cf0",
+    "size_bytes": 9812
+  }
+]

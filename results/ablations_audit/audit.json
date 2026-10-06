@@ -1,0 +1,334 @@
+{
+  "action_seed_base": 40000000,
+  "checkpoints_unchanged": true,
+  "checks": [
+    {
+      "fresh": {
+        "hunter_decisions": 71202,
+        "initially_adjacent_episodes": 2,
+        "seen_state_decisions": 66998,
+        "transitions": 35601
+      },
+      "original": {
+        "hunter_decisions": 16992,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 16032,
+        "transitions": 8496
+      },
+      "training_seed": 0,
+      "variant": "full_reward"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 67820,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 63732,
+        "transitions": 33910
+      },
+      "original": {
+        "hunter_decisions": 16190,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 15280,
+        "transitions": 8095
+      },
+      "training_seed": 1,
+      "variant": "full_reward"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 68924,
+        "initially_adjacent_episodes": 4,
+        "seen_state_decisions": 65058,
+        "transitions": 34462
+      },
+      "original": {
+        "hunter_decisions": 16606,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 15758,
+        "transitions": 8303
+      },
+      "training_seed": 2,
+      "variant": "full_reward"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 68086,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 64254,
+        "transitions": 34043
+      },
+      "original": {
+        "hunter_decisions": 17324,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 16298,
+        "transitions": 8662
+      },
+      "training_seed": 3,
+      "variant": "full_reward"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 69852,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 65924,
+        "transitions": 34926
+      },
+      "original": {
+        "hunter_decisions": 17094,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 16288,
+        "transitions": 8547
+      },
+      "training_seed": 4,
+      "variant": "full_reward"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 156286,
+        "initially_adjacent_episodes": 2,
+        "seen_state_decisions": 153738,
+        "transitions": 78143
+      },
+      "original": {
+        "hunter_decisions": 36692,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 35948,
+        "transitions": 18346
+      },
+      "training_seed": 0,
+      "variant": "no_distance"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 145566,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 143368,
+        "transitions": 72783
+      },
+      "original": {
+        "hunter_decisions": 35408,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 34972,
+        "transitions": 17704
+      },
+      "training_seed": 1,
+      "variant": "no_distance"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 156686,
+        "initially_adjacent_episodes": 4,
+        "seen_state_decisions": 154540,
+        "transitions": 78343
+      },
+      "original": {
+        "hunter_decisions": 37910,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 37414,
+        "transitions": 18955
+      },
+      "training_seed": 2,
+      "variant": "no_distance"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 152260,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 150092,
+        "transitions": 76130
+      },
+      "original": {
+        "hunter_decisions": 36936,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 36318,
+        "transitions": 18468
+      },
+      "training_seed": 3,
+      "variant": "no_distance"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 149594,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 147446,
+        "transitions": 74797
+      },
+      "original": {
+        "hunter_decisions": 36588,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 36148,
+        "transitions": 18294
+      },
+      "training_seed": 4,
+      "variant": "no_distance"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 67972,
+        "initially_adjacent_episodes": 2,
+        "seen_state_decisions": 63560,
+        "transitions": 33986
+      },
+      "original": {
+        "hunter_decisions": 16636,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 15620,
+        "transitions": 8318
+      },
+      "training_seed": 0,
+      "variant": "no_step_penalty"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 69736,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 65784,
+        "transitions": 34868
+      },
+      "original": {
+        "hunter_decisions": 16928,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 16030,
+        "transitions": 8464
+      },
+      "training_seed": 1,
+      "variant": "no_step_penalty"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 70964,
+        "initially_adjacent_episodes": 4,
+        "seen_state_decisions": 67312,
+        "transitions": 35482
+      },
+      "original": {
+        "hunter_decisions": 17428,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 16464,
+        "transitions": 8714
+      },
+      "training_seed": 2,
+      "variant": "no_step_penalty"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 69226,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 64854,
+        "transitions": 34613
+      },
+      "original": {
+        "hunter_decisions": 17542,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 16384,
+        "transitions": 8771
+      },
+      "training_seed": 3,
+      "variant": "no_step_penalty"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 67478,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 63760,
+        "transitions": 33739
+      },
+      "original": {
+        "hunter_decisions": 16088,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 15324,
+        "transitions": 8044
+      },
+      "training_seed": 4,
+      "variant": "no_step_penalty"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 64534,
+        "initially_adjacent_episodes": 2,
+        "seen_state_decisions": 60802,
+        "transitions": 32267
+      },
+      "original": {
+        "hunter_decisions": 15786,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 14696,
+        "transitions": 7893
+      },
+      "training_seed": 0,
+      "variant": "no_capture_reward"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 63052,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 59444,
+        "transitions": 31526
+      },
+      "original": {
+        "hunter_decisions": 15362,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 14474,
+        "transitions": 7681
+      },
+      "training_seed": 1,
+      "variant": "no_capture_reward"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 62460,
+        "initially_adjacent_episodes": 4,
+        "seen_state_decisions": 58626,
+        "transitions": 31230
+      },
+      "original": {
+        "hunter_decisions": 16258,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 15088,
+        "transitions": 8129
+      },
+      "training_seed": 2,
+      "variant": "no_capture_reward"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 63214,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 59146,
+        "transitions": 31607
+      },
+      "original": {
+        "hunter_decisions": 15904,
+        "initially_adjacent_episodes": 0,
+        "seen_state_decisions": 14810,
+        "transitions": 7952
+      },
+      "training_seed": 3,
+      "variant": "no_capture_reward"
+    },
+    {
+      "fresh": {
+        "hunter_decisions": 62670,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 58436,
+        "transitions": 31335
+      },
+      "original": {
+        "hunter_decisions": 15038,
+        "initially_adjacent_episodes": 1,
+        "seen_state_decisions": 14204,
+        "transitions": 7519
+      },
+      "training_seed": 4,
+      "variant": "no_capture_reward"
+    }
+  ],
+  "environment_seed_base": 30000000,
+  "fresh_episodes_per_training_seed": 2000,
+  "geometry_target_sampling_movement_and_flags_verified": true,
+  "learning_calls_forbidden_and_q_tables_unchanged": true,
+  "original_evaluation_rows_reproduced_by_independent_geometry": 10000,
+  "study_dir": "results\\ablations",
+  "training_original_fresh_environment_seed_overlap": 0,
+  "unique_checkpoint_paths_and_hashes": 20
+}

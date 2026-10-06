@@ -1,0 +1,165 @@
+{
+  "complete": true,
+  "completed_conditions": [
+    {
+      "checkpoint": "checkpoints/full_reward/seed_0.pkl",
+      "sha256": "3c5976b72e9043417aa0cf8176195b387e717b44a5373e58f538d60af7f7fa18",
+      "state_count": 49182,
+      "training_history": "raw/training/full_reward_seed_0.csv",
+      "training_seed": 0,
+      "variant": "full_reward"
+    },
+    {
+      "checkpoint": "checkpoints/full_reward/seed_1.pkl",
+      "sha256": "16dadf2a00216fb83e129d5900af575d2a589f88f47f614cd25bc359143235b9",
+      "state_count": 49554,
+      "training_history": "raw/training/full_reward_seed_1.csv",
+      "training_seed": 1,
+      "variant": "full_reward"
+    },
+    {
+      "checkpoint": "checkpoints/full_reward/seed_2.pkl",
+      "sha256": "a5505856800b2fe0bebe4f4f1c5457b76fdc9e1db04b1eb2f7aa3043639dc77c",
+      "state_count": 49768,
+      "training_history": "raw/training/full_reward_seed_2.csv",
+      "training_seed": 2,
+      "variant": "full_reward"
+    },
+    {
+      "checkpoint": "checkpoints/full_reward/seed_3.pkl",
+      "sha256": "a7cec49544c376874464da139b934a19568bcefe182d610a8c9d7dcc2bcf3cfa",
+      "state_count": 49972,
+      "training_history": "raw/training/full_reward_seed_3.csv",
+      "training_seed": 3,
+      "variant": "full_reward"
+    },
+    {
+      "checkpoint": "checkpoints/full_reward/seed_4.pkl",
+      "sha256": "773458c30c98738aaeda2511e904aec7aa9572f5f19032083cfc97068e210681",
+      "state_count": 49412,
+      "training_history": "raw/training/full_reward_seed_4.csv",
+      "training_seed": 4,
+      "variant": "full_reward"
+    },
+    {
+      "checkpoint": "checkpoints/no_distance/seed_0.pkl",
+      "sha256": "ffc3e4efa60c7f1513c9c863ad34e536f9ba7c2058925e31306b230f67e9d40d",
+      "state_count": 67050,
+      "training_history": "raw/training/no_distance_seed_0.csv",
+      "training_seed": 0,
+      "variant": "no_distance"
+    },
+    {
+      "checkpoint": "checkpoints/no_distance/seed_1.pkl",
+      "sha256": "9d0da4a6d9a0769955fb860515755f035a83933843475e2faac3939fcde1a738",
+      "state_count": 67416,
+      "training_history": "raw/training/no_distance_seed_1.csv",
+      "training_seed": 1,
+      "variant": "no_distance"
+    },
+    {
+      "checkpoint": "checkpoints/no_distance/seed_2.pkl",
+      "sha256": "d5780d50463afb8afdb2df603d42c84414b5d286975a07de8ed17c00aa0ff842",
+      "state_count": 67740,
+      "training_history": "raw/training/no_distance_seed_2.csv",
+      "training_seed": 2,
+      "variant": "no_distance"
+    },
+    {
+      "checkpoint": "checkpoints/no_distance/seed_3.pkl",
+      "sha256": "7eda01ed46df91871e437c043feb11eefdb199a9d353544ecb29a270adf1a37a",
+      "state_count": 67440,
+      "training_history": "raw/training/no_distance_seed_3.csv",
+      "training_seed": 3,
+      "variant": "no_distance"
+    },
+    {
+      "checkpoint": "checkpoints/no_distance/seed_4.pkl",
+      "sha256": "1253b63696a4f6bf4de37e79100fe2efe94705deb2d7bf710a1f0396f452928d",
+      "state_count": 67828,
+      "training_history": "raw/training/no_distance_seed_4.csv",
+      "training_seed": 4,
+      "variant": "no_distance"
+    },
+    {
+      "checkpoint": "checkpoints/no_step_penalty/seed_0.pkl",
+      "sha256": "c06e739d87a470fa7ec0ebf7be9616fa02fd313c030cd8bff8db7b1f1390451b",
+      "state_count": 48520,
+      "training_history": "raw/training/no_step_penalty_seed_0.csv",
+      "training_seed": 0,
+      "variant": "no_step_penalty"
+    },
+    {
+      "checkpoint": "checkpoints/no_step_penalty/seed_1.pkl",
+      "sha256": "8f54b2c2af61bf588b6e25a624b13ffc9a902b403986e20b9cec9ea976c19de4",
+      "state_count": 49416,
+      "training_history": "raw/training/no_step_penalty_seed_1.csv",
+      "training_seed": 1,
+      "variant": "no_step_penalty"
+    },
+    {
+      "checkpoint": "checkpoints/no_step_penalty/seed_2.pkl",
+      "sha256": "982190c0ada3ceb2cf3a2f0c9f91c807e752a509ea0ee6b4ca57a1709c86958e",
+      "state_count": 49814,
+      "training_history": "raw/training/no_step_penalty_seed_2.csv",
+      "training_seed": 2,
+      "variant": "no_step_penalty"
+    },
+    {
+      "checkpoint": "checkpoints/no_step_penalty/seed_3.pkl",
+      "sha256": "628a10808d29ebff9d4e03009f91689d838b8f5c35c0fca2afeb2f46f80f4f06",
+      "state_count": 49326,
+      "training_history": "raw/training/no_step_penalty_seed_3.csv",
+      "training_seed": 3,
+      "variant": "no_step_penalty"
+    },
+    {
+      "checkpoint": "checkpoints/no_step_penalty/seed_4.pkl",
+      "sha256": "5f599a0279852fd3e9a4bce30a9a624912f1209efd0a75c618111eb57eb18c08",
+      "state_count": 50218,
+      "training_history": "raw/training/no_step_penalty_seed_4.csv",
+      "training_seed": 4,
+      "variant": "no_step_penalty"
+    },
+    {
+      "checkpoint": "checkpoints/no_capture_reward/seed_0.pkl",
+      "sha256": "f4db6d40a56f3c882acee2282b5db9b9ec1e6ff410669eee513c4affb8336c15",
+      "state_count": 49558,
+      "training_history": "raw/training/no_capture_reward_seed_0.csv",
+      "training_seed": 0,
+      "variant": "no_capture_reward"
+    },
+    {
+      "checkpoint": "checkpoints/no_capture_reward/seed_1.pkl",
+      "sha256": "634bd98ea7502532b8d3976ba9b0af7c042f593e390671dc9b332ca65dc14ffb",
+      "state_count": 49714,
+      "training_history": "raw/training/no_capture_reward_seed_1.csv",
+      "training_seed": 1,
+      "variant": "no_capture_reward"
+    },
+    {
+      "checkpoint": "checkpoints/no_capture_reward/seed_2.pkl",
+      "sha256": "901d6da6efc5d03f7600b3bd412cb675e61783b8ba445e16a40cb271609f37cb",
+      "state_count": 49840,
+      "training_history": "raw/training/no_capture_reward_seed_2.csv",
+      "training_seed": 2,
+      "variant": "no_capture_reward"
+    },
+    {
+      "checkpoint": "checkpoints/no_capture_reward/seed_3.pkl",
+      "sha256": "b69ceb8db3b7b9fd36c192db1016388fb212a40826e6491660d12b01b63b1ac5",
+      "state_count": 49052,
+      "training_history": "raw/training/no_capture_reward_seed_3.csv",
+      "training_seed": 3,
+      "variant": "no_capture_reward"
+    },
+    {
+      "checkpoint": "checkpoints/no_capture_reward/seed_4.pkl",
+      "sha256": "ebb659ca22b2ed446095aad4b51d54a43d4dfabcb52c2831d7e28da6217c14c8",
+      "state_count": 49458,
+      "training_history": "raw/training/no_capture_reward_seed_4.csv",
+      "training_seed": 4,
+      "variant": "no_capture_reward"
+    }
+  ]
+}
