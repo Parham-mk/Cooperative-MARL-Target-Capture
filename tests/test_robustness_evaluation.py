@@ -1,120 +1,180 @@
-import pytest
-from configs import robustness_config as rob_cfg
-from experiments.run_robustness_evaluation import generate_unseen_initial_states, get_q_coverage, evaluate_robustness_episode
-from env.target_capture_env import TargetCaptureEnv
-from agents.q_learning_agent import QLearningAgent
-from env.position import Position
-from env.actions import Action
+"""Regression checks for matched, frozen and genuinely held-out evaluation."""
+
+import json
 import math
+from dataclasses import replace
 
-def test_held_out_seed_validation():
-    """Test 1: Verify robustness seeds do not overlap with training seeds."""
-    for s in rob_cfg.ROBUSTNESS_SEEDS:
-        assert s not in rob_cfg.TRAINING_SEEDS
+import pytest
 
-def test_valid_initial_states():
-    """Test 2: Verify all generated held-out initial states remain inside grid and have no overlap."""
-    cases = generate_unseen_initial_states(50, 42, rob_cfg.GRID_SIZE, rob_cfg.TRAINING_SEEDS)
-    for c in cases:
-        p0 = c["agent_0_pos"]
-        p1 = c["agent_1_pos"]
-        pt = c["target_pos"]
-        
-        # Inside grid
-        assert 0 <= p0.x < rob_cfg.GRID_SIZE
-        assert 0 <= p0.y < rob_cfg.GRID_SIZE
-        assert 0 <= p1.x < rob_cfg.GRID_SIZE
-        assert 0 <= p1.y < rob_cfg.GRID_SIZE
-        assert 0 <= pt.x < rob_cfg.GRID_SIZE
-        assert 0 <= pt.y < rob_cfg.GRID_SIZE
-        
-        # No overlap
-        assert p0 != p1
-        assert p0 != pt
-        assert p1 != pt
+from agents.q_learning_agent import QLearningAgent
+from agents.shared_q_agent import SharedQAgent
+from algorithms.cooperative_q_learning import SharedQTable
+from analysis.robustness_analysis import aggregate_robustness, validate_rows
+from configs.evaluation_config import ExperimentConfig
+from configs.robustness_config import RobustnessConfig, stress_cases
+from env.actions import Action
+from env.position import Position
+from env.target_capture_env import TargetCaptureEnv
+from experiments.evaluation_utils import q_table_snapshot
+from experiments.reproducibility import publish_evidence, sha256
+from experiments.run_comparison import run_comparison
+from experiments.run_robustness_evaluation import (
+    configuration_key, evaluate_robustness_episode, generate_unseen_initial_states,
+    get_q_coverage, reset_configuration_catalog, run_robustness, validate_initial_state,
+    validate_seed_ranges,
+)
+from experiments.statistical_analysis import read_raw_results
 
-def test_reproducible_initial_state_generation():
-    """Test 3: Same robustness seed -> same generated initial states."""
-    c1 = generate_unseen_initial_states(10, 100, rob_cfg.GRID_SIZE, [])
-    c2 = generate_unseen_initial_states(10, 100, rob_cfg.GRID_SIZE, [])
-    
-    for state1, state2 in zip(c1, c2):
-        assert state1["agent_0_pos"] == state2["agent_0_pos"]
-        assert state1["agent_1_pos"] == state2["agent_1_pos"]
-        assert state1["target_pos"] == state2["target_pos"]
 
-def test_policy_is_frozen():
-    """Test 4: Verify Q-table is unchanged during evaluation."""
-    env = TargetCaptureEnv(grid_size=5)
-    agent0 = QLearningAgent(seed=42)
-    agent1 = QLearningAgent(seed=42)
-    
-    # Pre-populate table
-    agent0.q_table[(0,0,1,1)] = {a: 1.0 for a in Action}
-    
-    q_table_before = {k: v.copy() for k, v in agent0.q_table.items()}
-    
-    evaluate_robustness_episode(env, agent0, agent1, seed=1)
-    
-    assert agent0.q_table == q_table_before
-    assert agent0.epsilon == 0.0
+@pytest.mark.parametrize("base", [1_000_002, 10_000_001, 30_000_005, 51_000_001])
+def test_ranges_reject_actual_episode_overlap(tmp_path, base):
+    source = ExperimentConfig(seeds=(7, 9), train_episodes=5, eval_episodes=3)
+    protocol = RobustnessConfig(tmp_path, eval_episodes=3, initial_state_cases=3, held_out_seed_base=base)
+    with pytest.raises(ValueError, match="overlap"):
+        validate_seed_ranges(source, protocol)
 
-def test_q_table_coverage():
-    """Test 5 & Test 6: Verify coverage calculation and unseen state rate exactly."""
+
+def test_held_out_configurations_exclude_training_starts(tmp_path):
+    source = ExperimentConfig(grid_size=4, seeds=(0, 1), train_episodes=20, eval_episodes=4)
+    training, evaluation = reset_configuration_catalog(source)
+    env = TargetCaptureEnv(4)
+    assert configuration_key(env.reset(1_000_019)) in training
+    assert configuration_key(env.reset(10_000_007)) in evaluation
+    first = generate_unseen_initial_states(1, 42, 4, set())[0]
+    first_key = tuple((first[name].x, first[name].y) for name in ("agent_0_pos", "agent_1_pos", "target_pos"))
+    excluded = training | evaluation | {first_key}
+    cases = generate_unseen_initial_states(20, 42, 4, excluded)
+    assert cases == generate_unseen_initial_states(20, 42, 4, excluded)
+    keys = set()
+    for case in cases:
+        validate_initial_state(case, 4)
+        key = tuple((case[name].x, case[name].y) for name in ("agent_0_pos", "agent_1_pos", "target_pos"))
+        assert key not in excluded and key not in keys
+        keys.add(key)
+
+
+@pytest.mark.parametrize("grid_size", [4, 5, 10])
+def test_stress_geometry(grid_size):
+    cases = {case.name: case for case in stress_cases(grid_size)}
+    for case in cases.values():
+        validate_initial_state(dict(zip(("agent_0_pos", "agent_1_pos", "target_pos"),
+                                        map(lambda p: Position(*p), (case.agent_0, case.agent_1, case.target)))), grid_size)
+    same = cases["same_side_hunters"]
+    assert same.agent_0[0] == same.agent_1[0] < same.target[0]
+    opposite = cases["opposite_side_hunters"]
+    assert opposite.agent_0[0] < opposite.target[0] < opposite.agent_1[0]
+    assert cases["boundary_target"].target[0] == 0
+    assert cases["widely_separated_hunters"].agent_1 == (grid_size - 1, grid_size - 1)
+
+
+@pytest.mark.parametrize("shared", [False, True])
+def test_seeded_rollout_frozen_and_repeatable(shared):
+    def agents():
+        if shared:
+            table = SharedQTable()
+            return (SharedQAgent(table, "agent_0", "agent_1", seed=1),
+                    SharedQAgent(table, "agent_1", "agent_0", seed=2))
+        return QLearningAgent(seed=1), QLearningAgent(seed=2)
+    pair = agents()
+    before = [q_table_snapshot(a) for a in pair]
+    initial = {"agent_0_pos": Position(0, 0), "agent_1_pos": Position(3, 3), "target_pos": Position(1, 1)}
+    row = evaluate_robustness_episode(TargetCaptureEnv(4, 8), *pair, initial, seed=55)
+    assert row == evaluate_robustness_episode(TargetCaptureEnv(4, 8), *agents(), initial, seed=55)
+    assert [q_table_snapshot(a) for a in pair] == before
+    assert row["seen_state_queries"] == 0
+    assert row["state_queries"] == 2 * row["episode_length"]
+    assert row["unseen_state_rate"] == 1
+    assert all(a.epsilon == 0 for a in pair)
+    with pytest.raises(ValueError, match="explicit environment seed"):
+        evaluate_robustness_episode(TargetCaptureEnv(4), *pair, initial)
+
+
+def test_membership_uses_frozen_checkpoint_keys():
     agent = QLearningAgent()
-    agent.q_table[(0,0,1,1)] = {a: 0.0 for a in Action}
-    
-    obs_seen = {
-        "agent_position": Position(0, 0),
-        "target_position": Position(1, 1)
-    }
-    obs_unseen = {
-        "agent_position": Position(2, 2),
-        "target_position": Position(1, 1)
-    }
-    
-    assert get_q_coverage(agent, obs_seen) == 1.0
-    assert get_q_coverage(agent, obs_unseen) == 0.0
-    
-    # Mocking evaluation loop
-    # 2 states, 1 seen, 1 unseen -> Coverage = 0.5
-    # UnseenStateRate = 1 - 0.5 = 0.5
-    coverage = (get_q_coverage(agent, obs_seen) + get_q_coverage(agent, obs_unseen)) / 2
-    assert coverage == 0.5
-    unseen_rate = 1.0 - coverage
-    assert unseen_rate == 0.5
+    obs = {"agent_position": Position(0, 0), "target_position": Position(1, 1)}
+    keys = frozenset(agent.q_table)
+    agent.q_table[(0, 0, 1, 1)] = {action: 0 for action in Action}
+    assert get_q_coverage(agent, obs) == 1
+    assert get_q_coverage(agent, obs, keys) == 0
 
-def test_performance_drop():
-    """Test 7: Verify delta calculation via synthetic metrics."""
-    # Synthetic metric
-    standard_cr = 0.95
-    held_out_cr = 0.70
-    delta = held_out_cr - standard_cr
-    assert math.isclose(delta, -0.25)
 
-def test_stress_case_construction():
-    """Test 8: Verify each stress case satisfies its documented geometric definition."""
-    cases = {sc.name: sc for sc in rob_cfg.STRESS_CASES}
-    
-    # Far target: distance from hunters to target should be large
-    far_tc = cases["far_target"]
-    assert far_tc.target[0] >= rob_cfg.GRID_SIZE - 2
-    
-    # Same side hunters: dx or dy between them is very small and they are on same side of target
-    same_tc = cases["same_side_hunters"]
-    assert abs(same_tc.agent_0[0] - same_tc.agent_1[0]) <= 1 or abs(same_tc.agent_0[1] - same_tc.agent_1[1]) <= 1
-    
-    # Opposite side: target is between them
-    opp_tc = cases["opposite_side_hunters"]
-    assert (opp_tc.agent_0[0] < opp_tc.target[0] < opp_tc.agent_1[0]) or (opp_tc.agent_1[0] < opp_tc.target[0] < opp_tc.agent_0[0])
+def test_aggregation_uses_query_denominator_and_missing_success_time():
+    rows = [dict(method="example", condition="standard", training_seed=0, captured=0,
+                 episode_length=length, episode_reward=0, capture_time=None,
+                 state_queries=2 * length, seen_state_queries=seen) for length, seen in ((1, 2), (9, 0))]
+    seeds, summaries = aggregate_robustness(rows)
+    assert seeds[0]["q_coverage"] == .1  # episode-mean coverage would incorrectly be .5
+    assert seeds[0]["unseen_state_rate"] == .9
+    assert math.isnan(seeds[0]["capture_time"])
+    assert summaries[0]["capture_time_valid_seeds"] == 0
+    assert math.isnan(summaries[0]["capture_rate_std"])
 
-def test_evaluation_smoke_test():
-    """Test 9: Run a tiny robustness evaluation (pipeline completes, doesn't crash)."""
-    env = TargetCaptureEnv(grid_size=5, max_steps=5)
-    agent0 = QLearningAgent()
-    agent1 = QLearningAgent()
-    
-    res = evaluate_robustness_episode(env, agent0, agent1, seed=0)
-    assert "captured" in res
-    assert "q_state_coverage" in res
-    assert "episode_reward" in res
+
+def test_deltas_are_paired_seed_estimates():
+    rows = []
+    for seed in (0, 1):
+        for condition in ("standard", "held_out_seeds"):
+            captured = int((seed == 0) == (condition == "standard"))
+            rows.append(dict(method="example", condition=condition, training_seed=seed, captured=captured,
+                             episode_length=1, episode_reward=0, capture_time=1 if captured else None,
+                             state_queries=2, seen_state_queries=2))
+    _, summaries = aggregate_robustness(rows)
+    held = next(r for r in summaries if r["condition"] == "held_out_seeds")
+    assert held["delta_capture_rate_mean"] == 0
+    assert held["delta_capture_rate_std"] == pytest.approx(math.sqrt(2))
+
+
+@pytest.fixture(scope="module")
+def completed_study(tmp_path_factory):
+    root = tmp_path_factory.mktemp("robustness")
+    source = ExperimentConfig(grid_size=4, max_steps=6, train_episodes=8, eval_episodes=3,
+                              seeds=(0, 1), output_dir=root / "comparison")
+    run_comparison(source)
+    protocol = RobustnessConfig(source.output_dir, root / "first", eval_episodes=3,
+                                initial_state_cases=3, stress_repeats=2, verify_against=source.output_dir)
+    run_robustness(protocol)
+    return root, source, protocol
+
+
+def test_complete_pipeline_is_reproducible_and_protects_evidence(completed_study):
+    root, source, protocol = completed_study
+    run_robustness(replace(protocol, output_dir=root / "second"))
+    for relative in ("raw/robustness_raw.csv", "summaries/robustness_summary.csv",
+                     "summaries/held_out_initial_configurations.csv", "summaries/checkpoint_identities.csv"):
+        assert sha256(protocol.output_dir / relative) == sha256(root / "second" / relative)
+    verification = json.loads((protocol.output_dir / "summaries/verification.json").read_text())
+    assert verification["episode_rows"] == 2 * 2 * (3 * 3 + 5 * 2)
+    assert verification["standard_rows_match_original"] == 12
+    assert verification["checkpoint_replica_hashes_match"]
+    assert all(check["unchanged"] for check in verification["frozen_table_checks"])
+    with pytest.raises(FileExistsError):
+        run_robustness(protocol)
+
+
+@pytest.mark.parametrize("corruption", ["missing", "duplicate", "queries", "matched", "capture_time"])
+def test_analysis_rejects_corrupted_data(completed_study, corruption):
+    _, _, protocol = completed_study
+    saved = json.loads((protocol.output_dir / "summaries/robustness_config.json").read_text())
+    rows = read_raw_results(protocol.output_dir / "raw/robustness_raw.csv")
+    if corruption == "missing":
+        rows.pop()
+    elif corruption == "duplicate":
+        rows.append(rows[0].copy())
+    elif corruption == "queries":
+        rows[0]["state_queries"] = "1"
+    elif corruption == "matched":
+        rows[0]["evaluation_seed"] = "0"
+    else:
+        rows[0]["capture_time"] = "-1"
+    with pytest.raises(ValueError):
+        validate_rows(rows, saved)
+
+
+def test_evidence_publishing_does_not_delete_existing_directory(tmp_path):
+    destination = tmp_path / "evidence"
+    destination.mkdir()
+    original = destination / "keep.txt"
+    original.write_text("existing evidence")
+    with pytest.raises(FileExistsError):
+        publish_evidence(tmp_path / "source", destination)
+    assert original.read_text() == "existing evidence"

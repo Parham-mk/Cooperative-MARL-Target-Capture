@@ -1,0 +1,712 @@
+{
+  "base_commit": "22320dd690531eaa94f611a47f03c3407c89424a",
+  "baseline_test_result": "128 passed, 13 dependency deprecation warnings",
+  "citation_validation": {
+    "schema": "https://github.com/citation-file-format/citation-file-format/blob/main/schema.json",
+    "schema_sha256": "79e2b85265c070f156047da750582a3e45d2b10f17cc019c85ceab2cf7d5ea08",
+    "status": "passed",
+    "validators_required_for_runtime": false
+  },
+  "commands": [
+    {
+      "command": "python -m experiments.baseline_evaluation --help",
+      "exit_code": 0,
+      "seconds": 0.14
+    },
+    {
+      "command": "python -m experiments.train_q_learning --help",
+      "exit_code": 0,
+      "seconds": 0.53
+    },
+    {
+      "command": "python -m experiments.evaluate_q_learning --help",
+      "exit_code": 0,
+      "seconds": 0.16
+    },
+    {
+      "command": "python -m experiments.train_cooperative_q_learning --help",
+      "exit_code": 0,
+      "seconds": 0.52
+    },
+    {
+      "command": "python -m experiments.evaluate_cooperative_q_learning --help",
+      "exit_code": 0,
+      "seconds": 0.16
+    },
+    {
+      "command": "python -m experiments.run_comparison --help",
+      "exit_code": 0,
+      "seconds": 0.52
+    },
+    {
+      "command": "python -m experiments.generate_behavioral_examples --help",
+      "exit_code": 0,
+      "seconds": 0.5
+    },
+    {
+      "command": "python -m experiments.run_reward_ablation --help",
+      "exit_code": 0,
+      "seconds": 0.53
+    },
+    {
+      "command": "python -m experiments.audit_reward_ablation --help",
+      "exit_code": 0,
+      "seconds": 0.53
+    },
+    {
+      "command": "python -m experiments.run_robustness_evaluation --help",
+      "exit_code": 0,
+      "seconds": 0.52
+    },
+    {
+      "command": "python -m experiments.statistical_analysis --help",
+      "exit_code": 0,
+      "seconds": 0.5
+    },
+    {
+      "command": "python -m experiments.reproducibility --help",
+      "exit_code": 0,
+      "seconds": 0.51
+    },
+    {
+      "command": "python -m experiments.reproduce --help",
+      "exit_code": 0,
+      "seconds": 0.52
+    },
+    {
+      "command": "python -m analysis.reward_ablation_analysis --help",
+      "exit_code": 0,
+      "seconds": 0.52
+    },
+    {
+      "command": "python -m analysis.robustness_analysis --help",
+      "exit_code": 0,
+      "seconds": 0.5
+    },
+    {
+      "command": "python -m pip check",
+      "exit_code": 0,
+      "seconds": 0.62
+    },
+    {
+      "command": "python -m experiments.baseline_evaluation --episodes 20 --grid-size 4 --max-steps 30 --seed 0",
+      "exit_code": 0,
+      "seconds": 0.2
+    },
+    {
+      "command": "python -m experiments.train_q_learning --episodes 50 --grid-size 4 --max-steps 30 --seed 0 --output-dir results/individual_independent",
+      "exit_code": 0,
+      "seconds": 0.56
+    },
+    {
+      "command": "python -m experiments.evaluate_q_learning --episodes 20 --grid-size 4 --max-steps 30 --seed 0 --agent0-path results/individual_independent/checkpoints/independent_q/seed_0_agent0.pkl --agent1-path results/individual_independent/checkpoints/independent_q/seed_0_agent1.pkl",
+      "exit_code": 0,
+      "seconds": 0.19
+    },
+    {
+      "command": "python -m experiments.train_cooperative_q_learning --episodes 50 --grid-size 4 --max-steps 30 --seed 0 --output-dir results/individual_cooperative",
+      "exit_code": 0,
+      "seconds": 0.58
+    },
+    {
+      "command": "python -m experiments.evaluate_cooperative_q_learning --episodes 20 --grid-size 4 --max-steps 30 --seed 0 --model-path results/individual_cooperative/checkpoints/cooperative_q/seed_0.pkl",
+      "exit_code": 0,
+      "seconds": 0.2
+    },
+    {
+      "command": "python -m experiments.generate_behavioral_examples --grid-size 4 --max-steps 30 --eval-episodes 25 --seeds 0 1 --output-dir results/demo_verified/main",
+      "exit_code": 0,
+      "seconds": 7.64
+    },
+    {
+      "command": "python -m experiments.statistical_analysis --output-dir results/demo_verified/main",
+      "exit_code": 0,
+      "seconds": 0.94
+    },
+    {
+      "command": "python -m analysis.reward_ablation_analysis --output-dir results/demo_verified/ablations",
+      "exit_code": 0,
+      "seconds": 1.09
+    },
+    {
+      "command": "python -m analysis.robustness_analysis --output-dir results/demo_verified/robustness",
+      "exit_code": 0,
+      "seconds": 0.92
+    },
+    {
+      "command": "python -m experiments.audit_reward_ablation --study-dir results/demo_verified/ablations --output-dir results/audit_verified --eval-episodes 5",
+      "exit_code": 0,
+      "seconds": 0.89
+    },
+    {
+      "command": "python -m experiments.run_comparison --grid-size 4 --max-steps 4 --train-episodes 4 --eval-episodes 3 --seeds 0 1 --output-dir results/repeat_a",
+      "exit_code": 0,
+      "seconds": 0.94
+    },
+    {
+      "command": "python -m experiments.generate_behavioral_examples --grid-size 4 --max-steps 4 --eval-episodes 3 --seeds 0 1 --output-dir results/repeat_a",
+      "exit_code": 0,
+      "seconds": 2.22
+    },
+    {
+      "command": "python -m experiments.run_comparison --grid-size 4 --max-steps 4 --train-episodes 4 --eval-episodes 3 --seeds 0 1 --output-dir results/repeat_b",
+      "exit_code": 0,
+      "seconds": 0.95
+    },
+    {
+      "command": "python -m experiments.generate_behavioral_examples --grid-size 4 --max-steps 4 --eval-episodes 3 --seeds 0 1 --output-dir results/repeat_b",
+      "exit_code": 0,
+      "seconds": 2.24
+    },
+    {
+      "command": "python -m experiments.reproducibility --run-a results/repeat_a --run-b results/repeat_b --seeds 0 1 --train-episodes 4 --eval-episodes 3 --publish-dir results/repeat_evidence",
+      "exit_code": 0,
+      "seconds": 0.8
+    },
+    {
+      "command": "python -m experiments.run_robustness_evaluation --comparison-dir results/repeat_a --verify-against results/repeat_b --output-dir results/tiny_robustness --eval-episodes 3 --initial-state-cases 3 --stress-repeats 2",
+      "exit_code": 0,
+      "seconds": 1.33
+    },
+    {
+      "command": "python -m pytest -q --basetemp .venv/pytest_release_final",
+      "exit_code": 0,
+      "seconds": 11.34
+    }
+  ],
+  "demo_command": {
+    "command": "python -m experiments.reproduce --output-dir results/demo_verified",
+    "exit_code": 0,
+    "requires_ignored_local_inputs": false
+  },
+  "demo_episode_counts": {
+    "ablations": 200,
+    "main": 200,
+    "robustness": 400
+  },
+  "dependencies": {
+    "Pillow": "12.3.0",
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.3",
+    "pytest": "9.1.1"
+  },
+  "development_final_test_result": "140 passed, 13 dependency deprecation warnings in 10.40s",
+  "generated_images": [
+    {
+      "frames": 1,
+      "path": "results/demo_verified/ablations/behavioral/full_reward_failure_trajectory.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/ablations/behavioral/full_reward_success_trajectory.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/ablations/behavioral/no_capture_reward_failure_trajectory.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/ablations/behavioral/no_capture_reward_success_trajectory.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/ablations/behavioral/no_distance_failure_trajectory.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/ablations/behavioral/no_distance_success_trajectory.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/ablations/behavioral/no_step_penalty_failure_trajectory.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/ablations/behavioral/no_step_penalty_success_trajectory.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/ablations/plots/ablation_learning_curves.png",
+      "size": [
+        1500,
+        1200
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/ablations/plots/capture_rate_ablation.png",
+      "size": [
+        1350,
+        750
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/ablations/plots/capture_time_ablation.png",
+      "size": [
+        1350,
+        750
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/ablations/plots/episode_length_ablation.png",
+      "size": [
+        1350,
+        750
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/main/behavioral/cooperative_q_learning_trajectory.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/main/behavioral/heuristic_trajectory.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/main/behavioral/independent_q_learning_trajectory.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/main/behavioral/random_trajectory.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 31,
+      "path": "results/demo_verified/main/gifs/cooperative_q_learning_failure.gif",
+      "size": [
+        600,
+        600
+      ]
+    },
+    {
+      "frames": 8,
+      "path": "results/demo_verified/main/gifs/cooperative_q_learning_success.gif",
+      "size": [
+        600,
+        600
+      ]
+    },
+    {
+      "frames": 3,
+      "path": "results/demo_verified/main/gifs/heuristic_success.gif",
+      "size": [
+        600,
+        600
+      ]
+    },
+    {
+      "frames": 31,
+      "path": "results/demo_verified/main/gifs/independent_q_learning_failure.gif",
+      "size": [
+        600,
+        600
+      ]
+    },
+    {
+      "frames": 9,
+      "path": "results/demo_verified/main/gifs/independent_q_learning_success.gif",
+      "size": [
+        600,
+        600
+      ]
+    },
+    {
+      "frames": 16,
+      "path": "results/demo_verified/main/gifs/random_success.gif",
+      "size": [
+        600,
+        600
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/main/plots/capture_rate_comparison.png",
+      "size": [
+        1500,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/main/plots/episode_length_comparison.png",
+      "size": [
+        1500,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/main/plots/reward_comparison.png",
+      "size": [
+        1500,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/main/plots/training_capture_curve.png",
+      "size": [
+        1500,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/main/plots/training_reward_curve.png",
+      "size": [
+        1500,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/robustness/plots/capture_rate_robustness.png",
+      "size": [
+        1500,
+        825
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/robustness/plots/cooperative_q_diagnostic.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/robustness/plots/independent_q_diagnostic.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/robustness/plots/performance_drop.png",
+      "size": [
+        1500,
+        825
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/robustness/plots/q_table_coverage.png",
+      "size": [
+        1500,
+        825
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/demo_verified/robustness/plots/stress_case_capture_rate.png",
+      "size": [
+        1500,
+        825
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/tiny_robustness/plots/capture_rate_robustness.png",
+      "size": [
+        1500,
+        825
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/tiny_robustness/plots/cooperative_q_diagnostic.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/tiny_robustness/plots/independent_q_diagnostic.png",
+      "size": [
+        900,
+        900
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/tiny_robustness/plots/performance_drop.png",
+      "size": [
+        1500,
+        825
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/tiny_robustness/plots/q_table_coverage.png",
+      "size": [
+        1500,
+        825
+      ]
+    },
+    {
+      "frames": 1,
+      "path": "results/tiny_robustness/plots/stress_case_capture_rate.png",
+      "size": [
+        1500,
+        825
+      ]
+    }
+  ],
+  "gif_layout_regeneration": [
+    {
+      "after_sha256": "b44d3d004d4bb7c962f95e0585d9bfafb17b296955b3e0e65815e323a77b3d11",
+      "before_sha256": "b7a9a74c4ad8b6a89b39b59ccc77076cc7e35a3a8d380b20f8361b0446829fc5",
+      "path": "results/reproducibility/gifs/cooperative_q_learning_success.gif",
+      "trajectory_sha256": "308001a3ff58bcfc85b806af855399748736b89d5b3beb1eb67e892eef20bde8"
+    },
+    {
+      "after_sha256": "d0c51ecc1869447e64a8993014492287075289b940556af9e98903b2a7a8dad5",
+      "before_sha256": "fdc233e12b1a0ee71de31ee440eb66448d299173305e2505bfee12997e1b1369",
+      "path": "results/reproducibility/gifs/heuristic_success.gif",
+      "trajectory_sha256": "e975e7e2d5186017fc29aa2a6ec16001817806ab60204e91e386ca3c4e83e227"
+    },
+    {
+      "after_sha256": "ca7761a0adaeaecf7300714c83fcbbabb3d6b8850f8808a41b355741b94cb74a",
+      "before_sha256": "7231173aaee67ba8cdf9f0cff24e1e4cbe08fbd72eb107df252a1b11611a7c3c",
+      "path": "results/reproducibility/gifs/independent_q_learning_failure.gif",
+      "trajectory_sha256": "38e4a81eadd16052354f91eead6e53ca15c5b9112ff36224d7e7c737e96fe299"
+    },
+    {
+      "after_sha256": "118820b8814b07ee83f14d24687fa07a69fb3007f44bec7cc087190c39889234",
+      "before_sha256": "60d32ffaf579c0b1d59117569ce9794ba4f8d6e4cadf5bea0d912fc8c82b7b5d",
+      "path": "results/reproducibility/gifs/independent_q_learning_success.gif",
+      "trajectory_sha256": "b19c001150940f8f5815bafa6295f6410a90a79c71c4e6172b94e5e2bc576ca0"
+    },
+    {
+      "after_sha256": "2d14ac7c53cbe789f67c3a0c4bc119d1cddd19dc2810952c3b476f674cf97e2a",
+      "before_sha256": "b55180b4d99d108056a46af8ef3ef8471d2a1a1d7288684c842786d60c7604ab",
+      "path": "results/reproducibility/gifs/random_success.gif",
+      "trajectory_sha256": "1efe6aa4442e0041f29a7dddf66b3a9238d4c76b45a38d5e83c7080df9ea1f65"
+    }
+  ],
+  "imports": [
+    "env.__init__",
+    "env.actions",
+    "env.capture",
+    "env.entities",
+    "env.grid_world",
+    "env.movement",
+    "env.position",
+    "env.rewards",
+    "env.target_capture_env",
+    "env.target_policy",
+    "agents.__init__",
+    "agents.base_agent",
+    "agents.heuristic_agent",
+    "agents.q_learning_agent",
+    "agents.random_agent",
+    "agents.shared_q_agent",
+    "algorithms.cooperative_q_learning",
+    "algorithms.q_update",
+    "analysis.behavioral_metrics",
+    "analysis.reward_ablation_analysis",
+    "analysis.robustness_analysis",
+    "analysis.trajectory_analysis",
+    "configs.ablation_config",
+    "configs.evaluation_config",
+    "configs.robustness_config",
+    "experiments.__init__",
+    "experiments.audit_reward_ablation",
+    "experiments.baseline_evaluation",
+    "experiments.evaluate_cooperative_q_learning",
+    "experiments.evaluate_q_learning",
+    "experiments.evaluation_utils",
+    "experiments.generate_behavioral_examples",
+    "experiments.reproduce",
+    "experiments.reproducibility",
+    "experiments.run_comparison",
+    "experiments.run_reward_ablation",
+    "experiments.run_robustness_evaluation",
+    "experiments.statistical_analysis",
+    "experiments.train_cooperative_q_learning",
+    "experiments.train_q_learning",
+    "visualization.gif_generator",
+    "visualization.renderer"
+  ],
+  "installation": {
+    "command": "python -m pip install -r requirements.txt",
+    "include_system_site_packages": false,
+    "pip_check": "passed",
+    "status": "passed"
+  },
+  "integrity": {
+    "errors": [],
+    "manifest_checks": [
+      {
+        "ignored_entries_not_in_release": 0,
+        "root": "results/reproducibility",
+        "tracked_entries_checked": 27
+      },
+      {
+        "ignored_entries_not_in_release": 48,
+        "root": "results/ablations",
+        "tracked_entries_checked": 27
+      },
+      {
+        "ignored_entries_not_in_release": 5,
+        "root": "results/ablations_audit",
+        "tracked_entries_checked": 3
+      },
+      {
+        "ignored_entries_not_in_release": 1,
+        "root": "results/robustness",
+        "tracked_entries_checked": 17
+      }
+    ],
+    "markdown_links_checked": 86
+  },
+  "platform": "Windows-11-10.0.26300-SP0",
+  "prepared_locally_only": true,
+  "python": "3.12.7",
+  "scientific_verification": {
+    "frozen_table_checks": 80,
+    "original_checkpoints_retrained": false,
+    "original_main_byte_identical_artifacts": 35,
+    "robustness_episode_rows": 20000,
+    "robustness_standard_rows_match_original": 5000,
+    "robustness_transitions": 410536
+  },
+  "snapshot": {
+    "excluded_inputs": [
+      "ignored checkpoints",
+      "ignored raw datasets",
+      "existing virtual environments",
+      "caches",
+      "Project Context prompts",
+      "scratch scripts"
+    ],
+    "final_inputs_synchronized": true,
+    "intended_release_file_count": 159,
+    "method": "git ls-files plus nonignored proposed deliverables; final documentation and verification records synchronized afterward"
+  },
+  "source_sha256": {
+    "agents/__init__.py": "4d191e4a635cf80ad3019bd73a59cd9edfe9f4bf7373daea34b268db493b16ff",
+    "agents/base_agent.py": "7c655a9af2071b01d14d7e93a915492e66186608f15aa81484998e025d6a52e5",
+    "agents/heuristic_agent.py": "8982efb3ca3808e65932f47d88068fd070156d25beb55614fa51e01eed4168bc",
+    "agents/q_learning_agent.py": "a8028a1a015f428ff40a066bccc12820013eddf99b8cc795975c8c3edf612e2a",
+    "agents/random_agent.py": "0cfbd067a41ce1c00972f42dedbdc4c292201e172812ebabc1013eb0778481e4",
+    "agents/shared_q_agent.py": "29fccc270739ffc1b3d95a569a9a3ef9f44d72f783c84767882503a600d5a69f",
+    "algorithms/cooperative_q_learning.py": "dc0ba1af1de5712434c183ff1a139255aa227b2a357ac112efe9c0e4436c0860",
+    "algorithms/q_update.py": "1b723221700c5d187f2783c5c1bb56791b894cfd51429778ca08c4733e113746",
+    "analysis/behavioral_metrics.py": "6cd30d8dafa4d1122e9d893a13b36494e93260d61521199a8475c8e75b790663",
+    "analysis/reward_ablation_analysis.py": "d83564ea80c1a077eded6a5b4cd8127d43ede3eeff286986ffcf02cc64200ba8",
+    "analysis/robustness_analysis.py": "f00357c0745b0acc07595042c5bde028696c6ded05e9470c74efdef22b44a313",
+    "analysis/trajectory_analysis.py": "e2731522ac52e8fb162cf0289e95f6cef5d4796fbf97ca6f52dbc34a735021b9",
+    "configs/ablation_config.py": "6860a326b44b6593ace33c6f65cc131e3c1507ca62ab20493cef5f977138598e",
+    "configs/evaluation_config.py": "44504ae63ba6363c4c90901237d2d82917604ac010a66d4c57b0b45a8be5f948",
+    "configs/robustness_config.py": "81ab73f2920cff29f114be94f1d094f93fa3068c8465eb105e9c8154c7cdf142",
+    "env/__init__.py": "93f232d3d6a38909cc31cd4465551ca11816961d56314931bf86034a7f16ef6a",
+    "env/actions.py": "f907f21140ae793fe4451593f510c785e9f85daa29e8d5074c1098d0ebc0cc93",
+    "env/capture.py": "b8fe507f8e7ecad61bb7d2f81d7ea8c8316610688539d7df29d095c75ef21b9c",
+    "env/entities.py": "7b5f18cabe9eb0aa8ddfa46a833021965dbea9bee5c598e131ab183e45c84247",
+    "env/grid_world.py": "920d23b2a90cc5f797df1c31c287a457de97aea48f9c079653818556815540f6",
+    "env/movement.py": "db055064f733e834cbce4b9c5c9cf6cd03088d468bfd35d8337ff6a0ee30caef",
+    "env/position.py": "90b14b8249ea980d9e69a43b8ec657beca7ff8124e8e635596b4e18c9ce5962b",
+    "env/rewards.py": "14b352cdfb22f56f3cba9e9c41f390280351b1852fea86faad641daf97b84c9d",
+    "env/target_capture_env.py": "adb8ffe785c3c144903070b16886a975fde14f6acaeea5e97cd5a1ae69012635",
+    "env/target_policy.py": "ca766081caaacb7085d53841746b976c6ea0a08ba50d9448a4974db92bb7fb27",
+    "experiments/__init__.py": "8f120f9c7d6d83e84e46cfdb2716058468667c319ec66f05dead64d8efda7713",
+    "experiments/audit_reward_ablation.py": "27c74794902b7f9d83203dabb2fa9d7a1c24888c2fce48540d83409c5d35a537",
+    "experiments/baseline_evaluation.py": "3fe25d4956338a90e2a8611e53cc59d29f77bceadfd814835635dec6463b0649",
+    "experiments/evaluate_cooperative_q_learning.py": "60072f77fd357478d26a6a62a5c8c5d83eb34499681f7d39830248f560beedca",
+    "experiments/evaluate_q_learning.py": "e17ec9b70058ebb456a083ee1092d097ef7906c65f6de5170262fa1c4cbadccd",
+    "experiments/evaluation_utils.py": "327bb6bd117f3a2b4357afc025d6abad9fdf8bc85e920ad676e446f922202141",
+    "experiments/generate_behavioral_examples.py": "09e95003c344779d4db7e964d5ccae1561be75fe60003751eaac11f473f84821",
+    "experiments/reproduce.py": "21ffe3efa327295942c62e427c20f4f506e0487c793cc8039ba0bc033c4a2efe",
+    "experiments/reproducibility.py": "8f85066e75f4259a9e23cbc0931868f00a5e9915409589c0105ae5d73f544549",
+    "experiments/run_comparison.py": "23f5891cac345a9e776b475551bcbf3679caf8de3e0038319e82cdd9dfffbbb7",
+    "experiments/run_reward_ablation.py": "ca8d9cadf1881bc387b0b15598d2e7b5fce8e3c18ac0fcbc1e184d89b419aedf",
+    "experiments/run_robustness_evaluation.py": "81f0af683c925f7b7a5dcb70c4c9cda2acd49c17f61aee08a6a07f75859e41ea",
+    "experiments/statistical_analysis.py": "bddf21253a40a12d157658bbbee00d330598239a2c53fa0ed6579210fa0cf034",
+    "experiments/train_cooperative_q_learning.py": "e55c4997e467ed0263d59f7ae2e5ad901df2a2cebc90b250748fbc8b9ea92649",
+    "experiments/train_q_learning.py": "b2192178516d93bad9ce82f205046570770b5a6c26b4ec40b5e8de18f183ec62",
+    "tests/__init__.py": "c6ab093d3d504764c7ff91982bcb621e9f8b6f6f5c8711acaf5e3b316a0b019c",
+    "tests/test_baseline_agents.py": "63e38641acf454ae3dd1cc0d4868922a8e404f0623381b543726003c6bb17df9",
+    "tests/test_capture.py": "83b176fa617fdf2d06fd7ddd07e1b66087f80f2e829e57ad7112eff3b03b9cd2",
+    "tests/test_cooperative_q_learning.py": "f2c5924344074ed860307d9f1dc45332cf78194515056e571c20152b8043a132",
+    "tests/test_entities.py": "a56a821505f3e55d9eafdef16d72e63e9b519de80ebc5fc10e2f77821c94a018",
+    "tests/test_environment.py": "d77e78a34b93f61b792003224cbc76dbb04872bb1273833acbc1e9e0bc581fa5",
+    "tests/test_evaluation_pipeline.py": "c3f6f20eef79082181662013c5fce0aa014514a370437676c880509e219643a8",
+    "tests/test_grid_world.py": "c6ae62ae984ba9f4e4fe30f8c97967314797959f5e949cd87355299ba42a6bfc",
+    "tests/test_movement.py": "80ee7c53883b95a45926656ccf254db1138145241b8810bed1591cebc16f7751",
+    "tests/test_phase11_phase12_contracts.py": "0b41d12090ee53c6bf34067d5214ecaa8be45241fce15e39d85c40497999abb9",
+    "tests/test_q_learning.py": "a9d8c42447eed82140c2c99aaec06d54a293825d80b452c41076ada3c3c05c6d",
+    "tests/test_reward_ablation.py": "e3436c789d6955abab6c99ae75e5339c23e3febf7bd4851ac6b57653cb5de263",
+    "tests/test_reward_ablation_audit.py": "82ba1e621ff823cab20eb6c8e45fd097cfe1e5cd18e98fdf97538cd30ebf08bf",
+    "tests/test_rewards.py": "4274a8d19fba3b4473a61070334397d3234c7bbfc4eca6b805446a5bcfd2c41d",
+    "tests/test_robustness_evaluation.py": "3534fc73ab334379464135dc5807fd0a9041f84da1f9027ad7bbc2b041e7191b",
+    "tests/test_setup.py": "fb905cd1b7009ff06c3ddf700c20e760796634fe6cb3cf143ce3d5daaea89a1e",
+    "tests/test_target.py": "61dc7bc6983fee06e40bb8fdb7a305eee078580aa044e74afa6f2f987d54534c",
+    "tests/test_trajectory_analysis.py": "b0230c7c41562b061b335f887c1e3b515c08e23584fa8541da700cb9dc9ed778",
+    "tests/test_visualization.py": "fbf43af333b85a204b023b44ed55c994c7925fbc1edfaaf4c7171d47a15e4306",
+    "visualization/gif_generator.py": "d130359ca577affff78b8666444a74a562be49624744be4a50d2c595ac281099",
+    "visualization/renderer.py": "9c52ce79c544ee78a30f0998d9c6189cf5221bf7c3949986e3f49dff540d4dd0"
+  },
+  "status": "passed",
+  "test_result": "140 passed in 11.03s",
+  "verification_date": "2026-10-06",
+  "visual_inspection": [
+    "main Cooperative GIF initial/middle/final frames",
+    "corrected main GIF legend and capture frame",
+    "robustness capture-rate figure",
+    "Independent robustness diagnostic path figure"
+  ]
+}

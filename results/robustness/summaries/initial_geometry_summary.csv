@@ -1,0 +1,22 @@
+method,condition,captured,seed_count,episode_count,initial_target_distance_sum_mean,initial_target_distance_sum_std,initial_hunter_separation_mean,initial_hunter_separation_std,initial_target_boundary_distance_mean,initial_target_boundary_distance_std
+Cooperative Q-Learning,held_out_initial_states,1,5,2500,13.3172,0.17218943056993938,6.566,0.18719508540557372,1.2124,0.01930802941783549
+Cooperative Q-Learning,held_out_seeds,1,5,2500,13.280800000000001,0.14870507725024057,6.7264,0.08279371956857604,1.1796,0.044618381862187736
+Cooperative Q-Learning,standard,1,5,2500,13.35,0.09418067742376879,6.7076,0.20961583909619047,1.1752,0.026929537686339905
+Cooperative Q-Learning,stress:boundary_target,1,5,500,11.0,0.0,1.0,0.0,0.0,0.0
+Cooperative Q-Learning,stress:far_target,1,5,500,27.0,0.0,9.0,0.0,0.0,0.0
+Cooperative Q-Learning,stress:opposite_side_hunters,1,5,500,9.0,0.0,9.0,0.0,4.0,0.0
+Cooperative Q-Learning,stress:same_side_hunters,1,5,500,35.0,0.0,1.0,0.0,0.0,0.0
+Cooperative Q-Learning,stress:widely_separated_hunters,1,5,500,18.0,0.0,18.0,0.0,4.0,0.0
+Independent Q-Learning,held_out_initial_states,0,2,2,5.5,2.1213203435596424,3.5,2.1213203435596424,1.5,2.1213203435596424
+Independent Q-Learning,held_out_initial_states,1,5,2498,13.323373146292585,0.1661533123048305,6.568355911823647,0.1849796679733855,1.2121547094188376,0.01940871419631577
+Independent Q-Learning,held_out_seeds,0,2,2,14.5,2.1213203435596424,9.5,2.1213203435596424,1.5,0.7071067811865476
+Independent Q-Learning,held_out_seeds,1,5,2498,13.279741082164328,0.15062132811656048,6.724226853707415,0.0800141677447901,1.179351503006012,0.04488476267413674
+Independent Q-Learning,standard,0,2,2,18.0,0.0,8.0,2.8284271247461903,0.0,0.0
+Independent Q-Learning,standard,1,5,2498,13.346305410821644,0.0923449424627039,6.706483366733467,0.2097618634214207,1.1761266533066133,0.026123917455401144
+Independent Q-Learning,stress:boundary_target,1,5,500,11.0,0.0,1.0,0.0,0.0,0.0
+Independent Q-Learning,stress:far_target,0,1,2,27.0,nan,9.0,nan,0.0,nan
+Independent Q-Learning,stress:far_target,1,5,498,27.0,0.0,9.0,0.0,0.0,0.0
+Independent Q-Learning,stress:opposite_side_hunters,1,5,500,9.0,0.0,9.0,0.0,4.0,0.0
+Independent Q-Learning,stress:same_side_hunters,0,1,1,35.0,nan,1.0,nan,0.0,nan
+Independent Q-Learning,stress:same_side_hunters,1,5,499,35.0,0.0,1.0,0.0,0.0,0.0
+Independent Q-Learning,stress:widely_separated_hunters,1,5,500,18.0,0.0,18.0,0.0,4.0,0.0

@@ -1,0 +1,175 @@
+{
+  "action_rng_schedule": "standard: source action base + 2*seed_index; other conditions: 60000000 + 1000000*condition_index + 2*seed_index (base configurable); hunter 1 adds 1; stream continuous within condition",
+  "coverage": "sum seen hunter action queries / sum all hunter action queries within training seed; fixed checkpoint keys; revisits counted",
+  "diagnostic_selection": "lowest nonstandard capture-rate condition per method; first failure by training/evaluation seed, otherwise longest episode with the same tie order",
+  "evaluation": "epsilon=0; existing seeded ties and zero-valued unseen states; no updates or insertion",
+  "grid_size_transfer": {
+    "included": false,
+    "reason": "same-grid reset and spatial robustness only; different grid sizes change encoded state support and boundary aliasing"
+  },
+  "protocol": {
+    "action_seed_base": 60000000,
+    "comparison_dir": "results\\validation\\run_a",
+    "eval_episodes": 500,
+    "held_out_seed_base": 50000000,
+    "initial_generator_seed": 70000000,
+    "initial_state_cases": 500,
+    "initial_state_seed_base": 51000000,
+    "output_dir": "results\\robustness",
+    "prior_evaluation_ranges": [
+      [
+        30000000,
+        30009999
+      ]
+    ],
+    "stress_repeats": 100,
+    "stress_seed_base": 52000000,
+    "verify_against": "results\\validation\\run_b"
+  },
+  "reset_catalog": {
+    "held_out_initial_exclusion": "all source training and prior main evaluation starts",
+    "training_starts_sha256": "83c0692a409c3f960640a16ae1039e1ef90f77438cc064d498e95fd34d0931dc",
+    "unique_prior_evaluation_starts": 2500,
+    "unique_training_starts": 24655
+  },
+  "seed_ranges": {
+    "fresh_environment_ranges": [
+      [
+        50000000,
+        50002499
+      ],
+      [
+        51000000,
+        51002499
+      ],
+      [
+        52000000,
+        52002499
+      ]
+    ],
+    "training_and_prior_evaluation": [
+      [
+        0,
+        4999
+      ],
+      [
+        1000000,
+        1004999
+      ],
+      [
+        2000000,
+        2004999
+      ],
+      [
+        3000000,
+        3004999
+      ],
+      [
+        4000000,
+        4004999
+      ],
+      [
+        10000000,
+        10002499
+      ],
+      [
+        30000000,
+        30009999
+      ]
+    ]
+  },
+  "source_comparison": {
+    "action_seed_base": 20000000,
+    "eval_episodes": 500,
+    "evaluation_seed_base": 10000000,
+    "grid_size": 10,
+    "max_steps": 100,
+    "output_dir": "results\\validation\\run_a",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "train_episodes": 5000,
+    "training_seed_stride": 1000000
+  },
+  "stress_cases": [
+    {
+      "agent_0": [
+        0,
+        0
+      ],
+      "agent_1": [
+        0,
+        9
+      ],
+      "name": "far_target",
+      "target": [
+        9,
+        5
+      ]
+    },
+    {
+      "agent_0": [
+        0,
+        0
+      ],
+      "agent_1": [
+        0,
+        1
+      ],
+      "name": "same_side_hunters",
+      "target": [
+        9,
+        9
+      ]
+    },
+    {
+      "agent_0": [
+        0,
+        5
+      ],
+      "agent_1": [
+        9,
+        5
+      ],
+      "name": "opposite_side_hunters",
+      "target": [
+        5,
+        5
+      ]
+    },
+    {
+      "agent_0": [
+        5,
+        5
+      ],
+      "agent_1": [
+        6,
+        5
+      ],
+      "name": "boundary_target",
+      "target": [
+        0,
+        5
+      ]
+    },
+    {
+      "agent_0": [
+        0,
+        0
+      ],
+      "agent_1": [
+        9,
+        9
+      ],
+      "name": "widely_separated_hunters",
+      "target": [
+        5,
+        5
+      ]
+    }
+  ]
+}

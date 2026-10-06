@@ -50,3 +50,24 @@ results/ablations_audit/*
 !results/checkpoints/.gitkeep
 Project Context/
 scratch/
+.pytest_cache/
+!results/robustness/
+results/robustness/*
+!results/robustness/summaries/
+results/robustness/summaries/*
+!results/robustness/summaries/robustness_config.json
+!results/robustness/summaries/checkpoint_identities.csv
+!results/robustness/summaries/held_out_initial_configurations.csv
+!results/robustness/summaries/per_seed_summary.csv
+!results/robustness/summaries/robustness_summary.csv
+!results/robustness/summaries/plot_source.csv
+!results/robustness/summaries/initial_geometry_summary.csv
+!results/robustness/summaries/diagnostic_selection.csv
+!results/robustness/summaries/verification.json
+!results/robustness/summaries/artifact_manifest.json
+!results/robustness/plots/
+results/robustness/plots/*
+!results/robustness/plots/*.png
+!results/robustness/trajectories/
+results/robustness/trajectories/*
+!results/robustness/trajectories/*_diagnostic.json
