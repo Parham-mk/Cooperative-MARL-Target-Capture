@@ -1,0 +1,3 @@
+method,condition,training_seed,evaluation_seed,captured,episode_length,trajectory,selection_rule
+Independent Q-Learning,stress:far_target,4,52000443,0,100,trajectories/independent_q_diagnostic.json,"lowest nonstandard capture-rate condition per method; first failure by training/evaluation seed, otherwise longest episode with the same tie order"
+Cooperative Q-Learning,held_out_initial_states,2,51001415,1,86,trajectories/cooperative_q_diagnostic.json,"lowest nonstandard capture-rate condition per method; first failure by training/evaluation seed, otherwise longest episode with the same tie order"

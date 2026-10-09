@@ -1,0 +1,811 @@
+{
+  "episode_rows": 20000,
+  "standard_rows_match_original": 5000,
+  "matched_initial_conditions": true,
+  "no_learning_calls": true,
+  "frozen_table_checks": [
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 0,
+      "condition": "standard",
+      "state_counts": [
+        9789,
+        9799
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 0,
+      "condition": "standard",
+      "state_counts": [
+        49182,
+        49182
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 0,
+      "condition": "held_out_seeds",
+      "state_counts": [
+        9789,
+        9799
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 0,
+      "condition": "held_out_seeds",
+      "state_counts": [
+        49182,
+        49182
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 0,
+      "condition": "held_out_initial_states",
+      "state_counts": [
+        9789,
+        9799
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 0,
+      "condition": "held_out_initial_states",
+      "state_counts": [
+        49182,
+        49182
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 0,
+      "condition": "stress:far_target",
+      "state_counts": [
+        9789,
+        9799
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 0,
+      "condition": "stress:far_target",
+      "state_counts": [
+        49182,
+        49182
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 0,
+      "condition": "stress:same_side_hunters",
+      "state_counts": [
+        9789,
+        9799
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 0,
+      "condition": "stress:same_side_hunters",
+      "state_counts": [
+        49182,
+        49182
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 0,
+      "condition": "stress:opposite_side_hunters",
+      "state_counts": [
+        9789,
+        9799
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 0,
+      "condition": "stress:opposite_side_hunters",
+      "state_counts": [
+        49182,
+        49182
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 0,
+      "condition": "stress:boundary_target",
+      "state_counts": [
+        9789,
+        9799
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 0,
+      "condition": "stress:boundary_target",
+      "state_counts": [
+        49182,
+        49182
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 0,
+      "condition": "stress:widely_separated_hunters",
+      "state_counts": [
+        9789,
+        9799
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 0,
+      "condition": "stress:widely_separated_hunters",
+      "state_counts": [
+        49182,
+        49182
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 1,
+      "condition": "standard",
+      "state_counts": [
+        9786,
+        9790
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 1,
+      "condition": "standard",
+      "state_counts": [
+        49554,
+        49554
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 1,
+      "condition": "held_out_seeds",
+      "state_counts": [
+        9786,
+        9790
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 1,
+      "condition": "held_out_seeds",
+      "state_counts": [
+        49554,
+        49554
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 1,
+      "condition": "held_out_initial_states",
+      "state_counts": [
+        9786,
+        9790
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 1,
+      "condition": "held_out_initial_states",
+      "state_counts": [
+        49554,
+        49554
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 1,
+      "condition": "stress:far_target",
+      "state_counts": [
+        9786,
+        9790
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 1,
+      "condition": "stress:far_target",
+      "state_counts": [
+        49554,
+        49554
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 1,
+      "condition": "stress:same_side_hunters",
+      "state_counts": [
+        9786,
+        9790
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 1,
+      "condition": "stress:same_side_hunters",
+      "state_counts": [
+        49554,
+        49554
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 1,
+      "condition": "stress:opposite_side_hunters",
+      "state_counts": [
+        9786,
+        9790
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 1,
+      "condition": "stress:opposite_side_hunters",
+      "state_counts": [
+        49554,
+        49554
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 1,
+      "condition": "stress:boundary_target",
+      "state_counts": [
+        9786,
+        9790
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 1,
+      "condition": "stress:boundary_target",
+      "state_counts": [
+        49554,
+        49554
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 1,
+      "condition": "stress:widely_separated_hunters",
+      "state_counts": [
+        9786,
+        9790
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 1,
+      "condition": "stress:widely_separated_hunters",
+      "state_counts": [
+        49554,
+        49554
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 2,
+      "condition": "standard",
+      "state_counts": [
+        9783,
+        9782
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 2,
+      "condition": "standard",
+      "state_counts": [
+        49768,
+        49768
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 2,
+      "condition": "held_out_seeds",
+      "state_counts": [
+        9783,
+        9782
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 2,
+      "condition": "held_out_seeds",
+      "state_counts": [
+        49768,
+        49768
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 2,
+      "condition": "held_out_initial_states",
+      "state_counts": [
+        9783,
+        9782
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 2,
+      "condition": "held_out_initial_states",
+      "state_counts": [
+        49768,
+        49768
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 2,
+      "condition": "stress:far_target",
+      "state_counts": [
+        9783,
+        9782
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 2,
+      "condition": "stress:far_target",
+      "state_counts": [
+        49768,
+        49768
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 2,
+      "condition": "stress:same_side_hunters",
+      "state_counts": [
+        9783,
+        9782
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 2,
+      "condition": "stress:same_side_hunters",
+      "state_counts": [
+        49768,
+        49768
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 2,
+      "condition": "stress:opposite_side_hunters",
+      "state_counts": [
+        9783,
+        9782
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 2,
+      "condition": "stress:opposite_side_hunters",
+      "state_counts": [
+        49768,
+        49768
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 2,
+      "condition": "stress:boundary_target",
+      "state_counts": [
+        9783,
+        9782
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 2,
+      "condition": "stress:boundary_target",
+      "state_counts": [
+        49768,
+        49768
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 2,
+      "condition": "stress:widely_separated_hunters",
+      "state_counts": [
+        9783,
+        9782
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 2,
+      "condition": "stress:widely_separated_hunters",
+      "state_counts": [
+        49768,
+        49768
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 3,
+      "condition": "standard",
+      "state_counts": [
+        9773,
+        9769
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 3,
+      "condition": "standard",
+      "state_counts": [
+        49972,
+        49972
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 3,
+      "condition": "held_out_seeds",
+      "state_counts": [
+        9773,
+        9769
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 3,
+      "condition": "held_out_seeds",
+      "state_counts": [
+        49972,
+        49972
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 3,
+      "condition": "held_out_initial_states",
+      "state_counts": [
+        9773,
+        9769
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 3,
+      "condition": "held_out_initial_states",
+      "state_counts": [
+        49972,
+        49972
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 3,
+      "condition": "stress:far_target",
+      "state_counts": [
+        9773,
+        9769
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 3,
+      "condition": "stress:far_target",
+      "state_counts": [
+        49972,
+        49972
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 3,
+      "condition": "stress:same_side_hunters",
+      "state_counts": [
+        9773,
+        9769
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 3,
+      "condition": "stress:same_side_hunters",
+      "state_counts": [
+        49972,
+        49972
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 3,
+      "condition": "stress:opposite_side_hunters",
+      "state_counts": [
+        9773,
+        9769
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 3,
+      "condition": "stress:opposite_side_hunters",
+      "state_counts": [
+        49972,
+        49972
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 3,
+      "condition": "stress:boundary_target",
+      "state_counts": [
+        9773,
+        9769
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 3,
+      "condition": "stress:boundary_target",
+      "state_counts": [
+        49972,
+        49972
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 3,
+      "condition": "stress:widely_separated_hunters",
+      "state_counts": [
+        9773,
+        9769
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 3,
+      "condition": "stress:widely_separated_hunters",
+      "state_counts": [
+        49972,
+        49972
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 4,
+      "condition": "standard",
+      "state_counts": [
+        9767,
+        9771
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 4,
+      "condition": "standard",
+      "state_counts": [
+        49412,
+        49412
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 4,
+      "condition": "held_out_seeds",
+      "state_counts": [
+        9767,
+        9771
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 4,
+      "condition": "held_out_seeds",
+      "state_counts": [
+        49412,
+        49412
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 4,
+      "condition": "held_out_initial_states",
+      "state_counts": [
+        9767,
+        9771
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 4,
+      "condition": "held_out_initial_states",
+      "state_counts": [
+        49412,
+        49412
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 4,
+      "condition": "stress:far_target",
+      "state_counts": [
+        9767,
+        9771
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 4,
+      "condition": "stress:far_target",
+      "state_counts": [
+        49412,
+        49412
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 4,
+      "condition": "stress:same_side_hunters",
+      "state_counts": [
+        9767,
+        9771
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 4,
+      "condition": "stress:same_side_hunters",
+      "state_counts": [
+        49412,
+        49412
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 4,
+      "condition": "stress:opposite_side_hunters",
+      "state_counts": [
+        9767,
+        9771
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 4,
+      "condition": "stress:opposite_side_hunters",
+      "state_counts": [
+        49412,
+        49412
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 4,
+      "condition": "stress:boundary_target",
+      "state_counts": [
+        9767,
+        9771
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 4,
+      "condition": "stress:boundary_target",
+      "state_counts": [
+        49412,
+        49412
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Independent Q-Learning",
+      "training_seed": 4,
+      "condition": "stress:widely_separated_hunters",
+      "state_counts": [
+        9767,
+        9771
+      ],
+      "unchanged": true
+    },
+    {
+      "method": "Cooperative Q-Learning",
+      "training_seed": 4,
+      "condition": "stress:widely_separated_hunters",
+      "state_counts": [
+        49412,
+        49412
+      ],
+      "unchanged": true
+    }
+  ],
+  "checkpoint_files_unchanged": true,
+  "held_out_initial_configurations_absent_from_source_training_and_evaluation": true,
+  "checkpoint_replica_hashes_match": true
+}

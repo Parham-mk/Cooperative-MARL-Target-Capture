@@ -178,7 +178,7 @@ def compare_reproductions(run_a: Path, run_b: Path):
 def publish_evidence(source: Path, destination: Path):
     source, destination = Path(source), Path(destination)
     if destination.exists():
-        shutil.rmtree(destination)
+        raise FileExistsError("evidence destination already exists; use a fresh publish directory")
     include = [
         "summaries/experiment_config.json",
         "summaries/comparison_summary.csv",

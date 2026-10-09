@@ -28,6 +28,7 @@ class GIFGenerator:
     def generate(self, trajectory: List[Dict[str, Any]], title: str, filepath: str, fps: int = 5):
         """Creates an animated GIF of the trajectory."""
         fig, ax = plt.subplots(figsize=(6, 6))
+        fig.subplots_adjust(left=0.1, right=0.9, bottom=0.17, top=0.88)
         
         a0_patch = patches.Circle((0, 0), 0.3, fc=self.colors["agent_0"], label="Agent 0")
         a1_patch = patches.Circle((0, 0), 0.3, fc=self.colors["agent_1"], label="Agent 1")
@@ -38,7 +39,7 @@ class GIFGenerator:
             ax.add_patch(a0_patch)
             ax.add_patch(a1_patch)
             ax.add_patch(t_patch)
-            ax.legend(loc="upper right", bbox_to_anchor=(1.3, 1.0))
+            ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.08), ncol=3)
             return a0_patch, a1_patch, t_patch
             
         def update(frame_idx):

@@ -1,327 +1,161 @@
 # Emergent Cooperation in Multi-Agent Reinforcement Learning for Target Capture
 
-This repository is an interpretable multi-agent reinforcement learning study in a deterministic, seeded GridWorld. Two hunters pursue a moving random target. Capture occurs when both hunters are Manhattan-adjacent to the target at the same time.
+A reproducible, interpretable tabular study of two hunters capturing a moving target: Random and Heuristic baselines, Independent Q-Learning, and Shared-Policy Cooperative Q-Learning, with behavioral analysis, reward ablation and frozen-policy robustness evaluation.
 
-## Current status
+![Representative learned capture](results/reproducibility/gifs/cooperative_q_learning_success.gif)
 
-Phases 0–13 are implemented and validated:
+Real Cooperative rollout, selected closest to the median successful capture time; ties use training seed and evaluation seed. [Selection and provenance](results/reproducibility/behavioral/representative_selection.csv).
 
-- GridWorld, movement, collision handling, target policy, capture, and rendering
-- team reward and non-learning Random and Heuristic baselines
-- Independent Q-Learning with one table per hunter
-- Shared-Policy Cooperative Q-Learning with one table used by both hunters
-- five-seed quantitative comparison
-- frozen-policy trajectory recording, behavioral metrics, plots, and GIFs
-- deterministic reproduction checks for raw data, training histories, summaries, and checkpoints
-- controlled five-seed reward ablation, learning-speed analysis, and behavioral comparison
+## Abstract
 
-Deep MARL, learned communication, continuous actions, and statistical hypothesis testing are outside the current scope.
+Two hunters must become simultaneously adjacent to a random moving target in a 10×10 GridWorld. Across five independently trained seeds, shared-policy tabular Q-learning captured in all 2,500 evaluation episodes and averaged 16.84 steps, compared with 99.92% capture and 20.28 steps for independent tables. Removing distance shaping reduced capture to 93.72% and delayed learning; removing the explicit capture bonus preserved observed perfect capture. Frozen original policies retained their capture rates on fresh seeds and verified held-out reset configurations. These results demonstrate effective learned task completion in a small benchmark; they do not isolate a causal effect of parameter sharing or prove general cooperation.
 
-## Environment and reward
+## Motivation and research questions
 
-The default experiment uses a `10 × 10` grid, a 100-step limit, two hunters, and one target. Every entity chooses from `UP`, `DOWN`, `LEFT`, `RIGHT`, and `STAY`. Hunter actions are chosen from the same pre-step state, applied sequentially, and followed by the target action. Entities cannot move outside the grid or into an occupied cell.
+Capturing requires both hunters to reach neighboring cells at the same time, so individual greedy pursuit may be insufficient. This small environment makes reward design, state representation and learned behavior inspectable. The study asks:
 
-The shared team reward is:
+1. How do learned policies compare with random movement and horizontal-first greedy pursuit?
+2. How does a shared relative-state policy compare with separate absolute-state tables?
+3. Which reward components affect capture, duration and learning speed?
+4. Do frozen policies retain performance on new seeds, held-out starts and spatial probes?
 
-```text
-sum of both hunters' reductions in Manhattan distance to the moving target
-+ 20 on capture
-- 0.05 each step
-```
+## Environment and formulation
 
-Capture has zero Q-learning bootstrap value. Time-limit truncation retains bootstrap value.
+The physical state contains the three distinct positions. Each hunter selects one of `UP`, `DOWN`, `LEFT`, `RIGHT`, `STAY`; the joint hunter action space has 25 combinations. Actions are chosen from the same pre-step state, applied sequentially (hunter 0 then hunter 1), and followed by target movement. Attempts to leave the grid or enter an occupied cell are blocked. The target samples uniformly among boundary-valid actions, including STAY; occupied cells can block its sampled move.
 
-## Learning methods
+Capture occurs **after a transition when both hunters have Manhattan distance exactly one from the target**. Nonoverlap forces distinct adjacent cells; no additional opposite-side requirement exists. Capture terminates the episode; otherwise the 100-step horizon truncates it. Initial adjacency alone does not terminate at reset.
 
-### Independent Q-Learning
+The tabular learners maximize discounted team return with discount 0.95. Their encoded observations are:
 
-Each hunter owns a separate sparse table. Its absolute state key is:
+| Method | Encoded policy state | Tables |
+|---|---|---|
+| Independent Q-Learning | `(hunter_x, hunter_y, target_x, target_y)` | One per hunter |
+| Shared-Policy Cooperative Q-Learning | `(target_dx, target_dy, teammate_dx, teammate_dy)` | One shared sparse table, two hunter wrappers |
 
-```text
-(hunter_x, hunter_y, target_x, target_y)
-```
+Independent encoding omits the teammate. Cooperative deltas are measured from the acting hunter and expose teammate relationships, but omit absolute boundary information and can alias physical configurations. Neither representation is claimed to establish a fully observed Markov state. “Cooperative” names the shared policy/team-reward implementation, not a demonstrated communication or role-learning mechanism.
 
-### Shared-Policy Cooperative Q-Learning
-
-Two logical hunter wrappers use one sparse Q-table and one policy architecture. Each hunter encodes the same environment state from its own perspective:
+Let `D_t` be the **sum** of both hunters' Manhattan distances to the target at timestep `t`. The team reward is:
 
 ```text
-(target_dx, target_dy, teammate_dx, teammate_dy)
+r_t = distance_weight * (D_t - D_(t+1))
+    + capture_weight * I(capture at t+1)
+    + step_penalty
+
+default weights: 1.0, 20.0, -0.05
 ```
 
-Both actions are selected before the environment step. The resulting team reward updates the shared table once for each hunter transition.
+Distances use the respective target position at each timestep. Reward is computed once per transition, added once to episode return and supplied to both hunter updates. Q-learning uses `Q ← Q + α[r + γ max Q(next) − Q]`, with zero bootstrap on capture and retained bootstrap on time-limit truncation. Shared-table updates run in hunter-0 then hunter-1 order after both actions have been selected.
 
-Both methods use seeded epsilon-greedy action selection with random tie-breaking. Evaluation sets epsilon to zero and treats unseen states as zero-valued without adding them to a table.
+## Methods and architecture
 
-## Reproduced Phase 11 protocol
+Random hunters sample uniformly from all five actions. The Heuristic moves toward the target horizontally first, then vertically; it does not plan around collisions or teammates. Independent Q-Learning learns separate policies. Shared-Policy Cooperative Q-Learning pools both hunters' experience into the same relative-state table. Both learned methods use learning rate 0.1, initial epsilon 1.0, episode decay 0.995 and floor 0.05.
 
-- training seeds: `0, 1, 2, 3, 4`
-- learning episodes: 5,000 per method and seed
-- evaluation episodes: 500 per method and seed
-- evaluation seed range: 10,000,000–10,002,499
-- evaluation uses frozen policies and the same environment seeds for every method
-- uncertainty: mean ± sample standard deviation across five independent seed-level estimates
+```mermaid
+flowchart LR
+    S[Pre-step positions] --> O[Hunter observations]
+    O --> A[Select both actions]
+    A --> E[Hunter moves then target move]
+    E --> N[Next positions and outcome]
+    S --> R[One team reward]
+    N --> R
+    R --> U[Training updates: hunter 0 then 1]
+    N --> U
+    U --> Q[Separate or shared Q-tables]
+    Q --> A
+```
 
-Two complete executions produced byte-identical raw CSVs, training histories, summary tables, curve-source data, and all 15 learned checkpoints.
+Evaluation skips updates and freezes tables. Epsilon is zero; greedy ties use seeded randomness, and unseen-state queries return zero values without inserting keys. [Exact mechanics, schedules and evidence](docs/methods_and_evidence.md).
 
-### Quantitative results
+## Experimental protocol and main results
 
-| Method | Capture rate | Episode length | Capture time on successes | Episode reward |
+Five training seeds (0–4) each train both learned methods for 5,000 episodes. Every method is evaluated on the same 500 environment seeds per training run, for 2,500 episodes per method. Training and evaluation environment ranges are disjoint. Results first average episodes within seed, then average seed estimates; `±` is **sample standard deviation across five seed estimates**, not a confidence interval. Capture time is conditional on success; zero-success capture time is N/A. Episode length includes failed 100-step episodes.
+
+| Method | Capture rate | Successful capture time | All-episode length | Episode return |
 |---|---:|---:|---:|---:|
-| Random | 0.0660 ± 0.0101 | 96.1988 ± 0.4606 | 42.1298 ± 2.7820 | -2.5575 ± 0.5226 |
-| Heuristic | 0.3636 ± 0.0162 | 66.4816 ± 1.5012 | 7.8159 ± 0.1103 | 14.0743 ± 0.4557 |
-| Independent Q-Learning | 0.9992 ± 0.0011 | 20.2772 ± 0.7763 | 20.2131 ± 0.8073 | 30.3193 ± 0.0657 |
+| Random | 0.0660 ± 0.0101 | 42.1298 ± 2.7820 | 96.1988 ± 0.4606 | −2.5575 ± 0.5226 |
+| Heuristic | 0.3636 ± 0.0162 | 7.8159 ± 0.1103 | 66.4816 ± 1.5012 | 14.0743 ± 0.4557 |
+| Independent Q-Learning | 0.9992 ± 0.0011 | 20.2131 ± 0.8073 | 20.2772 ± 0.7763 | 30.3193 ± 0.0657 |
 | Cooperative Q-Learning | 1.0000 ± 0.0000 | 16.8412 ± 0.4470 | 16.8412 ± 0.4470 | 30.5079 ± 0.0755 |
 
-Both learned methods captured the target in nearly every episode. Under this protocol, the shared-policy method completed episodes about 3.44 steps sooner on average than Independent Q-Learning. These descriptive results do not establish statistical significance or isolate whether teammate-relative state, parameter sharing, or their combination caused the difference.
+The shared method's mean all-episode length is 3.436 steps shorter (about 16.9%) under this protocol. Both representation and parameter sharing change, so the comparison cannot attribute that difference solely to cooperation. The Heuristic's short successful capture time reflects conditioning on its successful subset, alongside many failures.
 
-The exact summary is in [comparison_summary.csv](results/reproducibility/summaries/comparison_summary.csv), with seed-level values in [per_seed_summary.csv](results/reproducibility/summaries/per_seed_summary.csv).
+Values come from [generated summaries](results/reproducibility/summaries/comparison_summary.csv), [seed estimates](results/reproducibility/summaries/per_seed_summary.csv) and [configuration](results/reproducibility/summaries/experiment_config.json). Two original full-budget main runs matched across [35 byte-identical checked artifacts](results/reproducibility/reproduction_verification.json).
 
-![Capture-rate comparison](results/reproducibility/plots/capture_rate_comparison.png)
+![Episode lengths](results/reproducibility/plots/episode_length_comparison.png)
 
-## Phase 12 behavioral analysis
+## Behavioral evidence
 
-Behavioral analysis reused the five reproduced checkpoint sets and the same 500 evaluation episodes per seed. Policies remained frozen, and every recorded transition includes the actual hunter actions, target action, reward, positions, termination flags, checkpoint identity, and selection rule.
+The Heuristic has smaller mean hunter-target distance (2.6032) than the learned policies (Independent 3.5364; Cooperative 4.0687), yet captures much less often. Proximity alone does not measure capture effectiveness. Cooperative simultaneous-adjacency fraction is 0.0780 versus Independent 0.0700; because capture ends the episode and collisions enforce distinct cells, this is coupled to success and duration. The recorded distinct-side indicator is mechanically redundant with simultaneous adjacency here. These observations do not prove stable roles or causal coordination.
 
-### Behavioral metrics
+All visualizations are real frozen-policy trajectories selected by documented rules. [Behavioral summaries](results/reproducibility/behavioral/behavioral_summary.csv), [actual trajectories](results/reproducibility/trajectories/), [GIFs](results/reproducibility/gifs/) and [metric definitions and limitations](docs/methods_and_evidence.md#behavioral-evidence) provide the evidence.
 
-Metrics are averaged within each training seed first, followed by mean ± sample standard deviation across five seed-level estimates.
+![Representative Independent capture](results/reproducibility/gifs/independent_q_learning_success.gif)
 
-| Method | Mean target distance | Hunter separation | Simultaneous adjacency fraction | Distinct-side fraction |
-|---|---:|---:|---:|---:|
-| Random | 6.5217 ± 0.0262 | 6.6673 ± 0.0430 | 0.0038 ± 0.0003 | 0.0038 ± 0.0003 |
-| Heuristic | 2.6032 ± 0.0314 | 2.6826 ± 0.1108 | 0.0501 ± 0.0025 | 0.0501 ± 0.0025 |
-| Independent Q-Learning | 3.5364 ± 0.0316 | 4.0453 ± 0.1273 | 0.0700 ± 0.0033 | 0.0700 ± 0.0033 |
-| Cooperative Q-Learning | 4.0687 ± 0.0408 | 4.4486 ± 0.1180 | 0.0780 ± 0.0027 | 0.0780 ± 0.0027 |
+## Controlled reward ablation
 
-The shared-policy agents captured sooner while maintaining greater mean separation than the independent agents. Their simultaneous-adjacency fraction was also higher. Since episodes terminate immediately at capture, simultaneous adjacency largely reflects capture frequency and episode duration. Since collision handling already prevents hunters from occupying the same cell, the current distinct-side indicator equals simultaneous adjacency in this environment. These metrics provide evidence consistent with more efficient positioning, but they do not independently demonstrate stable roles or a general pincer strategy.
+Each variant retrains five fresh shared Q-tables for 5,000 episodes, then uses the same 500 evaluation episodes per seed. Only the indicated reward component changes.
 
-The full seed-level table is [behavioral_seed_summary.csv](results/reproducibility/behavioral/behavioral_seed_summary.csv).
-
-### Representative episodes
-
-A representative success is the successful episode whose capture time is closest to that method's median successful capture time. Ties are resolved by training seed and then evaluation seed. A learned-policy failure is the first failure under the same seed ordering.
-
-| Method | Selected success | Evaluation seed | Length |
+| Variant `(distance, capture, step)` | Capture rate | Successful capture time | All-episode length |
 |---|---:|---:|---:|
-| Random | training seed 1 | 10,000,904 | 38 |
-| Heuristic | training seed 0 | 10,000,063 | 8 |
-| Independent Q-Learning | training seed 0 | 10,000,009 | 17 |
-| Cooperative Q-Learning | training seed 0 | 10,000,010 | 15 |
+| Full reward `(1,20,−0.05)` | 1.0000 ± 0.0000 | 16.8412 ± 0.4470 | 16.8412 ± 0.4470 |
+| No distance `(0,20,−0.05)` | 0.9372 ± 0.0099 | 32.4607 ± 1.1130 | 36.7068 ± 0.8946 |
+| No step penalty `(1,20,0)` | 1.0000 ± 0.0000 | 16.9244 ± 0.5954 | 16.9244 ± 0.5954 |
+| No capture reward `(1,0,−0.05)` | 1.0000 ± 0.0000 | 15.6696 ± 0.4765 | 15.6696 ± 0.4765 |
 
-Independent Q-Learning failed in 2 of 2,500 evaluation episodes. The saved failure is training seed 0, evaluation seed 10,000,451; both hunters stayed relatively close to the target but never became adjacent simultaneously before the 100-step truncation. Cooperative Q-Learning had no failures in the complete 2,500-episode dataset, so no cooperative failure trajectory was fabricated.
+Removing distance shaping slowed capture and delayed the first complete 100-episode window with ≥50% capture from 254.6±6.7 to 921.6±88.5 episodes. The measured step-penalty benefit is weak, and explicit capture reward was **not necessary for observed success**. Raw returns use different definitions and must not rank ablation success. [Generated result table](results/ablations/summaries/reward_ablation_summary.csv) and [full report](docs/phase13_reward_ablation.md).
 
-| Independent Q-Learning | Shared-Policy Cooperative Q-Learning |
-|---|---|
-| ![Independent trajectory](results/reproducibility/behavioral/independent_q_learning_trajectory.png) | ![Cooperative trajectory](results/reproducibility/behavioral/cooperative_q_learning_trajectory.png) |
-| [Representative success GIF](results/reproducibility/gifs/independent_q_learning_success.gif) | [Representative success GIF](results/reproducibility/gifs/cooperative_q_learning_success.gif) |
+An [independent capture-rate audit](docs/phase13_capture_rate_audit.md) reproduced all 10,000 original ablation rows and found no leakage or inflated success accounting. On 10,000 fresh episodes per variant, the three distance-shaping variants again achieved all captures; no distance achieved 92.91%. An untrained shared-table control achieved 6.84%. Distance shaping still directs the task: the minimum summed distance is two, exactly at capture. Discounting also retains an early-reward incentive without a step penalty. These explain plausibility without establishing a causal mechanism. **1.0 is a finite-sample observation, not guaranteed success.**
 
-Selection details and trajectory paths are recorded in [representative_selection.csv](results/reproducibility/behavioral/representative_selection.csv). Machine-readable trajectories are under [results/reproducibility/trajectories](results/reproducibility/trajectories/).
+## Generalization and robustness
 
-## Reward Ablation Study
+The original main-study checkpoints were evaluated without retraining on Standard, fresh environment seeds, 2,500 initial configurations verified absent from all source training/main evaluation resets, and five fixed spatial probes. Each primary condition has 500 episodes per method and training seed; each probe has 100. Both methods receive matched seeds/starts. Coverage counts encoded action queries present in the frozen checkpoint, including revisits; seed-level numerator and denominator are explicit.
 
-Phase 13 tests how each reward component affects learning speed, capture success, efficiency, and positioning. Every condition uses the existing Shared-Policy Cooperative Q-Learning method, trained from an empty table. The full-reward condition was retrained independently; its five checkpoints and 2,500 evaluation rows exactly match the reproduced Phase 11 cooperative baseline.
+| Method | Condition | Capture rate | All-episode length | Q-query coverage |
+|---|---|---:|---:|---:|
+| Independent Q-Learning | Fresh seeds | 0.9992 ± 0.0011 | 20.4680 ± 0.9791 | 0.9980 ± 0.0001 |
+| Independent Q-Learning | Held-out starts | 0.9992 ± 0.0011 | 20.5300 ± 0.6015 | 0.9978 ± 0.0003 |
+| Cooperative Q-Learning | Fresh seeds | 1.0000 ± 0.0000 | 17.2916 ± 0.4675 | 0.9436 ± 0.0033 |
+| Cooperative Q-Learning | Held-out starts | 1.0000 ± 0.0000 | 17.1540 ± 0.2670 | 0.9447 ± 0.0040 |
 
-The reward equation is:
+Mean capture-rate change from Standard was zero. In fixed far-target and same-side probes, Independent captured 99.6% and 99.8%; Cooperative captured 100% in all five probes. Cooperative was slower than Independent in three probes despite its shorter standard duration. Its coverage fell to roughly 76–78% in those probes without observed failure, so unseen keys alone do not imply failure.
+
+The [robustness report](docs/robustness_evaluation.md) documents corrected reproducibility gaps, complete seed ranges, checkpoint hashes, reset-catalog proof, query denominators, rewards/deltas, spatial results and selected diagnostics. [Saved results](results/robustness/summaries/robustness_summary.csv) and [verification](results/robustness/summaries/verification.json) cover 20,000 rollouts, 80 unchanged-table checks and exact replication of all 5,000 Standard learned-policy rows. Grid-size transfer is excluded; these are same-grid tests. This study is distinct from the reward-variant capture audit.
+
+## Findings, limitations and future work
+
+Learned policies complete capture much more frequently than these two baselines. Distance shaping has descriptive support for faster learning and efficient capture; necessity of the explicit bonus is unsupported. Same-grid held-out capture remains stable, while difficult geometries affect efficiency. These findings are specific to five policies, one small grid, one random target and a fixed budget. Saturation limits discrimination; SD does not establish significance. State aliasing, simultaneous representation/sharing changes and sequential collision/update order limit causal conclusions. “Unseen starts” means reset configurations, not every intermediate training state or encoded key.
+
+Future work could independently vary sharing and representation, evaluate larger grids/target strategies, and study partial observability with controlled budgets. No deep RL, learned communication, extra agents, obstacles, hyperparameter search or publication claim is included.
+
+## Installation and reproduction
+
+From the repository root, Windows PowerShell:
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python -m pytest -q
+python -m experiments.reproduce --output-dir results/demo_new
+```
+
+Python 3.10+ is required; Python 3.12 is verified. POSIX uses `python3 -m venv .venv` and `. .venv/bin/activate`, followed by the same Python commands. The demo generates its own checkpoints/raw data and exercises comparison, behavior/GIFs, all four ablations, robustness and plots using **small demonstration budgets**. Choose a fresh output destination.
+
+[The reproduction guide](docs/reproducibility.md) gives verified commands and prerequisites for baselines, individual train/eval, full-budget main comparison, behavioral generation, ablation/audit, robustness, saved-data analysis and repeat verification. A clone includes selected evidence but excludes large raw/checkpoint collections, so regenerate those before analyses/evaluations that require them. [Clean release validation](docs/release_verification.md) records installation, tests, functional workflows, link checks and artifact inspection without ignored local inputs. Historical [manifests](results/reproducibility/artifact_manifest.json) and reports define their checked scopes.
+
+## Repository structure and citation
 
 ```text
-D_t = sum_i Manhattan(hunter_i,t, target_t)
-r_t = distance_weight * (D_(t-1) - D_t)
-      + capture_weight * indicator(capture at t)
-      + step_penalty
+env/            Grid, movement, target policy, capture and reward
+agents/         Random, heuristic, independent and shared-policy wrappers
+algorithms/     Q-update mathematics and shared sparse table
+configs/        Main, ablation and robustness protocols
+experiments/    Training, frozen evaluation, reproduction and audits
+analysis/       Seed aggregation, behavioral metrics and study plots
+visualization/  Trajectory plots and GIFs
+tests/          Mechanics, learning, evaluation and reproducibility checks
+docs/           Detailed protocols, historical reports and release verification
+results/        Selected main, ablation, audit and robustness evidence
 ```
 
-Both previous and current distances use the target position at their respective times. The distance contribution is a sum, the capture bonus is added once, and the step penalty is added once per environment transition. Each hunter's update receives the same team reward; episode reward adds it once per transition. Setting capture weight to zero preserves capture detection, termination, and zero terminal bootstrap.
-
-| Variant | Distance weight | Capture weight | Step penalty |
-|---|---:|---:|---:|
-| `full_reward` | 1.0 | 20.0 | -0.05 |
-| `no_distance` | 0.0 | 20.0 | -0.05 |
-| `no_step_penalty` | 1.0 | 20.0 | 0.0 |
-| `no_capture_reward` | 1.0 | 0.0 | -0.05 |
-
-The controlled protocol uses a 10 × 10 grid, 100-step limit, seeds `0, 1, 2, 3, 4`, 5,000 training episodes and 500 evaluation episodes per condition and seed. Learning rate is 0.1, gamma is 0.95, and epsilon starts at 1.0, decays by 0.995 after each episode, and has a minimum of 0.05. The state representation, hunter update order, movement rules, target policy, and termination/truncation handling are unchanged.
-
-For seed index `j` and zero-based episode `e`, training environment seeds are `j * 1,000,000 + e`; training action RNGs start at `2 * training_seed` and `2 * training_seed + 1`. Evaluation environment seeds are `10,000,000 + j * 500 + e`, spanning 10,000,000–10,002,499; evaluation action RNGs start at `20,000,000 + 2*j` and the next integer. All variants share these schedules and RNG initializations. Fresh evaluation wrappers load each checkpoint, use epsilon zero, and perform no learning. Seeded random tie-breaking remains active. Quantitative and behavioral metrics use the same recorded rollouts, whose Q-tables are checked for unchanged values and membership before and after evaluation.
-
-### Measured results
-
-Metrics are calculated within each training seed first, then reported as mean ± **sample standard deviation across five independent training-seed estimates**. Each condition has 2,500 evaluation episodes. Capture time uses successful episodes only; all five seeds contributed for every condition in this study. In general, zero-success seeds have NaN capture time and are excluded with an explicit valid-seed count; if none contribute, the result is N/A. Sample SD is N/A when fewer than two valid seeds contribute.
-
-| Variant | Capture rate | Capture time (successes) | Episode length (all) | Episode reward |
-|---|---:|---:|---:|---:|
-| Full reward | 1.0000 ± 0.0000 | 16.8412 ± 0.4470 | 16.8412 ± 0.4470 | 30.5079 ± 0.0755 |
-| No distance | 0.9372 ± 0.0099 | 32.4607 ± 1.1130 | 36.7068 ± 0.8946 | 16.9087 ± 0.2079 |
-| No step penalty | 1.0000 ± 0.0000 | 16.9244 ± 0.5954 | 16.9244 ± 0.5954 | 31.3500 ± 0.0942 |
-| No capture reward | 1.0000 ± 0.0000 | 15.6696 ± 0.4765 | 15.6696 ± 0.4765 | 10.5665 ± 0.1020 |
-
-**Episode rewards use different definitions and must not rank cross-variant success.** The primary metric is capture rate. Full reward, no step penalty, and no capture reward each succeeded in all 2,500 evaluation episodes. No distance succeeded in 2,343 episodes and failed in 157. Removing distance shaping increased all-episode duration by 19.8656 steps. Removing the step penalty changed duration by only +0.0832 steps. Removing the capture bonus preserved complete evaluation success and reduced duration by 1.1716 steps in this run. These observations do not establish statistical significance or universal necessity of any component.
-
-Exact results and valid-seed counts are in [reward_ablation_summary.csv](results/ablations/summaries/reward_ablation_summary.csv) and [per_seed_summary.csv](results/ablations/summaries/per_seed_summary.csv).
-
-![Reward ablation capture rates](results/ablations/plots/capture_rate_ablation.png)
-
-### Learning speed
-
-The predefined threshold is a rolling capture rate ≥ 0.50 over a **complete 100-episode window**. The crossing time is the number of episodes completed at the first qualifying window: the stored episode index is zero-based, so index 99 corresponds to 100 episodes completed. Partial initial windows cannot qualify and are saved as NaN. A seed that never qualifies is reported as **Not reached**; threshold-time summaries are conditional on attainment.
-
-| Variant | Reached seeds | Episodes completed at threshold, conditional mean ± sample SD |
-|---|---:|---:|
-| Full reward | 5/5 | 254.6 ± 6.7 |
-| No distance | 5/5 | 921.6 ± 88.5 |
-| No step penalty | 5/5 | 253.2 ± 11.4 |
-| No capture reward | 5/5 | 260.2 ± 9.3 |
-
-Without distance shaping, threshold attainment required about 3.62 times as many episodes. The other three conditions crossed at similar times. These are training curves with exploration, not frozen-policy evaluation curves or a guarantee of convergence.
-
-![Reward ablation training curves](results/ablations/plots/ablation_learning_curves.png)
-
-The [learning-speed seed table](results/ablations/summaries/learning_speed_per_seed.csv) records every crossing. Figure data are saved as [learning_curve_source.csv](results/ablations/summaries/learning_curve_source.csv) and [bar_plot_source.csv](results/ablations/summaries/bar_plot_source.csv). The other required figures are [capture time](results/ablations/plots/capture_time_ablation.png) and [episode length](results/ablations/plots/episode_length_ablation.png).
-
-### Behavioral observations
-
-Phase 12 metrics include the initial frame and every post-transition frame. Episode-level metrics are averaged within seed and then across five seeds using sample SD.
-
-| Variant | Mean target distance | Hunter separation | Simultaneous adjacency | Distinct-side fraction |
-|---|---:|---:|---:|---:|
-| Full reward | 4.0687 ± 0.0408 | 4.4486 ± 0.1180 | 0.0780 ± 0.0027 | 0.0780 ± 0.0027 |
-| No distance | 4.9507 ± 0.0434 | 4.6409 ± 0.1104 | 0.0513 ± 0.0041 | 0.0513 ± 0.0041 |
-| No step penalty | 4.1055 ± 0.0636 | 4.5128 ± 0.1121 | 0.0795 ± 0.0028 | 0.0795 ± 0.0028 |
-| No capture reward | 4.1415 ± 0.0627 | 4.6172 ± 0.0797 | 0.0846 ± 0.0023 | 0.0846 ± 0.0023 |
-
-No distance maintained larger average hunter-to-target distances and captured more slowly. The no-capture condition achieved faster capture despite a slightly larger mean distance, showing that mean proximity alone does not measure capture efficiency. Collision rules make distinct-side positioning equivalent to simultaneous adjacency. Immediate termination at capture couples both adjacency fractions to capture frequency and episode duration. These indicators do not independently prove cooperation or stable roles.
-
-Representative successes minimize distance from the variant's median successful capture time, with ties resolved by training seed and evaluation seed. Failures use the first failure in that same seed ordering. Selected successes all use training seed 0: full reward at evaluation seed 10,000,010 (15 steps), no distance at 10,000,057 (27 steps), no step penalty at 10,000,039 (15 steps), and no capture reward at 10,000,010 (13 steps).
-
-The selected no-distance failure, training seed 0 / evaluation seed 10,000,065, runs for all 100 steps. Its mean hunter-to-target distance is 7.4554 and mean separation is 10.4950; the hunters end 3 and 7 Manhattan steps from the target. The recorded paths show separated movement across the grid without simultaneous adjacency. This supports a diagnosis of ineffective pursuit for this example, rather than a claim of pursuit near the target without capture. No failures occurred for the other conditions. No reward-hacking or systematic oscillation claim is supported by these selected examples.
-
-[Behavioral summaries](results/ablations/behavioral/behavioral_summary.csv), [seed estimates](results/ablations/behavioral/behavioral_seed_summary.csv), and [selection rules](results/ablations/behavioral/representative_selection.csv) accompany five real [saved trajectories](results/ablations/trajectories/). All five selected trajectories were replayed against their environment seeds, with exact agreement in positions, actions, rewards, and termination flags.
-
-![Selected no-distance failure](results/ablations/behavioral/no_distance_failure_trajectory.png)
-
-### Interpretation and limits
-
-Distance shaping has strong descriptive support for faster learning and more efficient capture under this budget; it is not strictly necessary, since removing it still achieved 93.72% capture. Support for an efficiency benefit from this step penalty is weak. The hypothesized necessity of the explicit capture bonus is unsupported here: removing it preserved all observed captures and produced shorter episodes. A possible explanation is that distance shaping, the remaining time penalty, and capture termination already supply enough task structure in this small tabular setting. The study does not identify that mechanism.
-
-This is a fixed-budget, one-component-at-a-time study with five seeds, one grid size, one target policy, and one learning method. Components can interact, shaping can change state visitation, and reward weights were not optimized. A first threshold crossing is not a sustained-performance test. Descriptive seed variability is not a confidence interval or hypothesis test. The results have limited transfer to other MARL settings, larger teams, or deep learning. The full Phase 13 study was executed once; repeated tiny studies verified numerical reproducibility, and the independently retrained full-reward condition matched prior Phase 11 artifacts. No independent repeat of all four full-budget conditions is claimed.
-
-### Reproduction and artifacts
-
-The perfect capture rates were independently audited after the initial study. A separate evaluator reproduced all 10,000 original evaluation rows by checking capture geometry, movement, target sampling, and reward arithmetic. On a fresh seed range with 2,000 additional episodes per checkpoint, full reward, no step penalty, and no capture reward each captured in 10,000/10,000 episodes; no distance captured in 9,291/10,000. An untrained shared-table control captured in only 171/2,500 episodes. Training/evaluation seed overlap was zero, checkpoint paths and hashes were distinct across all 20 models, and evaluation left tables and checkpoint files unchanged. No leakage or inflated success accounting was found. Dense shaping still targets capture: with nonoverlapping entities, the sum of hunter distances has its minimum of 2 exactly at simultaneous adjacency. Gamma 0.95 also retains an incentive for early capture without a step penalty. See the [capture-rate audit](docs/phase13_capture_rate_audit.md) for checks, fresh results, limitations, and a reproduction command. Capture rate 1.0 describes zero observed failures in these finite samples.
-
-The complete executed study used:
-
-```bash
-python -m experiments.run_reward_ablation --train-episodes 5000 --eval-episodes 500 --seeds 0 1 2 3 4 --output-dir results/ablations
-```
-
-Choose a fresh output directory when retraining, such as `results/ablations_reproduction`; the runner rejects an existing study configuration to protect its evidence. A fresh run always starts empty tables, never loads a prior condition for training, and writes independent checkpoints. Smoke budgets are separate:
-
-```bash
-python -m experiments.run_reward_ablation --grid-size 4 --max-steps 10 --train-episodes 10 --eval-episodes 5 --seeds 0 1 --output-dir results/ablations_smoke_new
-python -m analysis.reward_ablation_analysis --output-dir results/ablations
-python -m pytest -q
-```
-
-Analysis uses saved raw data and histories and requires no retraining. Raw data are retained locally but ignored in Git, so a fresh clone must reproduce them in a new output directory before running that analysis command there. The 10-episode smoke test cannot supply scientific learning-speed results.
-
-The evidence bundle contains:
-
-- `raw/<variant>.csv`: 10,000 evaluation rows in total, with variant, training/evaluation seed, episode, capture, length, successful capture time, and variant-specific reward
-- `raw/training/<variant>_seed_<seed>.csv`: 100,000 training rows, including epsilon used/after decay and complete-window capture/length statistics
-- `checkpoints/<variant>/seed_<seed>.pkl`: 20 independent tables; identities and SHA-256 hashes are saved in [checkpoint_identities.csv](results/ablations/summaries/checkpoint_identities.csv)
-- `summaries/`: resolved [configuration](results/ablations/summaries/ablation_config.json), seed schedules, summaries, learning-speed results, figure sources, [verification](results/ablations/summaries/verification.json), completion status, and an [artifact manifest](results/ablations/summaries/artifact_manifest.json)
-- `plots/`, `behavioral/`, and `trajectories/`: the four required figures, behavior tables, five selected trajectory JSONs, and diagnostic plots
-
-Only narrowly listed evidence files are eligible for tracking. Large raw datasets, per-episode behavioral files, checkpoints, and smoke outputs remain ignored. All prior Phase 11/12 evidence is preserved. The pristine baseline had **90 passing tests**; the initial Phase 13 implementation passed **116 tests**, and the follow-up capture-rate audit extends the suite to **120 passing tests**. Coverage includes reward accounting, frozen unseen-state evaluation, seed aggregation, missing values, threshold conventions, fresh tables, isolated paths, default compatibility, repeated tiny-run equality, and independent capture/movement checks. Windows sandbox path-resolution failures required running tests outside that sandbox; 13 existing dependency deprecation warnings remain. See the [Phase 13 completion report](docs/phase13_reward_ablation.md) for the original implementation and verification record, and the [capture-rate audit](docs/phase13_capture_rate_audit.md) for the additional checks.
-
-## Generalization and Robustness
-
-To answer whether the tabular policies transfer beyond their exact training trajectories, we conducted a frozen-policy robustness evaluation (epsilon=0, no Q-table updates). We compared Independent Q-Learning to Shared-Policy Cooperative Q-Learning under three new, held-out evaluation conditions:
-
-### Held-Out Evaluation Protocol
-
-1. **In Distribution**: The standard 10x10 evaluation matching Phase 11.
-2. **Unseen Seeds**: Environment random seeds completely disjoint from the training seeds.
-3. **Unseen Initial States**: A deterministic set of 100 randomly generated initial spatial configurations never explicitly aligned with training seeds.
-4. **Stress Cases**: Specific geometric extremes (hunters very far from target, target near boundaries, etc.).
-
-Grid-size transfer (e.g. testing on a 12x12 grid) was intentionally excluded because tabular Q-learning does not provide mathematically reliable values for unseen relative states outside of bounds; thus, scaling the grid inherently breaks the pre-learned tabular bounds.
-
-### Robustness Results
-
-Both Independent and Cooperative methods demonstrated excellent robustness when evaluated on held-out seeds and unseen initial states within the 10x10 geometry. 
-
-| Method          | Condition              | Capture Rate      | Q Coverage |
-|-----------------|------------------------|-------------------|------------|
-| Independent Q   | In Distribution        | 1.00 ± 0.00       | 1.00 ± 0.00 |
-| Independent Q   | Unseen Seeds           | 1.00 ± 0.00       | 1.00 ± 0.00 |
-| Independent Q   | Unseen Initial States  | 1.00 ± 0.00       | 1.00 ± 0.00 |
-| Cooperative Q   | In Distribution        | 1.00 ± 0.00       | 0.96 ± 0.00 |
-| Cooperative Q   | Unseen Seeds           | 1.00 ± 0.00       | 0.96 ± 0.01 |
-| Cooperative Q   | Unseen Initial States  | 1.00 ± 0.00       | 0.96 ± 0.01 |
-
-*Note: Minor coverage deviations (0.96 vs 1.0) exist for Cooperative Q-Learning because its relative coordinate space encompasses a denser space of permutations, exposing slightly more "unseen" intermediate states during evaluation, although this did not harm the ultimate 100% capture rate.*
-
-![Capture Rate Robustness](results/robustness/plots/capture_rate_robustness.png)
-![Q-Table Coverage](results/robustness/plots/q_table_coverage.png)
-
-### State Coverage and Failure Cases
-
-The primary limitation of a purely tabular approach is its inability to guess values for unvisited configurations (State Coverage < 1.0). When facing severe geometric stress cases (e.g., both hunters stuck in the same corner far from the target), Cooperative Q-Learning sometimes dropped in capture rate (down to ~80% in the hardest permutations) specifically because those geometries yielded relative coordinates absent from the training table. Because the cooperative formulation uses agent-centric relative coordinates combined with parameter sharing, it trades absolute coordinate saturation for relational structure, meaning robustness differences cannot be purely attributed to "cooperation" alone but rather the representation switch.
-
-### Limitations
-
-- Tabular Q-learning cannot estimate values for truly unseen configurations; it relies entirely on its training saturation.
-- Robustness tests only evaluate changes in the initial state distribution; the target's random policy behavior remains unchanged.
-- The environment domain remained fixed at a 10x10 size without domain randomization or deep function approximation.
-
-## Reproduce the results
-
-Create an environment and install the declared dependencies:
-
-```bash
-python -m venv .venv/reproduction
-.venv/reproduction/Scripts/python -m pip install -r requirements.txt
-```
-
-Run the complete test suite:
-
-```bash
-.venv/reproduction/Scripts/python -m pytest -q
-```
-
-Run two complete quantitative experiments:
-
-```bash
-.venv/reproduction/Scripts/python -m experiments.run_comparison --grid-size 10 --max-steps 100 --train-episodes 5000 --eval-episodes 500 --seeds 0 1 2 3 4 --output-dir results/validation/run_a
-.venv/reproduction/Scripts/python -m experiments.run_comparison --grid-size 10 --max-steps 100 --train-episodes 5000 --eval-episodes 500 --seeds 0 1 2 3 4 --output-dir results/validation/run_b
-```
-
-Generate behavioral evidence from each checkpoint set:
-
-```bash
-.venv/reproduction/Scripts/python -m experiments.generate_behavioral_examples --grid-size 10 --max-steps 100 --eval-episodes 500 --seeds 0 1 2 3 4 --output-dir results/validation/run_a
-.venv/reproduction/Scripts/python -m experiments.generate_behavioral_examples --grid-size 10 --max-steps 100 --eval-episodes 500 --seeds 0 1 2 3 4 --output-dir results/validation/run_b
-```
-
-Validate and publish lightweight evidence:
-
-```bash
-.venv/reproduction/Scripts/python -m experiments.reproducibility --run-a results/validation/run_a --run-b results/validation/run_b --seeds 0 1 2 3 4 --train-episodes 5000 --eval-episodes 500 --publish-dir results/reproducibility
-```
-
-Full raw results and checkpoints remain ignored under `results/validation/`. The tracked evidence bundle contains configuration, summaries, plot-source data, plots, representative trajectories, GIFs, and a SHA-256 [artifact manifest](results/reproducibility/artifact_manifest.json).
-The independent-run comparison fingerprint and its checked scope are recorded in [reproduction_verification.json](results/reproducibility/reproduction_verification.json).
-
-## Limitations
-
-- The environment has only two homogeneous hunters on one small grid.
-- The moving target follows one seeded random policy.
-- Parameter sharing and teammate-relative observations change together, so this experiment cannot attribute the result to either factor alone.
-- The behavioral indicators are simple and partly constrained by the capture and collision rules.
-- Representative animations are deterministic examples selected by a documented rule; they do not replace the 2,500-episode-per-method summaries.
-- No hypothesis test, confidence interval, alternate target policy, or larger-team study is included.
-- The reward ablation uses a fixed budget and removes one component at a time; it does not resolve component interactions or transfer to other learning settings.
-
-The repository is ready for Phase 15.
+Use [CITATION.cff](CITATION.cff) when referencing this software; include the Git commit used for a study. Citation names follow verified Git contributor metadata (Borna/BornaMaherani and Parham Mohammadkhani/Parham-mk); no affiliations, ORCIDs or publication details are inferred. This is an unpublished software project. Licensed under [MIT](LICENSE). [Contributions and change guidance](CONTRIBUTING.md).

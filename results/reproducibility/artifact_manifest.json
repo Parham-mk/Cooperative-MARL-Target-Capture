@@ -36,28 +36,28 @@
   },
   {
     "path": "gifs/cooperative_q_learning_success.gif",
-    "sha256": "b7a9a74c4ad8b6a89b39b59ccc77076cc7e35a3a8d380b20f8361b0446829fc5",
-    "size_bytes": 79213
+    "sha256": "b44d3d004d4bb7c962f95e0585d9bfafb17b296955b3e0e65815e323a77b3d11",
+    "size_bytes": 138994
   },
   {
     "path": "gifs/heuristic_success.gif",
-    "sha256": "fdc233e12b1a0ee71de31ee440eb66448d299173305e2505bfee12997e1b1369",
-    "size_bytes": 46329
+    "sha256": "d0c51ecc1869447e64a8993014492287075289b940556af9e98903b2a7a8dad5",
+    "size_bytes": 84501
   },
   {
     "path": "gifs/independent_q_learning_failure.gif",
-    "sha256": "7231173aaee67ba8cdf9f0cff24e1e4cbe08fbd72eb107df252a1b11611a7c3c",
-    "size_bytes": 397985
+    "sha256": "ca7761a0adaeaecf7300714c83fcbbabb3d6b8850f8808a41b355741b94cb74a",
+    "size_bytes": 673619
   },
   {
     "path": "gifs/independent_q_learning_success.gif",
-    "sha256": "60d32ffaf579c0b1d59117569ce9794ba4f8d6e4cadf5bea0d912fc8c82b7b5d",
-    "size_bytes": 83111
+    "sha256": "118820b8814b07ee83f14d24687fa07a69fb3007f44bec7cc087190c39889234",
+    "size_bytes": 136139
   },
   {
     "path": "gifs/random_success.gif",
-    "sha256": "b55180b4d99d108056a46af8ef3ef8471d2a1a1d7288684c842786d60c7604ab",
-    "size_bytes": 175744
+    "sha256": "2d14ac7c53cbe789f67c3a0c4bc119d1cddd19dc2810952c3b476f674cf97e2a",
+    "size_bytes": 269542
   },
   {
     "path": "plots/capture_rate_comparison.png",

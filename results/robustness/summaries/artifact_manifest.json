@@ -1,0 +1,92 @@
+[
+  {
+    "path": "plots/capture_rate_robustness.png",
+    "sha256": "e3c9a0c64e63b73d0aa25980f8c43dec083666b8e58672ce40138ea9e2e6b1f6",
+    "size_bytes": 48471
+  },
+  {
+    "path": "plots/cooperative_q_diagnostic.png",
+    "sha256": "dab73da962622837b0756b2423a0eded358370a8ea50f9f3e0d835795469fba4",
+    "size_bytes": 46816
+  },
+  {
+    "path": "plots/independent_q_diagnostic.png",
+    "sha256": "cf9ee5f47cfb82842eabc5baa3aea6f8276372c9741788448b3363e573c0fb54",
+    "size_bytes": 50811
+  },
+  {
+    "path": "plots/performance_drop.png",
+    "sha256": "0bf3b49edcd8c9bdf10cfe485ca202c46790eaeab22e552a3a23e1a2e5aa04c8",
+    "size_bytes": 59182
+  },
+  {
+    "path": "plots/q_table_coverage.png",
+    "sha256": "1fa728b57bb84c5123ecc58eaecef92c281696f9b84c46c524a8503d897d4b6b",
+    "size_bytes": 54100
+  },
+  {
+    "path": "plots/stress_case_capture_rate.png",
+    "sha256": "27ed99a662b2e7f1f56fe87180309cb3b0803cf008e2d7f34bb62fbc6c8be863",
+    "size_bytes": 58739
+  },
+  {
+    "path": "raw/robustness_raw.csv",
+    "sha256": "0d6beb9dfce9ca4cf1a90f0f23a97eca28ccb89ee8c27a95a3985fcedb152c05",
+    "size_bytes": 2695739
+  },
+  {
+    "path": "summaries/checkpoint_identities.csv",
+    "sha256": "df8c1639d8b0020b866f872654010ecd23c0a9a89ad0e5e1fd6fa90ac8cfb190",
+    "size_bytes": 1678
+  },
+  {
+    "path": "summaries/diagnostic_selection.csv",
+    "sha256": "52e7351d313e8239d0175eab9ad55e29afb5f1bc4d9137fa0306d0ac1dee9e7d",
+    "size_bytes": 605
+  },
+  {
+    "path": "summaries/held_out_initial_configurations.csv",
+    "sha256": "ef6a1b131b920ff4025fcec36d0cbb64671e274726cc74fc5b567ba6b3192646",
+    "size_bytes": 87048
+  },
+  {
+    "path": "summaries/initial_geometry_summary.csv",
+    "sha256": "73cacbe724214f98f0a41b4a7f56ec042c5084be5003824175aba069cb4db1a1",
+    "size_bytes": 2440
+  },
+  {
+    "path": "summaries/per_seed_summary.csv",
+    "sha256": "e5f0188130d7f3e43d93e74a741a6d08f783680c6107234c588e3f19a24173eb",
+    "size_bytes": 18720
+  },
+  {
+    "path": "summaries/plot_source.csv",
+    "sha256": "1a80f03bbfd11aaf89362939ddd15066340ffcf0fd9d5c8744675857a6a480c2",
+    "size_bytes": 8323
+  },
+  {
+    "path": "summaries/robustness_config.json",
+    "sha256": "0d71aac41a5b555ca8c9ef943455e0f6515b2dda9765e691eaccc81ca5365da0",
+    "size_bytes": 3772
+  },
+  {
+    "path": "summaries/robustness_summary.csv",
+    "sha256": "1a80f03bbfd11aaf89362939ddd15066340ffcf0fd9d5c8744675857a6a480c2",
+    "size_bytes": 8323
+  },
+  {
+    "path": "summaries/verification.json",
+    "sha256": "0f524368ef4ce83a5e79770b50f0200fcb539f2462dc863d324f1228dfe02941",
+    "size_bytes": 17934
+  },
+  {
+    "path": "trajectories/cooperative_q_diagnostic.json",
+    "sha256": "343364429f5ef13ee428f1a250d2ffb038eed151eb4f965f4a55145b1e067323",
+    "size_bytes": 49238
+  },
+  {
+    "path": "trajectories/independent_q_diagnostic.json",
+    "sha256": "ee157a6bcc28e2b1cb0166df1337b6cca1eb7ffe36e53f7d986d9d3591b538c0",
+    "size_bytes": 57117
+  }
+]

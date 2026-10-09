@@ -1,5 +1,6 @@
 """Seed-level aggregation and Phase 11 figures."""
 
+import argparse
 import csv
 import math
 import os
@@ -169,5 +170,14 @@ def aggregate_and_plot(config: ExperimentConfig = None):
     return summaries
 
 
+def main():
+    parser = argparse.ArgumentParser(description="Rebuild comparison summaries and plots from saved raw data")
+    parser.add_argument("--output-dir", type=Path, default=Path("results"))
+    args = parser.parse_args()
+    if not list((args.output_dir / "raw").glob("*_results.csv")):
+        parser.error("no comparison raw data found; run experiments.run_comparison first")
+    aggregate_and_plot(ExperimentConfig(output_dir=args.output_dir))
+
+
 if __name__ == "__main__":
-    aggregate_and_plot()
+    main()

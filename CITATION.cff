@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite this repository."
+type: software
+title: "Emergent Cooperation in Multi-Agent Reinforcement Learning for Target Capture"
+authors:
+  - given-names: "Borna"
+    alias: "BornaMaherani"
+  - given-names: "Parham"
+    family-names: "Mohammadkhani"
+    alias: "Parham-mk"
+repository-code: "https://github.com/BornaMaherani/Cooperative-MARL-Target-Capture"
+url: "https://github.com/BornaMaherani/Cooperative-MARL-Target-Capture"
+license: MIT
+abstract: "A reproducible tabular multi-agent target-capture study comparing random and heuristic baselines, independent Q-learning and shared-policy cooperative Q-learning, with behavioral analysis, reward ablation and frozen-policy robustness evaluation."
